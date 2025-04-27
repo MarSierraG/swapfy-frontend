@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      alert('⚠️ No estás logueado. Redirigiendo al login...');
+      alert('⚠ No estás logueado. Redirigiendo al login...');
       window.location.href = '/login';
       return;
     }
@@ -21,10 +21,11 @@ export class HomeComponent implements OnInit {
     this.userName = localStorage.getItem('userName') || 'Usuario';
   }
 
+  // Método para cerrar sesión
   logout(): void {
     localStorage.removeItem('token');
-    localStorage.removeItem('userName'); // 💡 limpiamos también el nombre
-    alert('🔒 Has cerrado sesión. ¡Hasta pronto!');
+    localStorage.removeItem('userName');
+    alert('Has cerrado sesión. ¡Hasta pronto!');
     window.location.href = '/login';
   }
 }

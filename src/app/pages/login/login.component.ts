@@ -1,32 +1,36 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-
+import {AuthService} from '../../services/auth.service';
+import {Router} from '@angular/router';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
-  styleUrl: './login.component.css'
+  styleUrls: [
+    './login.component.css',
+    '../../../assets/styles/swapfy-forms.css'
+  ]
+
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
-  )
-
-    {
-      this.loginForm = this.fb.group({
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required]]
-      });
-    }
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
+    });
+  }
 
   onSubmit(): void {
     if (this.loginForm.valid) {
@@ -36,7 +40,6 @@ export class LoginComponent {
         next: (response) => {
           console.log('✅ Login exitoso', response);
 
-          // Guardamos el token y el nombre del usuario
           localStorage.setItem('token', response.token);
           localStorage.setItem('userName', response.user.name);
 
@@ -45,12 +48,26 @@ export class LoginComponent {
           this.router.navigate(['/home']);
         },
         error: (error) => {
-          console.error('❌ Error en el login', error);
-          alert('❌ Email o contraseña incorrectos.');
+          console.error('Error en el login', error);
+
+          if (error.error && error.error.error) {
+            this.errorMessage = error.error.error;
+          } else {
+            this.errorMessage = 'Hubo un error inesperado.';
+          }
+
+          // 🔥 Cerramos automáticamente después de 5 segundos
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 5000);
         }
       });
     } else {
-      alert('❌ Completa todos los campos.');
+      this.errorMessage = 'Completa todos los campos.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 5000);
     }
   }
+
 }

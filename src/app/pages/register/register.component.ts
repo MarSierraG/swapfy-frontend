@@ -1,21 +1,33 @@
-import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import {Component} from '@angular/core';
+import {FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from '../../services/auth.service';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
+  standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ],
-  styleUrl: './register.component.css'
+  styleUrls: [
+    './register.component.css',
+    '../../../assets/styles/swapfy-forms.css'
+  ]
 })
 export class RegisterComponent {
   registerForm: FormGroup;
+  errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.registerForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(4)]]
     });
@@ -27,19 +39,34 @@ export class RegisterComponent {
 
       this.authService.register(formData).subscribe({
         next: (response) => {
-          console.log('✅ Usuario registrado correctamente', response);
-          alert('✅ ¡Registro exitoso! Ahora puedes iniciar sesión.');
+          console.log('Registro exitoso', response);
+          alert('Registro exitoso. Ahora puedes iniciar sesión.');
           this.registerForm.reset();
+          this.router.navigate(['/login']);
         },
         error: (error) => {
-          console.error('❌ Error en el registro', error);
-          alert('❌ Hubo un problema al registrar. Por favor, revisa los datos.');
+          console.error('Error en el registro', error);
+
+          // Priorizar mostrar el mensaje de error específico
+          if (error.error && error.error.error) {
+            this.errorMessage = error.error.error;
+          } else if (error.error && error.error.message) {
+            this.errorMessage = error.error.message;
+          } else {
+            this.errorMessage = 'Ocurrió un error inesperado.';
+          }
+
+          // Limpiar mensaje después de 4 segundos
+          setTimeout(() => {
+            this.errorMessage = null;
+          }, 4000);
         }
       });
     } else {
-      console.log('Formulario inválido');
-      alert('❌ Por favor completa todos los campos correctamente.');
+      this.errorMessage = 'Por favor completa todos los campos correctamente.';
+      setTimeout(() => {
+        this.errorMessage = null;
+      }, 4000);
     }
   }
-
 }

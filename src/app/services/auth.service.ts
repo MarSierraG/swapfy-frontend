@@ -12,7 +12,7 @@ interface RegisterData {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:1314/api/auth';
+  private apiUrl = 'https://swapfy-backend-production.up.railway.app/api/auth'; // URL del backend en Railway
 
   constructor(private http: HttpClient) {}
 
@@ -23,6 +23,4 @@ export class AuthService {
   login(data: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, data);
   }
-
-
 }

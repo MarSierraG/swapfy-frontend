@@ -1,0 +1,44 @@
+/* Estilos para Login y Register */
+
+form {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.swapfy-error {
+  margin-bottom: 1rem;
+  padding: 8px 20px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, rgba(4, 93, 117, 0.8), rgba(10, 147, 150, 0.8));
+  border: 2px solid #045D75;
+  color: #f0f0f0;
+  font-weight: 500;
+  text-align: center;
+  font-size: 13px;
+  box-shadow: 0 2px 2px rgba(4, 93, 117, 0.5);
+  backdrop-filter: blur(3px);
+  transition: all 0.3s ease;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+button[type="submit"] {
+  background-color: #04506B;
+  color: white;
+  font-weight: 600;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, #045D75, #0A9396);
+  color: #f0f0f0;
+  box-shadow: 0 4px 10px rgba(4, 93, 117, 0.6);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
