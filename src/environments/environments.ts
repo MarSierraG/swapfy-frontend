@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://swapfy-backend-production.up.railway.app/api'
+  apiUrl: 'http://localhost:1314/api'
 };
