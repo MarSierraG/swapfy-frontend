@@ -22,7 +22,6 @@ export class AuthService {
   }
 
   login(data: { email: string; password: string }): Observable<any> {
-    console.log('🧪 API URL en uso:', environment.apiUrl);
     return this.http.post(`${this.apiUrl}/login`, data);
   }
 }
