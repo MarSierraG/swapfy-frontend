@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {environment} from '../../environments/environments';
 
 interface RegisterData {
   name: string;
@@ -12,7 +13,7 @@ interface RegisterData {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://swapfy-backend-production.up.railway.app/api/auth'; // URL del backend en Railway
+  private apiUrl = `${environment.apiUrl}/auth`; // Dinamico, segun el entorno
 
   constructor(private http: HttpClient) {}
 
@@ -21,6 +22,7 @@ export class AuthService {
   }
 
   login(data: { email: string; password: string }): Observable<any> {
+    console.log('🧪 API URL en uso:', environment.apiUrl);
     return this.http.post(`${this.apiUrl}/login`, data);
   }
 }
