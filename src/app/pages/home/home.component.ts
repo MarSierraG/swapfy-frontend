@@ -1,27 +1,55 @@
 import { Component, OnInit } from '@angular/core';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
+import { ItemService } from '../../services/item.service';
+import { Item } from '../../models/item.model';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-home',
+  standalone: true,
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css'],
+  imports: [
+    CommonModule,
+    SidebarComponent
+  ]
 })
+
 export class HomeComponent implements OnInit {
   userName: string = '';
+  items: Item[] = [];
+  menuOpen: boolean = false;
+
+  toggleMenu(): void {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  constructor(private itemService: ItemService) {}
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      alert('⚠ No estás logueado. Redirigiendo al login...');
+      alert(' No estás logueado. Redirigiendo al login...');
       window.location.href = '/login';
       return;
     }
 
-    // Aquí ya no necesitamos decodificar nada
     this.userName = localStorage.getItem('userName') || 'Usuario';
+
+    // Cargar artículos disponibles
+    this.itemService.getAvailableItems().subscribe({
+      next: (data) => {
+        this.items = data;
+        console.log('Artículos disponibles:', data);
+      },
+      error: (err) => {
+        console.error('Error al cargar artículos:', err);
+      }
+    });
   }
 
-  // Método para cerrar sesión
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');
