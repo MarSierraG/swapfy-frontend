@@ -1,0 +1,64 @@
+<div class="auth-container" [class.right-panel-active]="isRegisterActive">
+
+  <!-- FORMULARIO LOGIN -->
+  <div
+    class="form-container sign-in-container"
+    *ngIf="formMode === 'login'">
+    <app-login-form
+      (forgotPassword)="setFormMode('forgot')"
+      (register)="setFormMode('register')">
+    </app-login-form>
+  </div>
+
+  <!-- FORMULARIO REGISTRO -->
+  <div class="form-container sign-up-container" *ngIf="formMode === 'register'">
+    <app-register-form (backToLogin)="setFormMode('login')"></app-register-form>
+
+
+
+  </div>
+
+  <!-- FORMULARIO CONTRASEÑA" -->
+  <div
+    class="form-container reset-password-container"
+    *ngIf="formMode === 'forgot'">
+    <app-forgot-password (backToLogin)="setFormMode('login')"></app-forgot-password>
+  </div>
+
+
+  <!-- FORMULARIO DE RESETEO -->
+  <div class="form-container reset-password-container" *ngIf="formMode === 'reset'">
+    <app-reset-password></app-reset-password>
+  </div>
+
+
+
+  <!-- PANEL DE ANIMACIÓN DERECHA -->
+  <div class="overlay-container">
+    <div class="overlay">
+
+      <div class="wave-left" [class.transition-in]="isRegisterActive"></div>
+      <div class="wave-right" [class.transition-in]="!isRegisterActive"></div>
+
+      <div class="overlay-panel">
+        <img src="assets/logo/logo.png" alt="Swapfy" class="auth-logo" />
+
+        <ng-container *ngIf="isRegisterActive; else loginMode">
+          <h1>¡Bienvenido de vuelta!</h1>
+          <p class="ghost" (click)="setFormMode('login')">
+            ¿Ya tienes cuenta? ¡Inicia sesión!
+          </p>
+        </ng-container>
+
+        <ng-template #loginMode>
+          <h1>¿Nuevo por aquí?</h1>
+          <p class="ghost" (click)="setFormMode('register')">
+            ¿No tienes cuenta? ¡Regístrate ahora!
+          </p>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+
+</div>

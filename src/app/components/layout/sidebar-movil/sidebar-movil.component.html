@@ -1,0 +1,82 @@
+<!-- Botón menú móvil -->
+<button
+  class="menu-toggle d-md-none"
+  [class.open]="menuOpen"
+  [class.show-on-scroll]="showHeader"
+  [class.hide-on-scroll]="hideHeader"
+  (click)="toggleMenu()">
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+</button>
+
+<!-- Menú lateral móvil -->
+<div class="sidebar" [class.sidebar-open]="menuOpen">
+  <ul>
+    <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a routerLink="/home" title="Inicio" class="nav-link-wrapper">
+        <div class="icon-wrapper">
+          <i class="bi bi-house me-2"></i>
+          <span class="dot" *ngIf="router.url === '/home'"></span>
+        </div>
+        <span>Inicio</span>
+      </a>
+    </li>
+    <li routerLinkActive="active">
+      <a routerLink="/store" title="Mi tienda" class="nav-link-wrapper">
+        <div class="icon-wrapper">
+          <i class="bi bi-cart me-2"></i>
+          <span class="dot" *ngIf="router.url === '/store'"></span>
+        </div>
+        <span>Mi tienda</span>
+      </a>
+    </li>
+    <li routerLinkActive="active">
+      <a routerLink="/chats" title="Chats" class="nav-link-wrapper">
+        <div class="icon-wrapper">
+          <i class="bi bi-chat-dots me-2"></i>
+          <span class="dot" *ngIf="router.url === '/chats'"></span>
+        </div>
+        <span>Mensajes</span>
+      </a>
+    </li>
+    <li routerLinkActive="active">
+      <a routerLink="/settings" title="Ajustes" class="nav-link-wrapper">
+        <div class="icon-wrapper">
+          <i class="bi bi-gear me-2"></i>
+          <span class="dot" *ngIf="router.url === '/settings'"></span>
+        </div>
+        <span>Ajustes</span>
+      </a>
+    </li>
+    <li routerLinkActive="active">
+      <a routerLink="/credits" title="Créditos" class="nav-link-wrapper">
+        <div class="icon-wrapper">
+          <i class="bi bi-coin me-2"></i>
+          <span class="dot" *ngIf="router.url === '/credits'"></span>
+        </div>
+        <span>Créditos</span>
+      </a>
+    </li>
+    <li *ngIf="authService.isAdmin()" routerLinkActive="active">
+      <a routerLink="/admin" title="Panel Admin" class="nav-link-wrapper">
+        <div class="icon-wrapper">
+          <i class="bi bi-shield-lock-fill me-2"></i>
+          <span class="dot" *ngIf="router.url === '/admin'"></span>
+        </div>
+        <span>Panel Admin</span>
+      </a>
+    </li>
+    <li (click)="toggleDarkMode()" title="Modo oscuro">
+      <i class="bi fw-bold me-2" [ngClass]="isDarkMode ? 'bi-sun' : 'bi-moon'" style="font-size: 20px;"></i>
+      <span>{{ isDarkMode ? 'Modo claro' : 'Modo oscuro' }}</span>
+    </li>
+  </ul>
+</div>
+
+<!-- Fondo oscuro -->
+<div
+  class="sidebar-overlay d-md-none"
+  *ngIf="menuOpen"
+  (click)="toggleMenu()">
+</div>

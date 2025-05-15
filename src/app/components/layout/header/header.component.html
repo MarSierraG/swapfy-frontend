@@ -1,0 +1,21 @@
+<div class="fixed-header"
+     [class.show-on-scroll]="showHeader"
+     [class.hide-on-scroll]="hideHeader">
+
+  <!-- Logo + Título -->
+  <div class="brand-header d-md-flex">
+    <img src="../../../../assets/logo/logo.png" alt="Logo Swapfy" />
+    <span class="brand-title">Ｓｗａｐｆｙ</span>
+  </div>
+
+  <!-- Barra de búsqueda -->
+  <div *ngIf="isSearchVisible" class="search-wrapper">
+    <i class="bi bi-search"></i>
+    <input
+      type="text"
+      placeholder="Buscar artículos..."
+      class="search-bar"
+      style="background-color: white"
+    />
+  </div>
+</div>

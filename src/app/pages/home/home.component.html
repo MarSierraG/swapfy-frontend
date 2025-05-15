@@ -1,39 +1,21 @@
-<button class="menu-toggle d-md-none btn btn-outline-dark m-2" (click)="toggleMenu()">
-  ☰ Menú
-</button>
+<app-navbar-wrapper></app-navbar-wrapper>
 
-<app-sidebar class="d-none d-md-block"></app-sidebar>
+<div class="page-wrapper main-content">
+  <div class="welcome-header d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+    <div>
+      <h2 class="fw-bold mb-1">Bienvenido{{ userName ? ',' : '' }} <span class="username-highlight">{{ userName }}</span></h2>
+      <p class="text-muted mb-0">Explora artículos disponibles y encuentra oportunidades de trueque.</p>
+    </div>
+  </div>
 
-<div class="mobile-sidebar d-md-none" *ngIf="menuOpen">
-  <ul class="list-group">
-    <li class="list-group-item"><a routerLink="/home">🏠 Inicio</a></li>
-    <li class="list-group-item"><a routerLink="/store">🛒 Mi tienda</a></li>
-    <li class="list-group-item"><a routerLink="/chats">💬 Chats</a></li>
-    <li class="list-group-item"><a routerLink="/settings">⚙️ Ajustes</a></li>
-    <li class="list-group-item"><a routerLink="/credits">💰 Créditos</a></li>
-  </ul>
-</div>
 
-<div class="container mt-4 main-content" [style.marginLeft]="'260px'" class="main-content">
-  <h2>Bienvenido, {{ userName }} :)</h2>
   <button (click)="logout()" class="btn btn-outline-dark mb-4">Cerrar sesión</button>
 
   <h3>Artículos disponibles</h3>
 
-  <div class="row mt-3">
-    <div class="col-md-6 col-lg-4 mb-4" *ngFor="let item of items">
-      <div class="card h-100 shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">{{ item.title }}</h5>
-          <p class="card-text">{{ item.description }}</p>
-          <p class="card-text">
-            <strong>Créditos:</strong> {{ item.creditValue }}<br />
-            <strong>Tipo:</strong> {{ item.type }}<br />
-            <strong>Publicado por:</strong> {{ item.userName }}<br />
-            <strong>Etiquetas:</strong> {{ item.tagNames.join(', ') }}
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-item-list
+    [items]="items"
+    [isLoading]="isLoading"
+    [showOwner]="true"
+  ></app-item-list>
 </div>

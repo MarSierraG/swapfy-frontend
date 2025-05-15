@@ -1,0 +1,17 @@
+.toggle-password-btn {
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  padding: 0 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  color: #495057;
+  transition: background-color 0.2s ease;
+}
+
+
+
+.toggle-password-btn:hover {
+  background-color: #e2e6ea;
+}

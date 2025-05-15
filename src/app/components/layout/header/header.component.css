@@ -1,0 +1,98 @@
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+  transform: translateY(0);
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* espacio entre logo, buscador y botón */
+  padding: 15px 20px;
+  height: 65px;
+
+}
+
+.fixed-header.hide-on-scroll {
+  transform: translateY(-100%);
+}
+
+.fixed-header.show-on-scroll {
+  transform: translateY(0);
+}
+
+
+
+/* Titulo + Logo */
+.brand-header {
+  display: flex;
+  align-items: center;
+}
+
+/* Logo de la web */
+.brand-header img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+/* Nombre de la web */
+.brand-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #009BA5;
+  font-family: monospace;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 768px) {
+  .brand-title {
+    display: none;
+  }
+}
+
+
+/* Barra de búsqueda */
+.search-wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 17px;
+
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 20px;
+  padding: 4px 10px;
+  width: 28%;
+  min-width: 200px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+
+.search-wrapper i {
+  font-size: 1rem;
+  color: #666;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+
+.search-bar {
+  border: none;
+  outline: none;
+  width: 100%;
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+
+
+

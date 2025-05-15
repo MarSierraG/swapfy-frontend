@@ -1,0 +1,25 @@
+<div *ngIf="isLoading" class="text-center my-5">
+  <app-loader></app-loader>
+</div>
+
+<!-- Si es la tienda del usuario (showOwner = true) -->
+<div *ngIf="!isLoading && items.length === 0 && showOwner" class="text-center my-5 text-muted">
+  <i class="bi bi-box-seam-fill fs-1 d-block mb-3"></i>
+  <p class="mb-2">Aún no has publicado ningún artículo.</p>
+  <a class="btn btn-outline-primary" routerLink="/crear-articulo">
+    <i class="bi bi-plus-circle me-1"></i> Crear mi primer artículo
+  </a>
+</div>
+
+<!-- Si es una lista pública (como en /home) -->
+<div *ngIf="!isLoading && items.length === 0 && !showOwner" class="text-center my-5 text-muted">
+  <p>🪧 No hay artículos disponibles en este momento.</p>
+</div>
+
+<div *ngIf="!isLoading" class="items-wrapper">
+  <app-item-card
+    *ngFor="let item of items"
+    [item]="item"
+    [showOwner]="showOwner">
+  </app-item-card>
+</div>

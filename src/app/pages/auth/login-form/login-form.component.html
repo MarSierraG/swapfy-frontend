@@ -1,0 +1,82 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">
+    <i class="bi bi-box-arrow-in-right me-2"></i> Iniciar sesión
+  </h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="p-4 border rounded shadow-sm bg-white">
+
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Correo electrónico</label>
+      <div class="input-group">
+        <span class="input-group-text">
+          <i class="bi bi-envelope-fill"></i>
+        </span>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+          placeholder="Email"
+          [ngClass]="{'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
+        >
+      </div>
+      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="invalid-feedback">
+        Introduce un correo válido.
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="mb-3">
+      <label for="password" class="form-label">Contraseña</label>
+      <div class="input-group">
+        <span class="input-group-text">
+          <i class="bi bi-lock-fill"></i>
+        </span>
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          placeholder="Contraseña"
+          [ngClass]="{'is-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
+        >
+        <button class="toggle-password-btn" type="button" (click)="togglePasswordVisibility()" tabindex="-1">
+          <i
+            class="bi bi-eye"
+            [class.bi-eye-slash]="showPassword"
+            [class.bi-eye]="!showPassword"
+          ></i>
+        </button>
+
+      </div>
+      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="invalid-feedback">
+        La contraseña es obligatoria.
+      </div>
+    </div>
+
+    <!-- Alerta de error -->
+    <div *ngIf="errorMessage" class="swapfy-error">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Botón -->
+    <button type="submit" class="btn swapfy-button w-100 mt-2">
+      Iniciar sesión
+    </button>
+
+    <div class="text-end mt-2">
+      <a (click)="onForgotPasswordClick()" class="text-decoration-none">
+        ¿Olvidaste tu contraseña?
+      </a>
+    </div>
+
+    <!-- Solo en móviles: Enlace para registrarse -->
+    <div class="text-center mt-4 d-md-none">
+      <a (click)="goToRegister()" class="text-decoration-none text-primary">
+        <i class="bi bi-person-plus-fill me-1"></i>
+        ¿No tienes cuenta? Regístrate
+      </a>
+    </div>
+  </form>
+</div>

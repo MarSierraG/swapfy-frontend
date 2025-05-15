@@ -7,5 +7,7 @@ export interface Item {
   type: string;
   publicationDate: string;
   userName: string;
+  userId: number;
   tagNames: string[];
+  imageUrl: string;
 }

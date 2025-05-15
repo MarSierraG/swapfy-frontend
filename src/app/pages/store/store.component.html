@@ -1,0 +1,21 @@
+<app-navbar-wrapper></app-navbar-wrapper>
+
+<div class="page-wrapper main-content">
+  <h2>Mis artículos</h2>
+
+
+  <!-- Mostrar solo si hay artículos -->
+  <button
+    *ngIf="items.length > 0"
+    class="btn btn-outline-primary d-flex align-items-center gap-2 px-3 py-2 shadow-sm rounded-pill fw-semibold"
+    routerLink="/crear-articulo"
+  >
+    <i class="bi bi-plus-circle fs-5"></i> Crear artículo
+  </button>
+
+  <app-item-list
+    [items]="items"
+    [isLoading]="isLoading"
+    [showOwner]="true"
+  ></app-item-list>
+</div>

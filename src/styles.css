@@ -1,1 +1,126 @@
-/* You can add global styles to this file, and also import other style files */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.main-content {
+  max-width: 1300px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 0 auto;
+  padding-top: 90px;
+}
+
+:root {
+  --swapfy-primary: #14b8a6;
+
+  --swal2-background: #ffffff;
+  --swal2-title-color: #334155;
+  --swal2-text-color: #475569;
+  --swal2-icon-color: var(--swapfy-primary);
+  --swal2-confirm-button-background: var(--swapfy-primary);
+  --swal2-confirm-button-color: #ffffff;
+}
+
+/* Modo oscuro */
+body.dark-mode {
+  /* Bootstrap helpers */
+  --bs-body-bg: #121212;
+  --bs-body-color: #f8f9fa;
+  --bs-primary: #0dcaf0;
+
+  background-color: #121212;
+  color: #e0e0e0;
+
+  /* SweetAlert2 */
+  --swal2-background: #1e293b; /* slate‑800 */
+  --swal2-title-color: #f8fafc; /* slate‑50 */
+  --swal2-text-color: #f1f5f9; /* slate‑100 */
+}
+
+/* Tarjetas de ítems */
+body.dark-mode .item-card {
+  background-color: #1f1f1f !important;
+  color: #f1f1f1;
+  border: 1px solid #343a40;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .item-card .card-body {
+  background-color: transparent;
+  color: #e0e0e0;
+}
+
+body.dark-mode .item-card h5 {
+  color: #ffffff;
+}
+
+body.dark-mode .item-card .item-detail span {
+  color: #dddddd !important;
+}
+
+/* Sidebar */
+body.dark-mode .sidebar {
+  background-color: #1c1c1c;
+  border-right: 1px solid #343a40;
+}
+
+body.dark-mode .sidebar ul li a {
+  color: #eaeaea !important;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+body.dark-mode .sidebar ul li:hover a {
+  color: #121212 !important;
+}
+
+/* Movil */
+body.dark-mode .mobile-sidebar {
+  background-color: #1c1c1c;
+}
+
+body.dark-mode .mobile-sidebar .list-group-item {
+  background-color: #1c1c1c;
+  color: #f1f1f1;
+  border-color: #343a40;
+}
+
+body.dark-mode .mobile-sidebar .list-group-item:hover {
+  background-color: #f0f0f0;
+  color: #121212 !important;
+}
+
+body.dark-mode .mobile-sidebar a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Botones */
+body.dark-mode .btn,
+body.dark-mode .btn-outline-secondary {
+  background-color: #2e2e2e;
+  border-color: #6c757d;
+  color: #f8f9fa;
+}
+
+body.dark-mode .btn:hover,
+body.dark-mode .btn-outline-secondary:hover {
+  background-color: #495057;
+  border-color: #adb5bd;
+  color: #fff;
+}
+
+/* Navbar */
+body.dark-mode .fixed-header {
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+/* SweetAlert2 */
+.swal2-popup {
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px rgb(0 0 0 / 0.25);
+}
