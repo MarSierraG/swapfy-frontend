@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { ItemListComponent } from '../../components/items/item-list/item-list.component';
-import { HeaderComponent } from '../../components/layout/header/header.component';
 import { NavbarWrapperComponent } from '../../components/layout/navbar-wrapper/navbar-wrapper.component';
 
 import { ItemService } from '../../services/item/item.service';
@@ -15,7 +14,7 @@ import { AuthService } from '../../services/auth/auth.service';
   standalone: true,
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.css'],
-  imports: [CommonModule, RouterModule, ItemListComponent, HeaderComponent, NavbarWrapperComponent]
+  imports: [CommonModule, RouterModule, ItemListComponent, NavbarWrapperComponent]
 })
 export class StoreComponent implements OnInit {
   items: Item[] = [];

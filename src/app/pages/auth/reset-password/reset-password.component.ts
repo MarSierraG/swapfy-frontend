@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, LoaderComponent]
+  imports: [CommonModule, ReactiveFormsModule]
 })
 export class ResetPasswordComponent {
   resetForm: FormGroup;
