@@ -20,6 +20,10 @@ export class StoreComponent implements OnInit {
   items: Item[] = [];
   userId = 0;
   isLoading = true;
+  searchTerm: string = '';
+  filteredItems: Item[] = [];
+  searchField: string = 'title';
+
 
   constructor(private itemService: ItemService, private auth: AuthService) {}
 
@@ -29,6 +33,7 @@ export class StoreComponent implements OnInit {
     this.itemService.getItemsByUserId(this.userId).subscribe({
       next: (data) => {
         this.items = data;
+        this.applyFilter();
         this.isLoading = false;
       },
       error: (err) => {
@@ -41,4 +46,37 @@ export class StoreComponent implements OnInit {
   logout(): void {
     this.auth.logout();
   }
+
+  applyFilter(): void {
+    const term = this.searchTerm.toLowerCase().trim();
+    if (!term) {
+      this.filteredItems = this.items;
+      return;
+    }
+
+    this.filteredItems = this.items.filter(item => {
+      const field = this.searchField;
+
+      if (field === 'title') {
+        return item.title.toLowerCase().includes(term);
+      } else if (field === 'description') {
+        return item.description.toLowerCase().includes(term);
+      } else if (field === 'userName') {
+        return item.userName.toLowerCase().includes(term);
+      } else if (field === 'tagNames') {
+        return item.tagNames.some(tag => tag.toLowerCase().includes(term));
+      }
+
+      return false;
+    });
+  }
+
+
+  onSearchChanged({ term, field }: { term: string; field: string }): void {
+    this.searchTerm = term;
+    this.searchField = field;
+    this.applyFilter();
+  }
+
+
 }

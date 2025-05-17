@@ -1,7 +1,8 @@
 <app-header
   [showHeader]="showHeader"
   [hideHeader]="hideHeader"
-  [isSearchVisible]="isSearchVisible">
+  [isSearchVisible]="isSearchVisible"
+  (searchTerm)="onSearchTermChange($event)">
 </app-header>
 
 <app-sidebar-desktop

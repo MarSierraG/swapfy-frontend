@@ -17,5 +17,7 @@ export class ItemListComponent {
   @Input() showOwner: boolean = false;
   @Input() isLoading: boolean = true;
   @Input() onReload?: () => void;
+  @Input() searchTerm: string = '';
+
 }
 

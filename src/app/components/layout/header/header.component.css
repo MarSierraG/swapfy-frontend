@@ -56,6 +56,7 @@
 
 
 /* Barra de búsqueda */
+/* Contenedor del buscador */
 .search-wrapper {
   position: absolute;
   left: 50%;
@@ -68,31 +69,69 @@
   border-radius: 20px;
   padding: 4px 10px;
   width: 28%;
-  min-width: 200px;
+  min-width: 250px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   z-index: 100;
+  gap: 8px;
 }
 
-
+/* Icono de la lupa */
 .search-wrapper i {
   font-size: 1rem;
   color: #666;
-  margin-right: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
 }
 
-
+/* Input de texto */
 .search-bar {
   border: none;
   outline: none;
   width: 100%;
-  flex: 1;
   font-size: 0.9rem;
+  background-color: transparent;
 }
 
+/* Select del filtro */
+.search-select {
+  border: none;
+  background-color: transparent;
+  font-size: 0.85rem;
+  color: #333;
+  outline: none;
+  padding-left: 6px;
+  padding-right: 6px;
+  cursor: pointer;
+  appearance: none;
+}
+
+
+/* Contenedor del select + ícono */
+.filter-group {
+  display: flex;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 4px 8px;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+/* Icono del embudo */
+.filter-group i {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Select estilizado */
+.search-select {
+  border: none;
+  background-color: transparent;
+  font-size: 0.85rem;
+  color: #333;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+}
 
 
 

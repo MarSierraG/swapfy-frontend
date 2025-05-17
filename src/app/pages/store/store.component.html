@@ -1,4 +1,6 @@
-<app-navbar-wrapper></app-navbar-wrapper>
+<app-navbar-wrapper
+  (searchTermEmitter)="onSearchChanged($event)"
+></app-navbar-wrapper>
 
 <div class="page-wrapper main-content">
   <h2>Mis artículos</h2>
@@ -14,8 +16,9 @@
   </button>
 
   <app-item-list
-    [items]="items"
+    [items]="filteredItems"
     [isLoading]="isLoading"
     [showOwner]="true"
+    [searchTerm]="searchTerm"
   ></app-item-list>
 </div>

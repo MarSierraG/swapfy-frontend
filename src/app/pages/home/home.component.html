@@ -1,4 +1,6 @@
-<app-navbar-wrapper></app-navbar-wrapper>
+<app-navbar-wrapper
+  (searchTermEmitter)="onSearchChanged($event)"
+></app-navbar-wrapper>
 
 <div class="page-wrapper main-content">
   <div class="welcome-header d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
@@ -14,9 +16,10 @@
   <h3>Artículos disponibles</h3>
 
   <app-item-list
-    [items]="items"
+    [items]="filteredItems"
     [isLoading]="isLoading"
     [showOwner]="false"
+    [searchTerm]="searchTerm"
     [onReload]="loadItems"
   ></app-item-list>
 </div>

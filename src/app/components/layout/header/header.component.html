@@ -8,14 +8,34 @@
     <span class="brand-title">Ｓｗａｐｆｙ</span>
   </div>
 
-  <!-- Barra de búsqueda -->
+  <!-- Buscador completo -->
   <div *ngIf="isSearchVisible" class="search-wrapper">
     <i class="bi bi-search"></i>
+
     <input
       type="text"
       placeholder="Buscar artículos..."
       class="search-bar"
-      style="background-color: white"
+      [(ngModel)]="searchQuery"
+      (ngModelChange)="onSearchChange()"
     />
+
+    <!-- Selector de campo con icono -->
+    <div class="filter-group">
+      <i class="bi bi-funnel-fill"></i>
+      <select
+        [(ngModel)]="selectedField"
+        (change)="onSearchChange()"
+        class="search-select"
+      >
+        <option value="title">Título</option>
+        <option value="description">Descripción</option>
+
+        <!-- Ocultar esta opción si estamos en /store -->
+        <option *ngIf="router.url !== '/store'" value="userName">Usuario</option>
+
+        <option value="tagNames">Etiqueta</option>
+      </select>
+    </div>
   </div>
 </div>

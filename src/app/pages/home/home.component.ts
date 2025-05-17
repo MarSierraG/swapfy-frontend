@@ -20,6 +20,11 @@ export class HomeComponent implements OnInit {
   userName = '';
   items: Item[] = [];
   isLoading = true;
+  searchTerm: string = '';
+  filteredItems: Item[] = [];
+  searchField: string = 'title';
+
+
 
   constructor(private itemService: ItemService, private auth: AuthService) {}
 
@@ -32,6 +37,7 @@ export class HomeComponent implements OnInit {
       next: (data) => {
         this.items = myId ? data.filter((i) => i.userId !== myId) : data;
         this.isLoading = false;
+        this.applyFilter();
       },
       error: (err) => {
         console.error('Error al cargar artículos:', err);
@@ -52,6 +58,7 @@ export class HomeComponent implements OnInit {
       next: (data) => {
         this.items = myId ? data.filter((i) => i.userId !== myId) : data;
         this.isLoading = false;
+        this.applyFilter();
       },
       error: (err) => {
         if (err.status !== 401) {
@@ -62,5 +69,35 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  applyFilter(): void {
+    const term = this.searchTerm.toLowerCase().trim();
+    if (!term) {
+      this.filteredItems = this.items;
+      return;
+    }
+
+    this.filteredItems = this.items.filter(item => {
+      const field = this.searchField;
+
+      if (field === 'title') {
+        return item.title.toLowerCase().includes(term);
+      } else if (field === 'description') {
+        return item.description.toLowerCase().includes(term);
+      } else if (field === 'userName') {
+        return item.userName.toLowerCase().includes(term);
+      } else if (field === 'tagNames') {
+        return item.tagNames.some(tag => tag.toLowerCase().includes(term));
+      }
+
+      return false;
+    });
+  }
+
+
+  onSearchChanged({ term, field }: { term: string; field: string }): void {
+    this.searchTerm = term;
+    this.searchField = field;
+    this.applyFilter();
+  }
 
 }

@@ -1,9 +1,9 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
+import { Component, HostListener, OnInit, Output, EventEmitter } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import {SidebarDesktopComponent} from '../sidebar-desktop/sidebar-desktop.component';
-import {HeaderComponent} from '../header/header.component';
-import {SidebarMovilComponent} from '../sidebar-movil/sidebar-movil.component';
+import { SidebarDesktopComponent } from '../sidebar-desktop/sidebar-desktop.component';
+import { HeaderComponent } from '../header/header.component';
+import { SidebarMovilComponent } from '../sidebar-movil/sidebar-movil.component';
 
 @Component({
   selector: 'app-navbar-wrapper',
@@ -20,19 +20,21 @@ export class NavbarWrapperComponent implements OnInit {
   hideHeader = false;
   isSearchVisible = false;
   topbarHidden = false;
+  searchTerm: string = '';
+
+  @Output() searchTermEmitter = new EventEmitter<{ term: string; field: string }>();
 
   private lastScrollTop = 0;
+  searchField: string = 'title';
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // Detectar navegación y cambiar visibilidad de la barra
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         const path = this.getCleanPath(event.urlAfterRedirects);
         this.isSearchVisible = path === 'home' || path === 'store';
-
       });
 
     // Comprobar ruta actual al cargar
@@ -43,10 +45,14 @@ export class NavbarWrapperComponent implements OnInit {
   }
 
   private getCleanPath(url: string): string {
-    //  Elimina query params y fragmentos (#), y el slash inicial
     return url.split('?')[0].split('#')[0].replace(/^\//, '');
   }
 
+  onSearchTermChange({ term, field }: { term: string; field: string }): void {
+    this.searchTerm = term;
+    this.searchField = field;
+    this.searchTermEmitter.emit({ term, field });
+  }
 
   @HostListener('window:scroll', [])
   handleScroll(): void {
