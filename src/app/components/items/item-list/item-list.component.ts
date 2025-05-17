@@ -16,6 +16,6 @@ export class ItemListComponent {
   @Input() items: Item[] = [];
   @Input() showOwner: boolean = false;
   @Input() isLoading: boolean = true;
-
+  @Input() onReload?: () => void;
 }
 
