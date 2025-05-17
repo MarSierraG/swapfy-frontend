@@ -88,5 +88,30 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/reset-password`, data);
   }
 
+  currentUserRole(): string {
+    const token = localStorage.getItem('token');
+    if (!token) return '';
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.roles[0]; // O devuelve un array si prefieres
+    } catch (e) {
+      return '';
+    }
+  }
+
+  getUserRoles(): string[] {
+    const raw = localStorage.getItem(this.ROLES_KEY);
+    if (!raw || raw === 'undefined') return [];
+
+    try {
+      return JSON.parse(raw) as string[];
+    } catch (err) {
+      console.error('Error al parsear roles:', err);
+      return [];
+    }
+  }
+
+
 
 }
