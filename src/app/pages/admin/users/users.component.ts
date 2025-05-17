@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { UserService, User } from '../../../services/user/user.service';
 import Swal from 'sweetalert2';
 import {LoaderComponent} from '../../../components/shared/loader/loader.component';
+import {NavbarWrapperComponent} from '../../../components/layout/navbar-wrapper/navbar-wrapper.component';
 
 
 @Component({
@@ -11,7 +12,7 @@ import {LoaderComponent} from '../../../components/shared/loader/loader.componen
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
-  imports: [CommonModule, FormsModule, LoaderComponent],
+  imports: [CommonModule, FormsModule, LoaderComponent, NavbarWrapperComponent],
 })
 export class UsersComponent implements OnInit {
   users: User[] = [];

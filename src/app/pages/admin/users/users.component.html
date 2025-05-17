@@ -1,90 +1,93 @@
-<div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h3 class="fw-bold">
-      <i class="bi bi-people-fill me-2"></i> Gestión de Usuarios
-    </h3>
-  </div>
-
-  <!-- Filtro de búsqueda -->
-  <div class="row g-2 mb-3">
-    <div class="col-md-3">
-      <select class="form-select" [(ngModel)]="selectedFilter">
-        <option value="id">ID</option>
-        <option value="name">Nombre</option>
-        <option value="email">Email</option>
-        <option value="location">Localización</option>
-        <option value="role">Rol</option>
-      </select>
+<app-navbar-wrapper></app-navbar-wrapper>
+<div class="page-wrapper main-content">
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="fw-bold">
+        <i class="bi bi-people-fill me-2"></i> Gestión de Usuarios
+      </h3>
     </div>
-    <div class="col-md-9">
-      <div class="input-group">
-        <span class="input-group-text"><i class="bi bi-search"></i></span>
-        <input
-          class="form-control"
-          type="text"
-          placeholder="Buscar usuario..."
-          [(ngModel)]="searchValue"
-        />
+
+    <!-- Filtro de búsqueda -->
+    <div class="row g-2 mb-3">
+      <div class="col-md-3">
+        <select class="form-select" [(ngModel)]="selectedFilter">
+          <option value="id">ID</option>
+          <option value="name">Nombre</option>
+          <option value="email">Email</option>
+          <option value="location">Localización</option>
+          <option value="role">Rol</option>
+        </select>
+      </div>
+      <div class="col-md-9">
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Buscar usuario..."
+            [(ngModel)]="searchValue"
+          />
+        </div>
       </div>
     </div>
-  </div>
 
-  <p class="text-muted">Aquí podrás ver, editar o eliminar usuarios registrados en la plataforma.</p>
+    <p class="text-muted">Aquí podrás ver, editar o eliminar usuarios registrados en la plataforma.</p>
 
-  <!-- Spinner -->
-  <div *ngIf="isLoading" class="text-center my-5">
-    <app-loader></app-loader>
-  </div>
+    <!-- Spinner -->
+    <div *ngIf="isLoading" class="text-center my-5">
+      <app-loader></app-loader>
+    </div>
 
-  <!-- Mensaje si no hay usuarios -->
-  <div *ngIf="!isLoading && users.length === 0" class="text-center my-5">
-    <p class="text-muted">🪧 No hay usuarios registrados en la plataforma.</p>
-  </div>
+    <!-- Mensaje si no hay usuarios -->
+    <div *ngIf="!isLoading && users.length === 0" class="text-center my-5">
+      <p class="text-muted">🪧 No hay usuarios registrados en la plataforma.</p>
+    </div>
 
-  <!-- Tabla usuarios -->
-  <div class="table-responsive" *ngIf="!isLoading && filteredUsers.length > 0">
-    <table class="table table-striped align-middle shadow-sm rounded">
-      <thead>
-      <tr class="custom-table-header">
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Email</th>
-        <th>Localización</th>
-        <th>Créditos</th>
-        <th>Rol</th>
-        <th>Acciones</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let user of filteredUsers.slice(0, visibleCount)">
-        <td>{{ user.userId }}</td>
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.location || '-' }}</td>
-        <td>{{ user.credits }}</td>
-        <td>
-          <span class="badge text-bg-secondary text-uppercase">{{ user.roles[0] || '—' }}</span>
-        </td>
-        <td class="d-flex flex-wrap gap-1">
-          <button class="btn btn-sm btn-outline-info" (click)="showBiography(user)" title="Ver biografía">
-            <i class="bi bi-person-lines-fill"></i>
-          </button>
-          <button class="btn btn-sm btn-outline-primary" (click)="openEditModal(user)" title="Editar usuario">
-            <i class="bi bi-pencil-square"></i>
-          </button>
-          <button class="btn btn-sm btn-outline-danger" (click)="deleteUser(user)" title="Eliminar usuario">
-            <i class="bi bi-trash3"></i>
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <!-- Tabla usuarios -->
+    <div class="table-responsive" *ngIf="!isLoading && filteredUsers.length > 0">
+      <table class="table table-striped align-middle shadow-sm rounded">
+        <thead>
+        <tr class="custom-table-header">
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Localización</th>
+          <th>Créditos</th>
+          <th>Rol</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of filteredUsers.slice(0, visibleCount)">
+          <td>{{ user.userId }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.location || '-' }}</td>
+          <td>{{ user.credits }}</td>
+          <td>
+            <span class="badge text-bg-secondary text-uppercase">{{ user.roles[0] || '—' }}</span>
+          </td>
+          <td class="d-flex flex-wrap gap-1">
+            <button class="btn btn-sm btn-outline-info" (click)="showBiography(user)" title="Ver biografía">
+              <i class="bi bi-person-lines-fill"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-primary" (click)="openEditModal(user)" title="Editar usuario">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger" (click)="deleteUser(user)" title="Eliminar usuario">
+              <i class="bi bi-trash3"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
 
-    <!-- Mostrar más -->
-    <div class="text-center mt-3" *ngIf="visibleCount < filteredUsers.length">
-      <button class="btn btn-outline-secondary" (click)="showMoreUsers()">
-        <i class="bi bi-chevron-down me-1"></i> Mostrar más
-      </button>
+      <!-- Mostrar más -->
+      <div class="text-center mt-3" *ngIf="visibleCount < filteredUsers.length">
+        <button class="btn btn-outline-secondary" (click)="showMoreUsers()">
+          <i class="bi bi-chevron-down me-1"></i> Mostrar más
+        </button>
+      </div>
     </div>
   </div>
 </div>
