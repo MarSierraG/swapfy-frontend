@@ -1,8 +1,5 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
-
-/* Páginas standalone que ya tienes; basta con importar la clase */
-import { LandingComponent }   from './pages/landing/landing.component';
 import { HomeComponent }      from './pages/home/home.component';
 import { StoreComponent }     from './pages/store/store.component';
 import { DummyComponent }     from './pages/dummy/dummy.component';
@@ -10,8 +7,6 @@ import { CreateItemComponent } from './pages/create-item/create-item.component';
 import { AuthPageComponent } from './pages/auth/auth-page.component';
 import {ForgotPasswordComponent} from './pages/auth/forgot-password/forgot-password.component';
 import {ResetPasswordComponent} from './pages/auth/reset-password/reset-password.component';
-import { AdminComponent } from './pages/admin/admin.component';
-
 
 export const routes: Routes = [
 /* Rutas públicas */
@@ -22,7 +17,7 @@ export const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
 
 
-  { path: '',          component: LandingComponent,  pathMatch: 'full' },
+  { path: '', redirectTo: '/auth', pathMatch: 'full' },
 
   /* Rutas privadas */
   { path: 'home',           component: HomeComponent,        canActivate: [authGuard] },
@@ -47,11 +42,12 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
 
+  {
+    path: 'articulo/:id',
+    loadComponent: () =>
+      import('./pages/item-detail/item-detail.component').then(m => m.ItemDetailComponent)
+  },
 
 
-
-
-
-  /* ---------- catch‑all ---------- */
-  { path: '**', redirectTo: '' }   // redirige a landing si la ruta no existe
+  { path: '**', redirectTo: '' }
 ];
