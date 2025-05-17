@@ -1,0 +1,186 @@
+/* ===== Estilos base: MÓVIL ===== */
+.mobile-product-page {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 155, 165, 0.45) 0%,
+    rgba(0, 155, 165, 0.25) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+/* Contenedor imagen */
+.image-container {
+  width: 100%;
+  padding: 2rem 2rem 0;
+  margin-top: 4rem;
+  text-align: center;
+}
+
+/* Imagen principal */
+.main-image {
+  width: 100%;
+  max-width: 400px;
+  max-height: 500px;
+  object-fit: contain;
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1rem;
+}
+
+/* Fallback */
+.fallback-image {
+  width: 85%;
+  max-width: 400px;
+  height: 300px;
+  border: 2px dashed darkcyan;
+  border-radius: 1rem;
+  font-size: 1.1rem;
+  padding: 1.5rem;
+  margin: 0 auto 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #6c757d;
+}
+
+/* Formulario */
+.info-wrapper {
+  padding: 1.5rem 4rem 5rem;
+  width: 100%;
+  max-width: 700px;
+}
+
+/* Inputs modernos */
+.form-control,
+.form-select {
+  border-radius: 1rem;
+  border: 1px solid #cde6ea;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 123, 133, 0.05);
+  transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #009ba5;
+  box-shadow: 0 0 0 2px rgba(0, 155, 165, 0.2);
+  outline: none;
+}
+
+textarea.form-control {
+  resize: none;
+  min-height: 100px;
+}
+
+input[type="number"].form-control {
+  text-align: center;
+}
+
+/* Etiquetas */
+.form-label {
+  font-weight: 600;
+  color: #005a66;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.form-label i {
+  font-size: 1.2rem;
+  color: #007b8a;
+}
+
+/* Botones y márgenes */
+.mb-3,
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+/* Input de imagen moderno */
+.upload-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* Botón personalizado */
+.upload-label {
+  background-color: #e9f8f9;
+  border: 1px solid #cde6ea;
+  padding: 0.5rem 1.25rem;
+  border-radius: 2rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #007b8a;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.upload-label:hover {
+  background-color: #d5eff0;
+}
+
+/* Ocultar input nativo */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+
+
+/* Desktop */
+@media (min-width: 992px) {
+  .mobile-product-page {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0 10vw;
+    gap: 4rem;
+    background: linear-gradient(
+      to right,
+      rgba(0, 155, 165, 0.25) 0%,
+      rgba(0, 155, 165, 0.15) 35%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+
+  .image-container {
+    width: 50%;
+    max-width: 600px;
+    padding: 0;
+  }
+
+  .info-wrapper {
+    width: 50%;
+    max-width: 700px;
+    padding: 0 3rem 3rem;
+  }
+}
+
+.input-credito {
+  max-width: 150px;
+}
+
+.mb-5 {
+  margin-bottom: 5rem !important;
+}

@@ -1,0 +1,296 @@
+/* ===== Estilos base: MÓVIL ===== */
+.mobile-product-page {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 155, 165, 0.45) 0%,
+    rgba(0, 155, 165, 0.25) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+
+
+
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.image-wrapper {
+  height: 50vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.main-image {
+  width: 85%;
+  max-width: 400px;
+  height: auto;
+  object-fit: contain;
+}
+
+.fallback-image {
+  width: 85%;
+  max-width: 400px;
+  height: 100%;
+  border: 2px dashed #ccc;
+  border-radius: 1rem;
+  font-size: 1.1rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.info-wrapper {
+  text-align: center;
+  padding: 1.5rem 3rem 3rem;
+  width: 100%;
+}
+
+.product-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.product-subtitle {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 1rem;
+}
+
+.product-price {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0d6efd;
+  margin-bottom: 2rem;
+}
+
+.product-details {
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+  padding: 0 1rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #333;
+}
+
+.detail-item .label {
+  font-weight: 600;
+}
+
+.tags-wrapper {
+  padding: 0 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.action-buttons {
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+/* ===== Estilos DESKTOP ===== */
+@media (min-width: 992px) {
+  .mobile-product-page {
+    flex-direction: row; /* Imagen a la izquierda */
+    justify-content: center;
+    align-items: center;
+    padding: 6rem 10vw;
+    gap: 6rem;
+    background: linear-gradient(
+      to right,
+      rgba(0, 155, 165, 0.25) 0%,
+      rgba(0, 155, 165, 0.15) 35%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+
+  .image-wrapper {
+    width: 50%;
+    max-width: 600px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+
+  .main-image,
+  .fallback-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .fallback-image {
+    padding: 2rem;
+    border-radius: 1.25rem;
+    font-size: 1.3rem;
+    border: 2px dashed #007b8a;
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .info-wrapper {
+    width: 50%;
+    max-width: 700px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .product-title {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .product-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: #6c757d;
+  }
+
+  .product-price {
+    font-size: 2.3rem;
+    font-weight: bold;
+    color: #0078b5;
+    margin-bottom: 2.5rem;
+  }
+
+  .product-details {
+    font-size: 1.1rem;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    padding: 0;
+  }
+
+  .detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #333;
+  }
+
+  .tags-wrapper {
+    margin-bottom: 2rem;
+    padding: 0;
+    text-align: left;
+  }
+
+  .tags-wrapper .badge {
+    font-size: 0.85rem;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    color: #333;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+
+  .action-buttons {
+    max-width: 100%;
+    display: flex;
+    gap: 1.2rem;
+    padding: 0;
+    margin-top: 1rem;
+  }
+
+  .action-buttons button {
+    font-size: 1rem;
+    padding: 0.75rem 1.8rem;
+    min-width: 160px;
+    border-radius: 999px;
+  }
+}
+
+.editable-active input,
+.editable-active textarea {
+  border: 1px solid #0078b5;
+  box-shadow: 0 0 4px rgba(0, 120, 181, 0.3);
+}
+
+
+.editable-active {
+  transition: all 0.3s ease;
+}
+
+.editable-active:focus {
+  border-color: #009ba5;
+  box-shadow: 0 0 0 0.2rem rgba(0, 155, 165, 0.2);
+}
+
+/* Etiquetas modernas */
+.form-label {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #005a66;
+  letter-spacing: 0.3px;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Íconos junto al label */
+.form-label i {
+  font-size: 1.2rem;
+  color: #007b8a;
+}
+
+/* === Inputs y Selects modernos === */
+.form-control,
+.form-select {
+  border-radius: 0.75rem;
+  border: 1px solid #cde6ea;
+  box-shadow: 0 1px 3px rgba(0, 123, 133, 0.1);
+  padding: 0.65rem 1rem;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #007b8a;
+  box-shadow: 0 0 0 3px rgba(0, 123, 133, 0.2);
+  outline: none;
+}
+
+textarea.form-control {
+  resize: none;
+  min-height: 100px;
+}
+
+input[type="number"].form-control {
+  text-align: center;
+}
+
+/* Aumentar espacio entre grupo de campos */
+.mb-3,
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.6); /* opcional, para efecto de fondo difuminado */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

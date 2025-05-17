@@ -1,0 +1,83 @@
+<!-- SPINNER CENTRADO OVERLAY -->
+<div class="spinner-overlay" *ngIf="isLoading">
+  <app-loader></app-loader>
+</div>
+
+
+<app-navbar-wrapper></app-navbar-wrapper>
+
+<!-- MODO VISUAL -->
+<div *ngIf="item && !modoEdicion" class="mobile-product-page">
+  <!-- Imagen -->
+  <div class="image-wrapper">
+    <img *ngIf="item.imageUrl; else fallback" [src]="item.imageUrl" [alt]="item.title" class="main-image" />
+    <ng-template #fallback>
+      <div class="fallback-image d-flex align-items-center justify-content-center text-muted">
+        <i class="bi bi-image fs-1 me-2"></i>
+        <span>Sin imagen</span>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Información -->
+  <div class="info-wrapper">
+    <h2 class="product-title">{{ item.title }}</h2>
+    <p class="product-subtitle">{{ item.description }}</p>
+    <div class="product-price">
+      <i class="bi bi-cash-coin me-2"></i>{{ item.creditValue }} créditos
+    </div>
+
+    <div class="product-details mb-4 mt-3">
+      <div class="detail-item">
+        <i class="bi bi-arrow-left-right me-2 text-secondary"></i>
+        <span class="label">Tipo:</span> {{ item.type }}
+      </div>
+      <div class="detail-item">
+        <i class="bi bi-check2-circle me-2 text-success"></i>
+        <span class="label">Estado:</span> {{ item.status }}
+      </div>
+      <div class="detail-item">
+        <i class="bi bi-person-fill me-2 text-secondary"></i>
+        <span class="label">Publicado por:</span> {{ item.userName }}
+      </div>
+    </div>
+
+    <!-- Etiquetas -->
+    <div *ngIf="item.tagNames?.length" class="tags-wrapper">
+      <p class="text-secondary mb-2">Etiquetas:</p>
+      <div class="d-flex flex-wrap gap-2">
+        <span *ngFor="let tag of item.tagNames" class="badge bg-light border text-dark rounded-pill px-3 py-2">
+          {{ tag }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div *ngIf="isOwnerOrAdmin" class="action-buttons mt-4">
+      <button class="btn btn-dark w-100 rounded-pill py-2 mb-2" (click)="activarEdicion()">
+        <i class="bi bi-pencil me-1"></i> Editar
+      </button>
+      <button class="btn btn-outline-danger w-100 rounded-pill py-2" (click)="eliminar()">
+        <i class="bi bi-trash me-1"></i> Eliminar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MODO EDICIÓN -->
+
+<app-item-form
+  *ngIf="modoEdicion && item"
+  [modo]="'editar'"
+  [item]="item"
+  [tagsDisponibles]="tagsDisponibles"
+  [isLoading]="isLoading"
+  (guardar)="guardarCambios($event)"
+  (imagenSeleccionada)="selectedFile = $event"
+  (cancelar)="cancelarEdicion()">
+</app-item-form>
+
+
+
+
+
