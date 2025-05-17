@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, inject } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { importProvidersFrom } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -7,7 +7,9 @@ import { routes } from './app.routes';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
+let tokenAlreadyHandled = false;
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,7 +21,9 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([
         (req, next) => {
           const token = localStorage.getItem('token');
+          const router = inject(Router);
 
+          // Excluir peticiones externas (ej: Cloudinary)
           if (req.url.includes('cloudinary.com')) {
             return next(req);
           }
@@ -30,10 +34,10 @@ export const appConfig: ApplicationConfig = {
 
           return next(modifiedReq).pipe(
             catchError((error) => {
-              if (error.status === 401) {
+              if (error.status === 401 && !tokenAlreadyHandled) {
+                tokenAlreadyHandled = true;
                 localStorage.clear();
 
-                // Mostrar alerta elegante con SweetAlert2
                 import('sweetalert2').then(Swal => {
                   Swal.default.fire({
                     icon: 'warning',
@@ -45,10 +49,10 @@ export const appConfig: ApplicationConfig = {
                     },
                     buttonsStyling: false
                   }).then(() => {
-                    window.location.href = '/login';
+                    tokenAlreadyHandled = false;
+                    router.navigate(['/login']);
                   });
                 });
-
               }
 
               return throwError(() => error);
@@ -56,8 +60,6 @@ export const appConfig: ApplicationConfig = {
           );
         }
       ])
-
     )
   ]
 };
-
