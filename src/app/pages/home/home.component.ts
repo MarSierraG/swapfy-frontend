@@ -44,4 +44,23 @@ export class HomeComponent implements OnInit {
     this.auth.logout();
   }
 
+  loadItems(): void {
+    this.isLoading = true;
+    const myId = this.auth.currentUserId();
+
+    this.itemService.getAvailableItems().subscribe({
+      next: (data) => {
+        this.items = myId ? data.filter((i) => i.userId !== myId) : data;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        if (err.status !== 401) {
+          console.error('Error al recargar artículos:', err);
+          this.isLoading = false;
+        }
+      }
+    });
+  }
+
+
 }

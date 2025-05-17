@@ -1,105 +1,22 @@
-<div class="form-wrapper">
-<div class="form-title">
-  <i class="fa-solid fa-box-open"></i>
-  <h2>Crear nuevo artículo</h2>
+<!-- Spinner -->
+<div class="spinner-overlay" *ngIf="isLoading">
+  <app-loader></app-loader>
 </div>
 
 
-<form (ngSubmit)="crearItem()" #form="ngForm" novalidate>
+<app-navbar-wrapper></app-navbar-wrapper>
 
-  <!-- TÍTULO -->
-  <div class="input-icon">
-    <i class="fa-solid fa-heading"></i>
-    <input type="text" [(ngModel)]="item.title" name="title" placeholder="Título" required #title="ngModel" />
+<div class="mobile-product-page">
+  <!-- Formulario -->
+  <div class="info-wrapper">
+    <app-item-form
+      [modo]="'crear'"
+      [tagsDisponibles]="tagsDisponibles"
+      [isLoading]="isLoading"
+      (guardar)="crearItem($event)"
+      (imagenSeleccionada)="onImagenSeleccionada($event)">
+    </app-item-form>
+
+    <p *ngIf="mensaje" class="text-success text-center mt-3">{{ mensaje }}</p>
   </div>
-  <div *ngIf="title.invalid && title.touched" class="error-msg">Título requerido</div>
-
-  <!-- DESCRIPCIÓN -->
-  <div class="input-icon">
-    <i class="fa-solid fa-align-left"></i>
-    <input type="text" [(ngModel)]="item.description" name="description" placeholder="Descripción"
-           required #description="ngModel" />
-  </div>
-  <div *ngIf="description.invalid && description.touched" class="error-msg">
-    La descripción es obligatoria.
-  </div>
-
-  <!-- CRÉDITOS -->
-  <div class="input-icon">
-    <i class="fa-solid fa-coins"></i>
-    <input type="number" [(ngModel)]="item.creditValue" name="creditValue" placeholder="Créditos"
-           required min="1" #creditValue="ngModel" />
-  </div>
-  <div *ngIf="creditValue.invalid && creditValue.touched" class="error-msg">
-    Introduce un número mayor que 0.
-  </div>
-
-  <!-- TIPO Y ESTADO -->
-  <div class="dual-select">
-    <div>
-      <label><i class="fa-solid fa-tags"></i> Tipo:</label>
-      <select [(ngModel)]="item.type" name="type">
-        <option value="offer">Oferta</option>
-        <option value="demand">Demanda</option>
-      </select>
-    </div>
-    <div>
-      <label><i class="fa-solid fa-toggle-on"></i> Estado:</label>
-      <select [(ngModel)]="item.status" name="status">
-        <option value="Available">Disponible</option>
-        <option value="Unavailable">No disponible</option>
-      </select>
-    </div>
-  </div>
-
-
-  <!-- IMAGEN -->
-  <div class="custom-file-upload">
-    <label for="fileInput" class="upload-btn">
-      <i class="fa-solid fa-cloud-arrow-up"></i> Subir imagen
-    </label>
-    <input
-      id="fileInput"
-      name="fileInput"
-      type="file"
-      (change)="onFileSelected($event)"
-      accept="image/*"
-    />
-
-    <span *ngIf="selectedFileName" class="file-name">
-    {{ selectedFileName }}
-  </span>
-  </div>
-
-
-
-  <img *ngIf="item.imageUrl" [src]="item.imageUrl" class="preview-img" />
-  <div *ngIf="form.submitted && !item.imageUrl" class="error-msg">
-    Debes subir una imagen para este artículo.
-  </div>
-
-
-
-
-  <!-- ETIQUETAS -->
-  <label><i class="fa-solid fa-hashtag"></i> Selecciona etiquetas:</label>
-  <div class="etiqueta-checkboxes">
-    <label *ngFor="let tag of tagsDisponibles">
-      <input type="checkbox" [value]="tag.tagId" (change)="toggleTag(tag.tagId, $event)" />
-      {{ tag.name }}
-    </label>
-  </div>
-  <div *ngIf="form.submitted && item.tags.length === 0" class="error-msg">
-    Debes seleccionar al menos una etiqueta.
-  </div>
-
-  <!-- BOTÓN -->
-  <div class="boton-crear-container">
-    <button class="boton-crear" type="submit" [disabled]="form.invalid">
-      <i class="fa-solid fa-circle-check"></i> Crear artículo
-    </button>
-    <p *ngIf="mensaje" class="mensaje-ok">{{ mensaje }}</p>
-  </div>
-
-</form>
 </div>

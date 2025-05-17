@@ -1,43 +1,47 @@
-<div class="card item-card h-100">
-  <!-- Imagen o Placeholder -->
-  <div class="item-image">
-    <ng-container *ngIf="item.imageUrl; else placeholder">
-      <img [src]="item.imageUrl"
-           alt="Imagen del artículo"
-           class="img-fluid w-100 h-100 object-fit-cover" />
-    </ng-container>
+<a
+  [routerLink]="['/articulo', item.itemId]"
+  class="text-decoration-none text-reset d-block h-100"
+  style="cursor: pointer;"
+>
+  <div class="card item-card h-100">
+    <!-- Imagen o Placeholder -->
+    <div class="item-image">
+      <ng-container *ngIf="item.imageUrl; else placeholder">
+        <img [src]="item.imageUrl"
+             alt="Imagen del artículo"
+             class="img-fluid w-100 h-100 object-fit-cover" />
+      </ng-container>
+      <ng-template #placeholder>
+        <div class="placeholder d-flex justify-content-center align-items-center h-100 w-100">
+          <i class="fas fa-box-open fa-3x text-muted"></i>
+        </div>
+      </ng-template>
+    </div>
 
-    <ng-template #placeholder>
-      <div class="placeholder d-flex justify-content-center align-items-center h-100 w-100">
-        <i class="fas fa-box-open fa-3x text-muted"></i>
+    <!-- Información -->
+    <div class="card-body item-info">
+      <h5 class="item-title">{{ item.title }}</h5>
+      <p class="item-description">{{ item.description }}</p>
+
+      <div class="item-detail">
+        <span><i class="fas fa-coins"></i> {{ item.creditValue }} créditos</span>
+        <span><i class="fas fa-exchange-alt"></i> {{ item.type | titlecase }}</span>
       </div>
-    </ng-template>
-  </div>
 
-  <!-- Información -->
-  <div class="card-body item-info">
-    <h5 class="item-title">{{ item.title }}</h5>
-    <p class="item-description">{{ item.description }}</p>
+      <div *ngIf="showOwner" class="item-detail">
+        <i class="fas fa-user-circle"></i> <span class="text-muted">Publicado por</span> {{ item.userName }}
+      </div>
 
-    <div class="item-detail">
-      <span><i class="fas fa-coins"></i> {{ item.creditValue }} créditos</span>
-      <span><i class="fas fa-exchange-alt"></i> {{ item.type | titlecase }}</span>
-    </div>
+      <div *ngIf="item.status" class="item-detail">
+        <i class="fas fa-check-circle"></i> <span class="text-muted">Estado</span> {{ item.status }}
+      </div>
 
-    <div *ngIf="showOwner" class="item-detail">
-      <i class="fas fa-user-circle"></i> <span class="text-muted">Publicado por</span> {{ item.userName }}
-    </div>
-
-    <div *ngIf="item.status" class="item-detail">
-      <i class="fas fa-check-circle"></i> <span class="text-muted">Estado</span> {{ item.status }}
-    </div>
-
-    <div class="item-tags mt-2">
-      <i class="fas fa-tags me-1"></i>
-      <span *ngFor="let tag of item.tagNames; let last = last">
-      <span class="badge bg-secondary me-1">{{ tag }}</span>
-    </span>
+      <div class="item-tags mt-2">
+        <i class="fas fa-tags me-1"></i>
+        <span *ngFor="let tag of item.tagNames">
+          <span class="badge bg-secondary me-1">{{ tag }}</span>
+        </span>
+      </div>
     </div>
   </div>
-
-</div>
+</a>
