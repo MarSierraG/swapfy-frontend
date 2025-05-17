@@ -1,3 +1,8 @@
+export interface Tag {
+  tagId: number;
+  name: string;
+}
+
 export interface Item {
   itemId: number;
   title: string;
@@ -9,5 +14,6 @@ export interface Item {
   userName: string;
   userId: number;
   tagNames: string[];
+  tags?: Tag[];
   imageUrl: string;
 }
