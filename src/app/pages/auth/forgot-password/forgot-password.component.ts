@@ -42,7 +42,7 @@ export class ForgotPasswordComponent {
           Swal.fire({
             icon: 'success',
             title: '¡Código enviado!',
-            text: response.message || 'Revisa tu correo electrónico',
+            text: 'Revisa la bandeja de entrada del correo asociado a tu cuenta',
             confirmButtonColor: '#14b8a6'
           }).then(() => {
             this.router.navigate(['/auth'], { queryParams: { mode: 'reset' } });

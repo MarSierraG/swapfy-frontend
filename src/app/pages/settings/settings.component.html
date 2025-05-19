@@ -1,0 +1,99 @@
+<app-navbar-wrapper></app-navbar-wrapper>
+
+<div class="configurator-user-page" *ngIf="user">
+  <!-- Imagen de perfil -->
+  <div class="image-container text-center">
+    <img src="/assets/profile/user-default.png" alt="Foto de perfil" class="main-image mb-3" />
+    <h2 class="user-title text-center">{{ user?.name }}</h2>
+    <p class="user-subtitle text-center text-muted">{{ user?.email }}</p>
+  </div>
+
+
+  <!-- Contenido -->
+  <div class="info-wrapper">
+    <div *ngIf="!isEditing; else editForm">
+
+
+      <div class="user-details mt-4">
+        <div class="detail-block">
+          <div class="detail-icon">
+            <i class="bi bi-geo-alt"></i>
+          </div>
+          <div class="detail-content">
+            <h4 class="detail-title">Ubicación</h4>
+            <p class="detail-text">{{ user?.location || 'No especificada' }}</p>
+          </div>
+        </div>
+
+        <div class="detail-block">
+          <div class="detail-icon">
+            <i class="bi bi-chat-left-text"></i>
+          </div>
+          <div class="detail-content">
+            <h4 class="detail-title">Biografía</h4>
+            <p class="detail-text">{{ user?.biography || 'Sin biografía aún' }}</p>
+          </div>
+        </div>
+
+        <div class="detail-block">
+          <div class="detail-icon">
+            <i class="bi bi-cash-coin"></i>
+          </div>
+          <div class="detail-content">
+            <h4 class="detail-title">Créditos</h4>
+            <p class="detail-text">{{ user?.credits }}</p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="action-buttons mt-4">
+        <button class="btn btn-swapfy" (click)="startEdit()">
+          <i class="bi bi-pencil-fill"></i> Editar perfil
+        </button>
+
+        <button class="btn btn-logout mt-3" (click)="logout()">
+          <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+        </button>
+
+        <button class="btn btn-delete-account mt-3" (click)="confirmDeleteAccount()">
+          <i class="bi bi-trash text-danger"></i> Eliminar cuenta
+        </button>
+
+      </div>
+    </div>
+
+    <ng-template #editForm>
+      <form (ngSubmit)="saveChanges()" #form="ngForm" novalidate>
+        <div class="mb-3">
+          <label class="form-label"><i class="bi bi-person-fill"></i> Nombre</label>
+          <input [(ngModel)]="user!.name" name="name" type="text" class="form-control editable-active" required />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label"><i class="bi bi-envelope"></i> Email</label>
+          <input [(ngModel)]="user!.email" name="email" type="email" class="form-control editable-active" required />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label"><i class="bi bi-geo-alt"></i> Ubicación</label>
+          <input [(ngModel)]="user!.location" name="location" type="text" class="form-control editable-active" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label"><i class="bi bi-chat-left-text"></i> Biografía</label>
+          <textarea [(ngModel)]="user!.biography" name="biography" class="form-control editable-active" rows="3"></textarea>
+        </div>
+
+        <div class="action-buttons mt-4">
+          <button class="btn btn-swapfy py-2 mb-2" type="submit">
+            <i class="bi bi-check-circle me-1"></i> Guardar cambios
+          </button>
+          <button class="btn-outline-swapfy" type="button" (click)="cancelEdit()">
+            <i class="bi bi-x-circle me-1"></i> Cancelar
+          </button>
+        </div>
+      </form>
+    </ng-template>
+  </div>
+</div>

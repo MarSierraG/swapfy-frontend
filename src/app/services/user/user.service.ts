@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
-
 export interface User {
   userId: number;
   name: string;
@@ -12,7 +11,6 @@ export interface User {
   biography: string;
   credits: number;
   roles: string[];
-
 }
 
 @Injectable({ providedIn: 'root' })
@@ -25,12 +23,15 @@ export class UserService {
     return this.http.get<User[]>(this.apiUrl);
   }
 
-  deleteUser(userId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${userId}`);
+  getUserById(userId: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${userId}`);
   }
 
   updateUser(userId: number, userData: Partial<User>): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}/${userId}`, userData);
   }
 
+  deleteUser(userId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${userId}`);
+  }
 }
