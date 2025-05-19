@@ -1,13 +1,11 @@
-/* ===== Estilos base: MÓVIL ===== */
-.mobile-product-page {
+/* Movil */
+.product-page {
   background: linear-gradient(
     to bottom,
     rgba(0, 155, 165, 0.45) 0%,
     rgba(0, 155, 165, 0.25) 50%,
     rgba(255, 255, 255, 0) 100%
   );
-
-
 
   padding: 0;
   margin: 0;
@@ -101,10 +99,12 @@
   margin: 0 auto;
   padding: 0 1.5rem;
 }
-/* ===== Estilos DESKTOP ===== */
+
+
+/* Desktop */
 @media (min-width: 992px) {
-  .mobile-product-page {
-    flex-direction: row; /* Imagen a la izquierda */
+  .product-page {
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 6rem 10vw;

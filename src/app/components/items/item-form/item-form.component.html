@@ -1,4 +1,4 @@
-<div class="mobile-product-page">
+<div class="product-page">
   <div class="image-container text-center">
     <!-- Si hay imagen nueva, mostrarla -->
     <ng-container *ngIf="nuevaImagenSeleccionada; else fallback">
@@ -117,7 +117,7 @@
       <!-- Botones -->
       <div class="d-grid mt-4">
         <button
-          class="btn rounded-pill py-2 text-white d-flex align-items-center justify-content-center gap-2 position-relative"
+          class="btn btn-swapfy"
           type="submit"
           [disabled]="isLoading"
           style="background-color: darkcyan; border: none; min-height: 48px;">
@@ -133,7 +133,7 @@
 
 
       <div *ngIf="modo === 'editar'" class="d-grid mt-2">
-        <button class="btn btn-outline-secondary rounded-pill py-2" type="button" (click)="onCancelar()">
+        <button class="btn btn-outline-swapfy" type="button" (click)="onCancelar()">
           <i class="bi bi-x-circle me-1"></i> Cancelar
         </button>
       </div>

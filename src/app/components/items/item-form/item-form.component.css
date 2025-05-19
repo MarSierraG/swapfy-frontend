@@ -1,5 +1,5 @@
 /* ===== Estilos base: MÓVIL ===== */
-.mobile-product-page {
+.product-page {
   background: linear-gradient(
     to bottom,
     rgba(0, 155, 165, 0.45) 0%,
@@ -149,12 +149,13 @@ input[type="number"].form-control {
 
 /* Desktop */
 @media (min-width: 992px) {
-  .mobile-product-page {
+  .product-page {
     flex-direction: row;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding: 0 10vw;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 6rem;
+
     gap: 4rem;
     background: linear-gradient(
       to right,

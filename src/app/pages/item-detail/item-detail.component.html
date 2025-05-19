@@ -7,7 +7,7 @@
 <app-navbar-wrapper></app-navbar-wrapper>
 
 <!-- MODO VISUAL -->
-<div *ngIf="item && !modoEdicion" class="mobile-product-page">
+<div *ngIf="item && !modoEdicion" class="product-page">
   <!-- Imagen -->
   <div class="image-wrapper">
     <img *ngIf="item.imageUrl; else fallback" [src]="item.imageUrl" [alt]="item.title" class="main-image" />
@@ -54,7 +54,7 @@
 
     <!-- Botones -->
     <div *ngIf="isOwnerOrAdmin" class="action-buttons mt-4">
-      <button class="btn btn-dark w-100 rounded-pill py-2 mb-2" (click)="activarEdicion()">
+      <button class="btn btn-swapfy" (click)="activarEdicion()">
         <i class="bi bi-pencil me-1"></i> Editar
       </button>
       <button class="btn btn-outline-danger w-100 rounded-pill py-2" (click)="eliminar()">
