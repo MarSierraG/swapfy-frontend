@@ -56,4 +56,15 @@
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
+@media (min-width: 900px) {
+  .show-900 {
+    display: flex !important;
+  }
+}
+@media (max-width: 899.98px) {
+  .show-900 {
+    display: none !important;
+  }
+}
+
 

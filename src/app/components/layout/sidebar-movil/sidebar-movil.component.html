@@ -1,6 +1,6 @@
 <!-- Botón menú móvil -->
 <button
-  class="menu-toggle d-md-none"
+  class="menu-toggle hide-900"
   [class.open]="menuOpen"
   [class.show-on-scroll]="showHeader"
   [class.hide-on-scroll]="hideHeader"
@@ -76,7 +76,7 @@
 
 <!-- Fondo oscuro -->
 <div
-  class="sidebar-overlay d-md-none"
+  class="sidebar-overlay hide-900"
   *ngIf="menuOpen"
   (click)="toggleMenu()">
 </div>

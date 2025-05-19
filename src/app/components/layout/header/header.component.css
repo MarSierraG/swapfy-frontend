@@ -48,11 +48,24 @@
   letter-spacing: 2px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 899.98px) {
   .brand-title {
     display: none;
   }
 }
+
+@media (min-width: 900px) {
+  .show-900 {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 899.98px) {
+  .show-900 {
+    display: none !important;
+  }
+}
+
 
 
 /* Barra de búsqueda */
@@ -69,7 +82,7 @@
   border-radius: 20px;
   padding: 4px 10px;
   width: 28%;
-  min-width: 250px;
+  min-width: 290px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   z-index: 100;
   gap: 8px;

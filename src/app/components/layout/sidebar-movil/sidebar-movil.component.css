@@ -1,10 +1,13 @@
-/* Escritorio */
-.sidebar {
-  display: none;
+/*Escritorio*/
+@media (min-width: 900px) {
+  .sidebar {
+    display: none;
+  }
 }
 
+
 /* Móvil: sidebar desde la derecha */
-@media (max-width: 768px) {
+@media (max-width: 899.98px) {
   .sidebar {
     display: flex;
     flex-direction: column;
@@ -168,4 +171,15 @@
 .sidebar ul li a .icon {
   margin-right: 10px;
   font-size: 18px;
+}
+
+@media (min-width: 900px) {
+  .hide-900 {
+    display: none !important;
+  }
+}
+@media (max-width: 899.98px) {
+  .hide-900 {
+    display: block !important;
+  }
 }

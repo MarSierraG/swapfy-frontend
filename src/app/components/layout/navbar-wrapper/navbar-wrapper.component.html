@@ -5,7 +5,7 @@
   (searchTerm)="onSearchTermChange($event)">
 </app-header>
 
-<app-sidebar-desktop
+<app-sidebar-desktop  class="show-900"
   [topbarHidden]="topbarHidden"
   [isSearchVisible]="isSearchVisible"
   [showHeader]="showHeader"
@@ -13,7 +13,7 @@
 ></app-sidebar-desktop>
 
 
-<app-sidebar-movil
+<app-sidebar-movil  class="hide-900"
   [showHeader]="showHeader"
   [hideHeader]="hideHeader">
 </app-sidebar-movil>
