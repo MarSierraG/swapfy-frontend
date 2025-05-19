@@ -1,18 +1,118 @@
+/* ======= TÍTULO ======= */
+.admin-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #003f66;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.admin-title .icon {
+  font-size: 1.8rem;
+  color: #007b8a;
+}
+
+
+/* ======= TABLA ======= */
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+.table th, .table td {
+  vertical-align: middle;
+  font-size: 0.95rem;
+  padding: 0.85rem 1rem;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f6f9fb;
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+  background-color: #ffffff;
+}
+
+
+/* ======= CABECERA TABLA ======= */
 .custom-table-header th {
-  background: linear-gradient(135deg, #009ba5, #003f66) !important;
+  background: linear-gradient(135deg, #009ba5, #003f66);
   color: white;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  border: none !important;
 }
 
-.table-responsive {
-  padding-bottom: 7%;
+
+/* ======= FILTROS ======= */
+.form-select, .form-control {
+  border-radius: 0.75rem;
+  border: 1px solid #cde6ea;
+  box-shadow: 0 1px 3px rgba(0, 123, 133, 0.05);
+  transition: all 0.3s ease;
 }
 
-.choices-wrapper {
-  max-height: 180px;
-  overflow-y: auto;
-  margin-top: 10px;
+.form-select:focus, .form-control:focus {
+  border-color: #009ba5;
+  box-shadow: 0 0 0 3px rgba(0, 155, 165, 0.15);
 }
 
-.choices {
-  margin-bottom: 10px;
+
+/* ======= BOTONES ACCIONES ======= */
+td .btn {
+  border-radius: 0.5rem !important;
+  padding: 0.35rem 0.55rem !important;
+  font-size: 0.85rem !important;
+}
+
+.btn-outline-info:hover {
+  background-color: #d4f3f7;
+  color: #007b8a;
+  border-color: #00c4cc;
+}
+
+.btn-outline-primary:hover {
+  background-color: #d6e8ff;
+  color: #004080;
+  border-color: #1976d2;
+}
+
+.btn-outline-danger:hover {
+  background-color: #ffe3e3;
+  color: #a1001c;
+  border-color: #dc3545;
+}
+
+
+/* ======= ETIQUETAS ======= */
+td .badge {
+  background-color: #6c757d;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  border-radius: 999px;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+
+/* ======= BOTÓN MOSTRAR MÁS ======= */
+.btn-outline-secondary {
+  border-radius: 999px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 500;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #e6e6e6;
+  color: #000;
 }

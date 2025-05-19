@@ -1,8 +1,64 @@
-.list-group-item a {
-  text-decoration: none;
-  color: inherit;
+.admin-dashboard-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #e9f8f9 0%, #ffffff 100%);
+  padding-top: 5rem;
 }
 
-.list-group-item:hover {
-  background-color: #f0f0f0;
+.admin-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.admin-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 2px solid #00b3b3;
+  padding-bottom: 1rem;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.admin-card {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  text-decoration: none;
+  color: #222;
+  border: 1px solid #e0e0e0;
+  position: relative;
+}
+
+.admin-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 140, 155, 0.1);
+  border-color: #00b3b3;
+}
+
+.admin-card .icon {
+  font-size: 2.5rem;
+  color: #00a2a2;
+  margin-bottom: 0.8rem;
+}
+
+.admin-card .label {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.admin-card .desc {
+  font-size: 0.95rem;
+  color: #666;
 }

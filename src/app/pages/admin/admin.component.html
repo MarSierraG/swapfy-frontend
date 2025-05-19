@@ -1,17 +1,29 @@
 <app-navbar-wrapper></app-navbar-wrapper>
-<div class="page-wrapper main-content">
-  <div class="container mt-5">
-    <h2 class="mb-4">🔧 Panel de Administración</h2>
-    <ul class="list-group">
-      <li class="list-group-item">
-        <a routerLink="/admin/users"><i class="bi bi-person-fill me-2"></i> Usuarios</a>
-      </li>
-      <li class="list-group-item">
-        <a routerLink="/admin/items"><i class="bi bi-box-seam me-2"></i> Artículos</a>
-      </li>
-      <li class="list-group-item">
-        <a routerLink="/admin/tags"><i class="bi bi-tags me-2"></i> Etiquetas</a>
-      </li>
-    </ul>
+
+<div class="admin-dashboard-wrapper">
+  <div class="admin-container">
+    <h2 class="admin-title">
+      <i class="bi bi-tools me-2"></i> Panel de Administración
+    </h2>
+
+    <div class="admin-grid">
+      <a routerLink="/admin/users" class="admin-card shadow-sm">
+        <i class="bi bi-people-fill icon"></i>
+        <h4 class="label">Usuarios</h4>
+        <p class="desc">Gestiona los usuarios registrados</p>
+      </a>
+
+      <a routerLink="/admin/items" class="admin-card shadow-sm">
+        <i class="bi bi-box-seam icon"></i>
+        <h4 class="label">Artículos</h4>
+        <p class="desc">Modifica o elimina publicaciones</p>
+      </a>
+
+      <a routerLink="/admin/tags" class="admin-card shadow-sm">
+        <i class="bi bi-tags icon"></i>
+        <h4 class="label">Etiquetas</h4>
+        <p class="desc">Organiza tus categorías</p>
+      </a>
+    </div>
   </div>
 </div>
