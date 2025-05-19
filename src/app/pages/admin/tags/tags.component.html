@@ -1,0 +1,66 @@
+<app-navbar-wrapper></app-navbar-wrapper>
+
+<div class="page-wrapper main-content">
+  <div class="container mt-4">
+    <!-- Título + Botón crear -->
+    <!-- Título -->
+    <h3 class="fw-bold mb-3 mt-4 d-flex align-items-center">
+      <i class="bi bi-tags-fill me-2"></i> Gestión de Etiquetas
+    </h3>
+
+    <!-- Botón centrado debajo del título -->
+    <div class="text-center mb-4">
+      <button class="btn btn-swapfy" (click)="openCreateModal()">
+        <i class="bi bi-plus-circle me-1"></i> Crear etiqueta
+      </button>
+    </div>
+
+
+    <!-- Buscador -->
+    <div class="input-group mb-3">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input
+        class="form-control"
+        type="text"
+        placeholder="Buscar etiqueta..."
+        [(ngModel)]="searchValue" />
+    </div>
+
+    <!-- Loader -->
+    <div *ngIf="isLoading" class="text-center my-5">
+      <app-loader></app-loader>
+    </div>
+
+    <!-- Sin resultados -->
+    <div *ngIf="!isLoading && filteredTags.length === 0" class="text-center my-5">
+      <p class="text-muted">🏷️ No se encontraron etiquetas.</p>
+    </div>
+
+    <!-- Tabla -->
+    <div class="table-responsive" *ngIf="!isLoading && filteredTags.length > 0">
+      <table class="table table-striped align-middle shadow-sm rounded">
+        <thead>
+        <tr class="custom-table-header">
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let tag of filteredTags">
+          <td>{{ tag.tagId }}</td>
+          <td><span class="badge badge-role">{{ tag.name }}</span></td>
+          <td class="d-flex flex-wrap gap-1">
+            <button class="btn btn-sm btn-outline-primary" (click)="openEditModal(tag)">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger" (click)="confirmDelete(tag)">
+              <i class="bi bi-trash3"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

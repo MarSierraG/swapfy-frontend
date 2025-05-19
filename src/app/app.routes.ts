@@ -7,6 +7,7 @@ import { CreateItemComponent } from './pages/create-item/create-item.component';
 import { AuthPageComponent } from './pages/auth/auth-page.component';
 import {ForgotPasswordComponent} from './pages/auth/forgot-password/forgot-password.component';
 import {ResetPasswordComponent} from './pages/auth/reset-password/reset-password.component';
+import {SettingsComponent} from './pages/settings/settings.component';
 
 export const routes: Routes = [
 /* Rutas públicas */
@@ -24,7 +25,6 @@ export const routes: Routes = [
   { path: 'store',          component: StoreComponent,       canActivate: [authGuard] },
   { path: 'crear-articulo', component: CreateItemComponent,  canActivate: [authGuard] },
   { path: 'chats',          component: DummyComponent,       canActivate: [authGuard] },
-  { path: 'settings',       component: DummyComponent,       canActivate: [authGuard] },
   { path: 'credits',        component: DummyComponent,       canActivate: [authGuard] },
 
   {
@@ -53,6 +53,16 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/admin/items/items.component').then(m => m.AdminItemsComponent)
   },
 
+  {
+    path: 'admin/tags',
+    loadComponent: () => import('./pages/admin/tags/tags.component').then(m => m.TagsComponent),
+    canActivate: [authGuard]
+  },
+
+  {
+    path: 'settings',
+    component: SettingsComponent
+  },
 
 
   { path: '**', redirectTo: '' }
