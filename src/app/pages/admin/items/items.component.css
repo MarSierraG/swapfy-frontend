@@ -1,0 +1,18 @@
+.custom-table-header th {
+  background: linear-gradient(135deg, #009ba5, #003f66) !important;
+  color: white;
+}
+
+.table-responsive {
+  padding-bottom: 7%;
+}
+
+.choices-wrapper {
+  max-height: 180px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+.choices {
+  margin-bottom: 10px;
+}

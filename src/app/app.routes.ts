@@ -48,6 +48,12 @@ export const routes: Routes = [
       import('./pages/item-detail/item-detail.component').then(m => m.ItemDetailComponent)
   },
 
+  {
+    path: 'admin/items',
+    loadComponent: () => import('./pages/admin/items/items.component').then(m => m.AdminItemsComponent)
+  },
+
+
 
   { path: '**', redirectTo: '' }
 ];

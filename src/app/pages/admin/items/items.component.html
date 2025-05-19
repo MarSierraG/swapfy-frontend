@@ -1,0 +1,101 @@
+<app-navbar-wrapper></app-navbar-wrapper>
+<div class="page-wrapper main-content">
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="fw-bold">
+        <i class="bi bi-box-seam me-2"></i> Gestión de Artículos
+      </h3>
+    </div>
+
+    <!-- Filtro de búsqueda -->
+    <div class="row g-2 mb-3">
+      <div class="col-md-3">
+        <select class="form-select" [(ngModel)]="selectedFilter">
+          <option value="id">ID del item</option>
+          <option value="title">Título</option>
+          <option value="type">Tipo</option>
+          <option value="status">Estado</option>
+          <option value="userId">ID - Propietario</option>
+          <option value="userName">Nombre del propietario</option>
+        </select>
+      </div>
+      <div class="col-md-9">
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Buscar artículo..."
+            [(ngModel)]="searchValue"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p class="text-muted">Aquí podrás ver, editar o eliminar los artículos publicados por los usuarios.</p>
+
+    <!-- Spinner -->
+    <div *ngIf="isLoading" class="text-center my-5">
+      <app-loader></app-loader>
+    </div>
+
+    <!-- Mensaje si no hay artículos -->
+    <div *ngIf="!isLoading && items.length === 0" class="text-center my-5">
+      <p class="text-muted">📦 No hay artículos publicados aún.</p>
+    </div>
+
+    <!-- Tabla de artículos -->
+    <div class="table-responsive" *ngIf="!isLoading && filteredItems.length > 0">
+      <table class="table table-striped align-middle shadow-sm rounded">
+        <thead>
+        <tr class="custom-table-header">
+          <th>ID</th>
+          <th>ID Usuario</th>
+          <th>Propietario</th>
+          <th>Título</th>
+          <th>Etiquetas</th>
+          <th>Tipo</th>
+          <th>Estado</th>
+          <th>Créditos</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of filteredItems.slice(0, visibleCount)">
+          <td>{{ item.itemId }}</td>
+          <td>{{ item.userId }}</td>
+          <td>{{ item.userName }}</td>
+          <td>{{ item.title }}</td>
+          <td>
+      <span *ngFor="let tag of item.tagNames" class="badge bg-secondary me-1">
+        {{ tag }}
+      </span>
+          </td>
+          <td>{{ item.type }}</td>
+          <td>{{ item.status }}</td>
+          <td>{{ item.creditValue }}</td>
+          <td class="d-flex flex-wrap gap-1">
+            <button class="btn btn-sm btn-outline-info" (click)="showDescription(item)" title="Ver descripción">
+              <i class="bi bi-card-text"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-primary" (click)="openEditModal(item)" title="Editar artículo">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger" (click)="deleteItem(item)" title="Eliminar artículo">
+              <i class="bi bi-trash3"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+
+      <!-- Mostrar más -->
+      <div class="text-center mt-3" *ngIf="visibleCount < filteredItems.length">
+        <button class="btn btn-outline-secondary" (click)="showMoreItems()">
+          <i class="bi bi-chevron-down me-1"></i> Mostrar más
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
