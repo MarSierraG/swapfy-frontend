@@ -178,8 +178,3 @@
     display: none !important;
   }
 }
-@media (max-width: 899.98px) {
-  .hide-900 {
-    display: block !important;
-  }
-}
