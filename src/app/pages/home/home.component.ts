@@ -46,10 +46,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  logout(): void {
-    this.auth.logout();
-  }
-
   loadItems(): void {
     this.isLoading = true;
     const myId = this.auth.currentUserId();
