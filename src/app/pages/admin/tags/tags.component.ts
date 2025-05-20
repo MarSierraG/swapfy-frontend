@@ -110,10 +110,10 @@ export class TagsComponent implements OnInit {
                   this.tagService.updateTag(tag.tagId!, { name: nuevoNombre }, true).subscribe({
                     next: () => {
                       this.loadTags();
-                      Swal.fire('Etiqueta actualizada forzadamente', '', 'success');
+                      Swal.fire('Etiqueta actualizada', '', 'success');
                     },
                     error: () => {
-                      Swal.fire('Error', 'No se pudo actualizar la etiqueta forzadamente.', 'error');
+                      Swal.fire('Error', 'No se pudo actualizar la etiqueta.', 'error');
                     }
                   });
                 }
