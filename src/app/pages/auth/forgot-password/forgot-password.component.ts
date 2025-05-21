@@ -26,7 +26,7 @@ export class ForgotPasswordComponent {
     private router: Router
   ) {
     this.forgotForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(254)]]
     });
   }
 

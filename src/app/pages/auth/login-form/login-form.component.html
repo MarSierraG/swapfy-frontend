@@ -20,9 +20,18 @@
           placeholder="Email"
           [ngClass]="{'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
         >
-      </div>
-      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="invalid-feedback">
-        Introduce un correo válido.
+        <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="invalid-feedback">
+          <div *ngIf="loginForm.get('email')?.errors?.['required']">
+            El correo es obligatorio.
+          </div>
+          <div *ngIf="loginForm.get('email')?.errors?.['email']">
+            Introduce un correo con formato válido.
+          </div>
+          <div *ngIf="loginForm.get('email')?.errors?.['maxlength']">
+            El correo no puede superar los 254 caracteres.
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -49,9 +58,21 @@
           ></i>
         </button>
 
-      </div>
-      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="invalid-feedback">
-        La contraseña es obligatoria.
+
+        <div
+          *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="loginForm.get('password')?.errors?.['required']">
+            La contraseña es obligatoria.
+          </div>
+          <div *ngIf="loginForm.get('password')?.errors?.['maxlength']">
+            Máximo 50 caracteres.
+          </div>
+          <div *ngIf="loginForm.get('password')?.errors?.['pattern']">
+            Solo caracteres alfanuméricos y símbolos seguros (&#64;#$%^&+=!.-).
+          </div>
+        </div>
       </div>
     </div>
 
@@ -61,9 +82,13 @@
     </div>
 
     <!-- Botón -->
-    <button type="submit" class="btn swapfy-button w-100 mt-2">
+    <button
+      type="submit"
+      class="btn swapfy-button w-100 mt-2"
+      [disabled]="loginForm.invalid">
       Iniciar sesión
     </button>
+
 
     <div class="text-end mt-2">
       <a (click)="onForgotPasswordClick()" class="text-decoration-none">

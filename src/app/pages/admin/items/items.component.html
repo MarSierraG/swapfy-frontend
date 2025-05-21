@@ -1,6 +1,6 @@
 <app-navbar-wrapper></app-navbar-wrapper>
 <div class="page-wrapper main-content">
-  <div class="container mt-4">
+  <div class="container mt-4 pb-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h3 class="admin-title">
         <i class="bi bi-box-seam me-2 icon"></i> Gestión de Artículos
@@ -41,7 +41,7 @@
 
     <!-- Mensaje si no hay artículos -->
     <div *ngIf="!isLoading && items.length === 0" class="text-center my-5">
-      <p class="text-muted">📦 No hay artículos publicados aún.</p>
+      <p class="text-muted"> No hay artículos publicados aún.</p>
     </div>
 
     <!-- Tabla de artículos -->

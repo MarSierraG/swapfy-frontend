@@ -20,14 +20,30 @@
             [class.is-invalid]="registerForm.get('name')?.touched && registerForm.get('name')?.invalid"
           >
         </div>
-        <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid" class="invalid-feedback">
-          El nombre completo es obligatorio.
+
+        <!-- Mensaje de name -->
+        <div *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid"
+             class="invalid-feedback d-block mt-1">
+          <div *ngIf="registerForm.get('name')?.errors?.['required']">
+            El nombre completo es obligatorio.
+          </div>
+          <div *ngIf="registerForm.get('name')?.errors?.['minlength']">
+            El nombre debe tener al menos 2 caracteres.
+          </div>
+          <div *ngIf="registerForm.get('name')?.errors?.['maxlength']">
+            El nombre no puede superar los 100 caracteres.
+          </div>
+          <div *ngIf="registerForm.get('name')?.errors?.['nombreInvalido']">
+            El nombre solo puede contener letras, espacios y guiones.
+          </div>
         </div>
       </div>
+
 
       <!-- Email -->
       <div class="mb-3">
         <label for="email" class="form-label">Correo electrónico</label>
+
         <div class="input-group">
           <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
           <input
@@ -39,8 +55,23 @@
             [class.is-invalid]="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
           >
         </div>
-        <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="invalid-feedback">
-          Introduce un correo válido.
+
+        <!-- Mensajes de email -->
+        <div
+          *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid"
+          class="invalid-feedback d-block mt-1">
+          <div *ngIf="registerForm.get('email')?.errors?.['required']">
+            El correo es obligatorio.
+          </div>
+          <div *ngIf="registerForm.get('email')?.errors?.['emailDuplicado']">
+            Este correo ya está registrado.
+          </div>
+          <div *ngIf="registerForm.get('email')?.errors?.['email']">
+            Introduce un correo con formato válido.
+          </div>
+          <div *ngIf="registerForm.get('email')?.errors?.['maxlength']">
+            El correo no puede superar los 254 caracteres.
+          </div>
         </div>
       </div>
 
@@ -63,10 +94,11 @@
             </button>
           </div>
 
-          <!-- Validaciones -->
+          <!-- Mensajes de password -->
           <div *ngIf="pass.touched && pass.errors" class="invalid-feedback d-block mt-1">
             <div *ngIf="pass.errors['required']">La contraseña es obligatoria.</div>
             <div *ngIf="pass.errors['minlength']">Debe tener al menos 8 caracteres.</div>
+            <div *ngIf="pass.errors['maxlength']">La contraseña no puede superar los 100 caracteres.</div>
             <div *ngIf="pass.errors['weakPassword']">
               Debe incluir al menos una letra, un número y un símbolo.
             </div>

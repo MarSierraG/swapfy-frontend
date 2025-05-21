@@ -1,18 +1,14 @@
 <div class="product-page">
+  <!-- Imagen -->
   <div class="image-container text-center">
-    <!-- Si hay imagen nueva, mostrarla -->
     <ng-container *ngIf="nuevaImagenSeleccionada; else fallback">
       <img [src]="nuevaImagenSeleccionada" alt="Vista previa" class="main-image mb-3" />
     </ng-container>
 
-    <!-- Si no hay imagen nueva -->
     <ng-template #fallback>
-      <!-- Si estás editando y hay imagen original -->
       <ng-container *ngIf="modo === 'editar' && formItem.imageUrl; else sinImagen">
         <img [src]="formItem.imageUrl" alt="Imagen original" class="main-image mb-3" />
       </ng-container>
-
-      <!-- Si no hay ninguna imagen -->
       <ng-template #sinImagen>
         <div class="fallback-image">
           <i class="bi bi-image fs-1 me-2"></i> Sin imagen
@@ -20,10 +16,10 @@
       </ng-template>
     </ng-template>
 
-    <!-- Input para subir imagen (siempre visible) -->
+    <!-- Subir imagen -->
     <div class="upload-wrapper mt-2">
       <label for="imagen" class="upload-label">
-        <i class="bi bi-upload me-2 fs-4"></i> Cambiar imagen
+        <i class="bi bi-upload me-2 fs-4"></i> Subir imagen
       </label>
       <input
         id="imagen"
@@ -31,47 +27,99 @@
         accept="image/*"
         (change)="onImageChange($event)"
         class="upload-input visually-hidden" />
-      <div *ngIf="mostrarErrores && modo === 'crear' && !selectedImageFile" class="text-danger mt-1">
-        Debes subir una imagen.
+
+      <div *ngIf="mostrarErrores && modo === 'crear' && !selectedImageFile" class="validation-error">
+        La imagen es obligatoria para crear un artículo.
+      </div>
+
+      <div *ngIf="imagenInvalida" class="validation-error">
+        Imagen no válida. Usa JPG, PNG o WebP y máximo 5MB.
       </div>
     </div>
+
   </div>
 
   <!-- Formulario -->
   <div class="info-wrapper">
     <form (ngSubmit)="onGuardar()" #form="ngForm" novalidate>
+
       <!-- Título -->
       <div class="mb-3">
         <label class="form-label"><i class="bi bi-fonts"></i> Título</label>
-        <input [(ngModel)]="formItem.title" name="title" type="text" class="form-control editable-active" required />
-        <div *ngIf="mostrarErrores && !formItem.title.trim()" class="text-danger mt-1">
-          El título es obligatorio.
+        <input
+          [(ngModel)]="formItem.title"
+          name="title"
+          type="text"
+          maxlength="100"
+          class="form-control editable-active"
+          (blur)="titleTouched = true"
+          required />
+        <div class="validator-inline">
+          <div class="form-text text-end">
+            {{ formItem.title?.length || 0 }}/100
+          </div>
+          <div *ngIf="(mostrarErrores || titleTouched) && (!formItem.title || formItem.title.trim().length < 3)" class="validation-error">
+            El título es obligatorio y debe tener al menos 3 caracteres.
+          </div>
+          <div *ngIf="isTituloInvalido()" class="validation-error">
+            El título no debe contener símbolos especiales.
+          </div>
         </div>
       </div>
+
 
       <!-- Descripción -->
       <div class="mb-3">
         <label class="form-label"><i class="bi bi-card-text"></i> Descripción</label>
-        <textarea [(ngModel)]="formItem.description" name="description" class="form-control editable-active" rows="3" required></textarea>
-        <div *ngIf="mostrarErrores && !formItem.description.trim()" class="text-danger mt-1">
-          La descripción es obligatoria.
+        <textarea
+          [(ngModel)]="formItem.description"
+          name="description"
+          maxlength="250"
+          class="form-control editable-active"
+          rows="3"
+          (blur)="descriptionTouched = true"
+          required></textarea>
+        <div class="form-text text-end">
+          {{ formItem.description?.length || 0 }}/250
+        </div>
+        <div *ngIf="(mostrarErrores || descriptionTouched) && (!formItem.description || formItem.description.trim().length < 10)" class="validation-error">
+          La descripción es obligatoria y debe tener al menos 10 caracteres.
         </div>
       </div>
 
+
       <!-- Créditos -->
       <div class="mb-4">
-        <label class="form-label"><i class="bi bi-cash-coin text-warning"></i> Créditos</label>
+        <label class="form-label">
+          <i class="bi bi-cash-coin text-warning"></i> Créditos
+        </label>
         <input
-          [(ngModel)]="formItem.creditValue"
+          [ngModel]="formItem.creditValue"
+          (ngModelChange)="onCreditChange($event)"
           name="creditValue"
-          type="number"
+          type="text"
+          pattern="^[0-9]*$"
           class="form-control editable-active input-credito"
-          min="0"
+          maxlength="6"
+          (blur)="creditTouched = true"
           required />
-        <div *ngIf="mostrarErrores && formItem.creditValue <= 0" class="text-danger mt-1">
-          Debes asignar al menos 1 crédito.
+
+        <div class="form-text text-end">
+          {{ String(formItem.creditValue || '').length }}/6
+        </div>
+
+        <div *ngIf="(mostrarErrores || creditTouched)">
+          <div *ngIf="!formItem.creditValue || +formItem.creditValue <= 0" class="validation-error">
+            Debes asignar al menos 1 crédito.
+          </div>
+          <div *ngIf="String(formItem.creditValue).length > 6" class="validation-error">
+            El valor no puede tener más de 6 cifras.
+          </div>
         </div>
       </div>
+
+
+
 
       <!-- Tipo y Estado -->
       <div class="row g-3 mb-4">
@@ -95,7 +143,7 @@
       <div class="mb-5">
         <label class="form-label"><i class="bi bi-tags-fill"></i> Etiquetas</label>
         <div class="row">
-          <div class="col-6" *ngFor="let tag of tagsDisponibles; let i = index">
+          <div class="col-6" *ngFor="let tag of tagsDisponibles">
             <div class="form-check">
               <input
                 type="checkbox"
@@ -107,9 +155,7 @@
             </div>
           </div>
         </div>
-
-
-        <div *ngIf="mostrarErrores && formItem.tags.length === 0" class="text-danger mt-1">
+        <div *ngIf="(mostrarErrores || tagsTouched) && formItem.tags.length === 0" class="validation-error-tags ">
           Debes seleccionar al menos una etiqueta.
         </div>
       </div>
@@ -121,16 +167,10 @@
           type="submit"
           [disabled]="isLoading"
           style="background-color: darkcyan; border: none; min-height: 48px;">
-
-          <ng-container>
-            <i class="bi bi-check-circle me-1"></i>
-            {{ modo === 'editar' ? 'Guardar cambios' : 'Crear artículo' }}
-          </ng-container>
-
+          <i class="bi bi-check-circle me-1"></i>
+          {{ modo === 'editar' ? 'Guardar cambios' : 'Crear artículo' }}
         </button>
       </div>
-
-
 
       <div *ngIf="modo === 'editar'" class="d-grid mt-2">
         <button class="btn btn-outline-swapfy" type="button" (click)="onCancelar()">

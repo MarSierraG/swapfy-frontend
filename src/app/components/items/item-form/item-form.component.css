@@ -108,7 +108,8 @@ input[type="number"].form-control {
 
 /* Input de imagen moderno */
 .upload-wrapper {
-  display: flex;
+  display: block;
+  position: relative;
   justify-content: center;
   margin-top: 1rem;
 }
@@ -185,3 +186,31 @@ input[type="number"].form-control {
 .mb-5 {
   margin-bottom: 5rem !important;
 }
+
+
+.image-container .validation-error {
+  padding-top: 1rem;
+  margin-top: 0;
+  font-size: 0.9rem;
+  color: #dc3545;
+  font-weight: 500;
+  width: 100%;
+}
+
+.validation-error {
+  margin-top: -1.2rem;
+  font-size: 0.9rem;
+  color: #dc3545;
+  font-weight: 500;
+  width: 90%;
+}
+
+.validation-error-tags {
+  padding-top: 1rem;
+  margin-top: 0;
+  font-size: 0.9rem;
+  color: #dc3545;
+  font-weight: 500;
+  width: 100%;
+}
+

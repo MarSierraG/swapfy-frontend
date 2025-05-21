@@ -8,17 +8,12 @@
     <p class="user-subtitle text-center text-muted">{{ user?.email }}</p>
   </div>
 
-
   <!-- Contenido -->
   <div class="info-wrapper">
-    <div *ngIf="!isEditing; else editForm">
-
-
+    <div *ngIf="!isEditing; else editTpl">
       <div class="user-details mt-4">
         <div class="detail-block">
-          <div class="detail-icon">
-            <i class="bi bi-geo-alt"></i>
-          </div>
+          <div class="detail-icon"><i class="bi bi-geo-alt"></i></div>
           <div class="detail-content">
             <h4 class="detail-title">Ubicación</h4>
             <p class="detail-text">{{ user?.location || 'No especificada' }}</p>
@@ -26,9 +21,7 @@
         </div>
 
         <div class="detail-block">
-          <div class="detail-icon">
-            <i class="bi bi-chat-left-text"></i>
-          </div>
+          <div class="detail-icon"><i class="bi bi-chat-left-text"></i></div>
           <div class="detail-content">
             <h4 class="detail-title">Biografía</h4>
             <p class="detail-text">{{ user?.biography || 'Sin biografía aún' }}</p>
@@ -36,16 +29,13 @@
         </div>
 
         <div class="detail-block">
-          <div class="detail-icon">
-            <i class="bi bi-cash-coin"></i>
-          </div>
+          <div class="detail-icon"><i class="bi bi-cash-coin"></i></div>
           <div class="detail-content">
             <h4 class="detail-title">Créditos</h4>
             <p class="detail-text">{{ user?.credits }}</p>
           </div>
         </div>
       </div>
-
 
       <div class="action-buttons mt-4">
         <button class="btn btn-swapfy" (click)="startEdit()">
@@ -59,32 +49,80 @@
         <button class="btn btn-delete-account mt-3" (click)="confirmDeleteAccount()">
           <i class="bi bi-trash text-danger"></i> Eliminar cuenta
         </button>
-
       </div>
     </div>
 
-    <ng-template #editForm>
-      <form (ngSubmit)="saveChanges()" #form="ngForm" novalidate>
+    <!-- Modo edicion -->
+    <ng-template #editTpl>
+      <form [formGroup]="editForm" (ngSubmit)="saveChanges()">
+
+        <!-- Nombre -->
         <div class="mb-3">
           <label class="form-label"><i class="bi bi-person-fill"></i> Nombre</label>
-          <input [(ngModel)]="user!.name" name="name" type="text" class="form-control editable-active" required />
+          <input formControlName="name" type="text" class="form-control editable-active"
+                 [class.is-invalid]="editForm.get('name')?.touched && editForm.get('name')?.invalid"
+                 maxlength="100" />
+          <div class="form-text text-end">
+            {{ editForm.get('name')?.value?.length || 0 }}/100
+          </div>
+          <div *ngIf="editForm.get('name')?.touched && editForm.get('name')?.invalid" class="invalid-feedback d-block mt-1">
+            <div *ngIf="editForm.get('name')?.errors?.['required']">El nombre es obligatorio.</div>
+            <div *ngIf="editForm.get('name')?.errors?.['minlength']">Mínimo 2 caracteres.</div>
+            <div *ngIf="editForm.get('name')?.errors?.['maxlength']">Máximo 100 caracteres.</div>
+            <div *ngIf="editForm.get('name')?.errors?.['nombreInvalido']">Solo letras, espacios y guiones permitidos.</div>
+          </div>
         </div>
 
+        <!-- Email -->
         <div class="mb-3">
           <label class="form-label"><i class="bi bi-envelope"></i> Email</label>
-          <input [(ngModel)]="user!.email" name="email" type="email" class="form-control editable-active" required />
+          <input formControlName="email" type="email" class="form-control editable-active"
+                 [class.is-invalid]="editForm.get('email')?.touched && editForm.get('email')?.invalid"
+                 maxlength="254" />
+          <div class="form-text text-end">
+            {{ editForm.get('email')?.value?.length || 0 }}/254
+          </div>
+          <div *ngIf="editForm.get('email')?.touched && editForm.get('email')?.invalid" class="invalid-feedback d-block mt-1">
+            <div *ngIf="editForm.get('email')?.errors?.['required']">El email es obligatorio.</div>
+            <div *ngIf="editForm.get('email')?.errors?.['email']">Formato de email no válido.</div>
+            <div *ngIf="editForm.get('email')?.errors?.['maxlength']">Máximo 254 caracteres.</div>
+            <div *ngIf="editForm.get('email')?.errors?.['emailDuplicado']">Este email ya está registrado.</div>
+          </div>
         </div>
 
+
+        <!-- Ubicación -->
         <div class="mb-3">
           <label class="form-label"><i class="bi bi-geo-alt"></i> Ubicación</label>
-          <input [(ngModel)]="user!.location" name="location" type="text" class="form-control editable-active" />
+          <input formControlName="location" type="text" class="form-control editable-active"
+                 [class.is-invalid]="editForm.get('location')?.touched && editForm.get('location')?.invalid"
+                 maxlength="100" />
+          <div class="form-text text-end">
+            {{ editForm.get('location')?.value?.length || 0 }}/100
+          </div>
+          <div *ngIf="editForm.get('location')?.touched && editForm.get('location')?.invalid" class="invalid-feedback d-block mt-1">
+            <div *ngIf="editForm.get('location')?.errors?.['minlength']">Mínimo 2 caracteres.</div>
+            <div *ngIf="editForm.get('location')?.errors?.['maxlength']">Máximo 100 caracteres.</div>
+          </div>
         </div>
 
+
+        <!-- Biografía -->
         <div class="mb-3">
           <label class="form-label"><i class="bi bi-chat-left-text"></i> Biografía</label>
-          <textarea [(ngModel)]="user!.biography" name="biography" class="form-control editable-active" rows="3"></textarea>
+          <textarea formControlName="biography" rows="3" class="form-control editable-active"
+                    [class.is-invalid]="editForm.get('biography')?.touched && editForm.get('biography')?.invalid"
+                    maxlength="300"></textarea>
+          <div class="form-text text-end">
+            {{ editForm.get('biography')?.value?.length || 0 }}/300
+          </div>
+          <div *ngIf="editForm.get('biography')?.touched && editForm.get('biography')?.invalid" class="invalid-feedback d-block mt-1">
+            <div *ngIf="editForm.get('biography')?.errors?.['maxlength']">Máximo 300 caracteres.</div>
+          </div>
         </div>
 
+
+        <!-- Botones -->
         <div class="action-buttons mt-4">
           <button class="btn btn-swapfy py-2 mb-2" type="submit">
             <i class="bi bi-check-circle me-1"></i> Guardar cambios
@@ -93,7 +131,9 @@
             <i class="bi bi-x-circle me-1"></i> Cancelar
           </button>
         </div>
+
       </form>
     </ng-template>
+
   </div>
 </div>

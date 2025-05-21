@@ -25,24 +25,19 @@ export class ResetPasswordComponent {
     private authService: AuthService,
     private router: Router
   ) {
-    this.resetForm = this.fb.group(
-      {
-        email: ['', [Validators.required, Validators.email]],
-        code: ['', Validators.required],
-        newPassword: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(8),
-            passwordStrengthValidator
-          ]
-        ],
-        confirmPassword: ['', Validators.required]
-      },
-      {
-        validators: [this.passwordsMatchValidator]
-      }
-    );
+    this.resetForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(254)]],
+      code: ['', [Validators.required, Validators.maxLength(20)]],
+      newPassword: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(100),
+        passwordStrengthValidator
+      ]],
+      confirmPassword: ['', Validators.required]
+    }, {
+      validators: [this.passwordsMatchValidator]
+    });
   }
 
   passwordsMatchValidator(group: AbstractControl): ValidationErrors | null {

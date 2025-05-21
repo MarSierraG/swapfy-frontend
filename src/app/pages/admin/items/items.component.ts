@@ -108,27 +108,27 @@ export class AdminItemsComponent implements OnInit {
 
   openEditModal(item: Item): void {
     const formHtml = `
-      <input id="swal-title" class="swal2-input" placeholder="Título" value="${item.title}" />
-      <input id="swal-description" class="swal2-input" placeholder="Descripción" value="${item.description}" />
-      <input id="swal-credits" type="number" class="swal2-input" placeholder="Créditos" value="${item.creditValue}" />
-      <select id="swal-type" class="swal2-select">
-        <option value="offer" ${item.type === 'offer' ? 'selected' : ''}>Oferta</option>
-        <option value="demand" ${item.type === 'demand' ? 'selected' : ''}>Demanda</option>
+    <input id="swal-title" class="swal2-input" placeholder="Título (3-100 caracteres)" value="${item.title}" maxlength="100" />
+    <textarea id="swal-description" class="swal2-textarea" placeholder="Descripción (10-500 caracteres)" maxlength="500">${item.description}</textarea>
+    <input id="swal-credits" type="number" class="swal2-input" placeholder="Créditos" value="${item.creditValue}" min="1" max="999999" />
+    <select id="swal-type" class="swal2-select">
+      <option value="offer" ${item.type === 'offer' ? 'selected' : ''}>Oferta</option>
+      <option value="demand" ${item.type === 'demand' ? 'selected' : ''}>Demanda</option>
+    </select>
+    <select id="swal-status" class="swal2-select">
+      <option value="Available" ${item.status === 'Available' ? 'selected' : ''}>Disponible</option>
+      <option value="Unavailable" ${item.status === 'Unavailable' ? 'selected' : ''}>No disponible</option>
+    </select>
+    <div class="choices-wrapper">
+      <select id="swal-tags" multiple>
+        ${this.availableTags.map(tag => `
+          <option value="${tag.tagId}" ${item.tags?.some(t => t.tagId === tag.tagId) ? 'selected' : ''}>
+            ${tag.name}
+          </option>
+        `).join('')}
       </select>
-      <select id="swal-status" class="swal2-select">
-        <option value="Available" ${item.status === 'Available' ? 'selected' : ''}>Disponible</option>
-        <option value="Unavailable" ${item.status === 'Unavailable' ? 'selected' : ''}>No disponible</option>
-      </select>
-      <div class="choices-wrapper">
-        <select id="swal-tags" multiple>
-          ${this.availableTags.map(tag => `
-            <option value="${tag.tagId}" ${item.tags?.some(t => t.tagId === tag.tagId) ? 'selected' : ''}>
-              ${tag.name}
-            </option>
-          `).join('')}
-        </select>
-      </div>
-    `;
+    </div>
+  `;
 
     Swal.fire({
       title: `Editar artículo: ${item.title}`,
@@ -145,15 +145,33 @@ export class AdminItemsComponent implements OnInit {
       buttonsStyling: false,
       preConfirm: () => {
         const title = (document.getElementById('swal-title') as HTMLInputElement).value.trim();
-        const description = (document.getElementById('swal-description') as HTMLInputElement).value.trim();
+        const description = (document.getElementById('swal-description') as HTMLTextAreaElement).value.trim();
         const creditValue = +(document.getElementById('swal-credits') as HTMLInputElement).value;
         const type = (document.getElementById('swal-type') as HTMLSelectElement).value;
         const status = (document.getElementById('swal-status') as HTMLSelectElement).value;
         const tagSelect = document.getElementById('swal-tags') as HTMLSelectElement;
         const selectedTags: number[] = Array.from(tagSelect.selectedOptions).map(opt => +opt.value);
 
-        if (!title || !description || isNaN(creditValue) || creditValue < 0) {
-          Swal.showValidationMessage('Todos los campos son obligatorios y los créditos deben ser positivos');
+        const regex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s'-]{3,100}$/;
+
+        if (!title || !regex.test(title)) {
+          Swal.showValidationMessage('El título debe tener entre 3 y 100 caracteres y no contener símbolos especiales.');
+          return;
+        }
+
+        if (!description || description.length < 10 || description.length > 500) {
+          Swal.showValidationMessage('La descripción debe tener entre 10 y 500 caracteres.');
+          return;
+        }
+
+        const creditString = creditValue.toString();
+        if (isNaN(creditValue) || creditValue <= 0 || creditString.length > 6) {
+          Swal.showValidationMessage('Los créditos deben ser un número positivo de hasta 6 cifras.');
+          return;
+        }
+
+        if (selectedTags.length === 0) {
+          Swal.showValidationMessage('Debes seleccionar al menos una etiqueta.');
           return;
         }
 
@@ -211,8 +229,8 @@ export class AdminItemsComponent implements OnInit {
         });
       }
     });
-
   }
+
 
   showMoreItems(): void {
     this.visibleCount += 15;

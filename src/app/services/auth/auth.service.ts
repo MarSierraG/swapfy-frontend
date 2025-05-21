@@ -66,7 +66,13 @@ export class AuthService {
     }
   }
 
-
+  checkEmailExists(email: string, excludeId?: number) {
+    let url = `${environment.apiUrl}/users/check-email?email=${encodeURIComponent(email)}`;
+    if (excludeId !== undefined) {
+      url += `&excludeId=${excludeId}`;
+    }
+    return this.http.get<boolean>(url);
+  }
 
   logout(): void {
     localStorage.clear();

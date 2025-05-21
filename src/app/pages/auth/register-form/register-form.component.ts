@@ -5,13 +5,15 @@ import {
   Validators,
   ReactiveFormsModule,
   AbstractControl,
-  ValidationErrors
+  ValidationErrors, AsyncValidatorFn
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 
 import { AuthService } from '../../../services/auth/auth.service';
+import {debounceTime, first, map, of, switchMap} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'app-register-form',
@@ -34,19 +36,52 @@ export class RegisterFormComponent {
     private router: Router
   ) {
     this.registerForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(100),
+          this.nombreValidoValidator
+        ]
+      ],
+      email: [
+        '',
+        [Validators.required, Validators.email, Validators.maxLength(254)],
+        [this.emailUnicoValidator()]
+      ],
+
       password: [
         '',
         [
           Validators.required,
           Validators.minLength(8),
+          Validators.maxLength(100),
           this.passwordStrengthValidator
         ]
       ]
     });
 
   }
+
+  private emailUnicoValidator(excludeId?: number): AsyncValidatorFn {
+    return (control: AbstractControl) => {
+      const email = control.value;
+      if (!email) return of(null);
+
+      return of(email).pipe(
+        debounceTime(400),
+        switchMap(email =>
+          this.authService.checkEmailExists(email, excludeId).pipe(
+            map((exists: boolean) => (exists ? { emailDuplicado: true } : null)),
+            catchError(() => of(null))
+          )
+        ),
+        first()
+      );
+    };
+  }
+
 
   @Output() backToLogin = new EventEmitter<void>();
 
@@ -60,6 +95,13 @@ export class RegisterFormComponent {
 
     return isValid ? null : { weakPassword: true };
   }
+
+  private nombreValidoValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value || '';
+    const regex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s'-]+$/;
+    return regex.test(value.trim()) ? null : { nombreInvalido: true };
+  }
+
 
   onSubmit(): void {
     if (!this.registerForm.valid) {

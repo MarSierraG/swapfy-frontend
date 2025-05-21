@@ -125,7 +125,7 @@ export class UsersComponent implements OnInit {
         cancelButton: 'btn btn-outline-secondary'
       },
       buttonsStyling: false,
-      preConfirm: () => {
+      preConfirm: async () => {
         const name = (document.getElementById('swal-name') as HTMLInputElement).value.trim();
         const email = (document.getElementById('swal-email') as HTMLInputElement).value.trim();
         const location = (document.getElementById('swal-location') as HTMLInputElement).value.trim();
@@ -133,14 +133,43 @@ export class UsersComponent implements OnInit {
         const credits = +(document.getElementById('swal-credits') as HTMLInputElement).value;
         const role = (document.getElementById('swal-role') as HTMLSelectElement).value;
 
-        if (!name || !email || !location || isNaN(credits) || credits < 0) {
-          Swal.showValidationMessage('Todos los campos son obligatorios y los créditos deben ser positivos');
+        const nombreRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s'-]{2,100}$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!nombreRegex.test(name)) {
+          Swal.showValidationMessage('El nombre debe tener entre 2 y 100 caracteres y solo puede contener letras, espacios y guiones.');
           return;
         }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-          Swal.showValidationMessage('El correo electrónico no tiene un formato válido');
+        if (!email || !emailRegex.test(email) || email.length > 254) {
+          Swal.showValidationMessage('Introduce un correo electrónico válido y que no supere los 254 caracteres.');
+          return;
+        }
+
+        if (!location || location.length < 2 || location.length > 100) {
+          Swal.showValidationMessage('La localización debe tener entre 2 y 100 caracteres.');
+          return;
+        }
+
+        if (biography && biography.length > 300) {
+          Swal.showValidationMessage('La biografía no puede superar los 300 caracteres.');
+          return;
+        }
+
+        if (isNaN(credits) || credits < 0) {
+          Swal.showValidationMessage('Los créditos deben ser un número igual o mayor que 0.');
+          return;
+        }
+
+        if (!['USER', 'ADMIN'].includes(role)) {
+          Swal.showValidationMessage('El rol debe ser USER o ADMIN.');
+          return;
+        }
+
+        // Validación email único
+        const emailExists = this.users.some(u => u.email === email && u.userId !== user.userId);
+        if (emailExists) {
+          Swal.showValidationMessage('Este correo electrónico ya está en uso por otro usuario.');
           return;
         }
 
@@ -151,14 +180,13 @@ export class UsersComponent implements OnInit {
       if (result.isConfirmed && result.value) {
         const updatedUser = result.value;
 
-        // Comparamos si hay cambios reales
         const noChanges =
           updatedUser.name === user.name &&
           updatedUser.email === user.email &&
           updatedUser.location === user.location &&
           updatedUser.biography === user.biography &&
           updatedUser.credits === user.credits &&
-          updatedUser.role === user.roles?.[0]
+          updatedUser.role === user.roles?.[0];
 
         if (noChanges) {
           Swal.fire({
@@ -169,7 +197,6 @@ export class UsersComponent implements OnInit {
           return;
         }
 
-        // Si hay cambios, hacemos la petición
         this.userService.updateUser(user.userId, updatedUser).subscribe({
           next: (response) => {
             const index = this.users.findIndex(u => u.userId === user.userId);
@@ -182,7 +209,6 @@ export class UsersComponent implements OnInit {
           }
         });
       }
-
     });
   }
 
