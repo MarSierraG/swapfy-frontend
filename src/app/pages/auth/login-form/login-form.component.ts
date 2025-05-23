@@ -83,7 +83,14 @@ export class LoginFormComponent {
       error: (error) => {
         console.error('Error en el login', error);
         const backendMsg = error?.error?.error || 'Hubo un error inesperado.';
-        this.setTimedError(backendMsg);
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al iniciar sesión',
+          text: backendMsg,
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#ef4444'
+        });
       }
     });
   }
