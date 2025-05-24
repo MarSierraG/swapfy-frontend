@@ -1,0 +1,85 @@
+.start-chat-wrapper {
+  padding: 6rem 1.5rem 3rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.header .icon {
+  font-size: 2.2rem;
+  color: #009ba5;
+  background-color: #e0f7fa;
+  padding: 0.5rem;
+  border-radius: 12px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.header p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.search {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  outline-color: #009ba5;
+  transition: border 0.2s ease;
+}
+
+.user-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-list li {
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.user-list li:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  border-color: #009ba5;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.user-email {
+  font-size: 0.9rem;
+  color: #475569;
+  word-break: break-all;
+}
+
+.no-results {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin-top: 2rem;
+}

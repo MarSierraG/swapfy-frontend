@@ -1,0 +1,32 @@
+<app-navbar-wrapper></app-navbar-wrapper>
+
+<div class="start-chat-wrapper">
+  <div class="header">
+    <span class="material-symbols-outlined icon">person_add</span>
+    <div>
+      <h2>Iniciar conversación</h2>
+      <p>Busca un usuario para empezar un chat</p>
+    </div>
+  </div>
+
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    (input)="filterUsers()"
+    placeholder="Buscar por nombre o email"
+    class="search"
+  />
+
+  <ul class="user-list" *ngIf="filteredUsers.length > 0; else noResults">
+    <li *ngFor="let user of filteredUsers" (click)="startChat(user.userId)">
+      <div class="user-name">{{ user.name }}</div>
+      <div class="user-email">{{ user.email }}</div>
+    </li>
+  </ul>
+
+  <ng-template #noResults>
+    <p class="no-results">
+      No se encontraron usuarios con ese nombre o email.
+    </p>
+  </ng-template>
+</div>

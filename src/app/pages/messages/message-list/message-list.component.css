@@ -1,0 +1,117 @@
+.chat-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+  padding: 6rem 1.5rem 3rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.chat-title {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.chat-title h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.chat-title p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.chat-title .material-symbols-outlined {
+  font-size: 2rem;
+  color: #009ba5;
+  background-color: #e0f2fe;
+  padding: 0.4rem;
+  border-radius: 10px;
+}
+
+.new-chat-btn {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  background-color: #009ba5;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.new-chat-btn:hover {
+  background-color: #009ba5;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+li:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.convo-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #0f172a;
+  margin-bottom: 0.3rem;
+}
+
+.convo-message {
+  font-size: 0.95rem;
+  color: #475569;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.empty {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin-top: 3rem;
+}
+
+app-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.85);
+}

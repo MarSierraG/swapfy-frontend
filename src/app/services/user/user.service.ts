@@ -20,7 +20,12 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl);
+    const token = localStorage.getItem('token');
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    return this.http.get<User[]>(this.apiUrl, { headers });
   }
 
   getUserById(userId: number): Observable<User> {
@@ -33,5 +38,10 @@ export class UserService {
 
   deleteUser(userId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${userId}`);
+  }
+
+  getCurrentUser(): User | null {
+    const userJson = localStorage.getItem('user');
+    return userJson ? JSON.parse(userJson) as User : null;
   }
 }

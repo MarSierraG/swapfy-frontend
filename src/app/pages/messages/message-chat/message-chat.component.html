@@ -1,0 +1,28 @@
+<app-navbar-wrapper></app-navbar-wrapper>
+<app-loader *ngIf="isLoading"></app-loader>
+
+<div class="chat-container">
+  <div class="messages" #messageContainer>
+    <div
+      *ngFor="let msg of messages"
+      [class.me]="msg.senderUserId === userId"
+      [class.other]="msg.senderUserId !== userId"
+    >
+      <p>{{ msg.content }}</p>
+      <small>{{ msg.timestamp | date: 'short' }}</small>
+    </div>
+  </div>
+
+  <form (ngSubmit)="sendMessage()" class="input-area">
+    <input
+      #messageInput
+      [(ngModel)]="content"
+      name="message"
+      placeholder="Escribe un mensaje..."
+      required
+    />
+    <button type="submit">
+      <span class="material-symbols-outlined">send</span>
+    </button>
+  </form>
+</div>

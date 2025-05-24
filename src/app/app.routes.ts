@@ -24,7 +24,6 @@ export const routes: Routes = [
   { path: 'home',           component: HomeComponent,        canActivate: [authGuard] },
   { path: 'store',          component: StoreComponent,       canActivate: [authGuard] },
   { path: 'crear-articulo', component: CreateItemComponent,  canActivate: [authGuard] },
-  { path: 'chats',          component: DummyComponent,       canActivate: [authGuard] },
   { path: 'credits',        component: DummyComponent,       canActivate: [authGuard] },
 
   {
@@ -64,6 +63,11 @@ export const routes: Routes = [
     component: SettingsComponent
   },
 
+  {
+    path: 'chats',
+    loadChildren: () =>
+      import('./pages/messages/messages.routes').then(m => m.MESSAGES_ROUTES),
+  },
 
   { path: '**', redirectTo: '' }
 ];
