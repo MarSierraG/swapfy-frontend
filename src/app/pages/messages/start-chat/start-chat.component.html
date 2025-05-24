@@ -1,4 +1,5 @@
 <app-navbar-wrapper></app-navbar-wrapper>
+<app-loader *ngIf="isLoading"></app-loader>
 
 <div class="start-chat-wrapper">
   <div class="header">
@@ -17,15 +18,29 @@
     class="search"
   />
 
-  <ul class="user-list" *ngIf="filteredUsers.length > 0; else noResults">
-    <li *ngFor="let user of filteredUsers" (click)="startChat(user.userId)">
-      <div class="user-name">{{ user.name }}</div>
-      <div class="user-email">{{ user.email }}</div>
-    </li>
-  </ul>
+  <!-- Cuando no hay búsqueda -->
+  <ng-container *ngIf="!searchTerm.trim(); else searchResults">
+    <h3 *ngIf="recentUsers.length > 0" class="section-title">Chats iniciados</h3>
+    <ul class="user-list">
+      <li *ngFor="let user of recentUsers" (click)="startChat(user.userId)">
+        <div class="user-name">{{ user.name }}</div>
+        <div class="user-email">{{ user.email }}</div>
+      </li>
+    </ul>
+  </ng-container>
 
-  <ng-template #noResults>
-    <p class="no-results">
+  <!-- Resultados de búsqueda -->
+  <ng-template #searchResults>
+    <h3 *ngIf="results.length > 0" class="section-title">Resultados</h3>
+    <ul class="user-list">
+      <li *ngFor="let user of results" (click)="startChat(user.userId)" class="chat-card">
+        <div class="user-name">{{ user.name }}</div>
+        <div class="user-email">{{ user.email }}</div>
+        <span *ngIf="hasChatWith(user.userId)" class="badge">Chat ya iniciado</span>
+      </li>
+    </ul>
+
+    <p *ngIf="results.length === 0" class="no-results">
       No se encontraron usuarios con ese nombre o email.
     </p>
   </ng-template>

@@ -38,7 +38,6 @@
   font-size: 1rem;
   border: 1px solid #d1d5db;
   border-radius: 8px;
-  margin-bottom: 1.5rem;
   outline-color: #009ba5;
   transition: border 0.2s ease;
 }
@@ -83,3 +82,63 @@
   font-size: 0.95rem;
   margin-top: 2rem;
 }
+
+app-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.section-title {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #009ba5;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.3rem;
+}
+
+.info-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.chat-card {
+  position: relative;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  transition: box-shadow 0.2s ease;
+}
+
+.chat-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  border-color: #009ba5;
+}
+
+.badge {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #0284c7;
+  background-color: #e0f2fe;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+}
+
