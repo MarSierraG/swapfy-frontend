@@ -32,3 +32,19 @@
   transform: scale(1.2);
   transition: transform 0.3s, color 0.3s;
 }
+
+.form-control {
+  background-color: white;
+}
+
+.container{
+  color:black;
+}
+
+.input-group-text{
+  color:black;
+}
+
+.btn-outline-secondary{
+  color: black !important;
+}

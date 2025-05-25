@@ -25,7 +25,7 @@
 
       <div class="item-detail">
         <span><i class="fas fa-coins"></i> {{ item.creditValue }} créditos</span>
-        <span><i class="fas fa-exchange-alt"></i> {{ item.type | titlecase }}</span>
+        <span><i class="fas fa-exchange-alt"></i> {{ translate(item.type) }}</span>
       </div>
 
       <div *ngIf="showOwner" class="item-detail">
@@ -33,7 +33,7 @@
       </div>
 
       <div *ngIf="item.status" class="item-detail">
-        <i class="fas fa-check-circle"></i> <span class="text-muted">Estado</span> {{ item.status }}
+        <i class="fas fa-check-circle"></i> <span class="text-muted">Estado</span> {{ translate(item.status) }}
       </div>
 
       <div class="item-tags mt-2">

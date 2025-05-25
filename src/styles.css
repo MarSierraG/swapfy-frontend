@@ -120,7 +120,11 @@ body.dark-mode .fixed-header {
   backdrop-filter: blur(8px);
 }
 
-/* SweetAlert2 */
+body.dark-mode .text-muted{
+  color: white !important;
+}
+
+  /* SweetAlert2 */
 .swal2-popup {
   border-radius: 1rem;
   box-shadow: 0 4px 24px rgb(0 0 0 / 0.25);

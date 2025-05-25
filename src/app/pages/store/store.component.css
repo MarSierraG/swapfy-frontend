@@ -1,0 +1,22 @@
+.section-header {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid #009ba5;
+  letter-spacing: 0.3px;
+}
+
+:host-context(body.dark-mode) .section-header {
+  color: white;
+}
+
+.section-header .icon {
+  font-size: 1.5rem;
+  color: #009ba5;
+}

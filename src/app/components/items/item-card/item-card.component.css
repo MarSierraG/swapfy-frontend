@@ -83,3 +83,8 @@ ul {
   flex-wrap: wrap;
   gap: 0.4rem;
 }
+
+
+:host-context(body.dark-mode) .item-detail{
+  color: ghostwhite;
+}

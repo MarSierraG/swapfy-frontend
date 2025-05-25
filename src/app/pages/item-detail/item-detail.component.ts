@@ -168,5 +168,15 @@ export class ItemDetailComponent implements OnInit {
     });
   }
 
+  translate(key: string): string {
+    const map: Record<string, string> = {
+      available: 'Disponible',
+      unavailable: 'No disponible',
+      offer: 'Oferta',
+      demand: 'Demanda',
+    };
+
+    return map[key?.toLowerCase()] || key;
+  }
 
 }

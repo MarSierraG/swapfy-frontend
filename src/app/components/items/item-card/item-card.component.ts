@@ -13,4 +13,17 @@ import {RouterLink} from '@angular/router';
 export class ItemCardComponent {
   @Input() item!: Item;
   @Input() showOwner: boolean = false;
+
+  translate(key: string): string {
+    const map: Record<string, string> = {
+      available: 'Disponible',
+      unavailable: 'No disponible',
+      offer: 'Oferta',
+      demand: 'Demanda',
+    };
+
+    return map[key?.toLowerCase()] || key;
+  }
+
 }
+

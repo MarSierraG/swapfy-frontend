@@ -297,3 +297,8 @@ input[type="number"].form-control {
   align-items: center;
   justify-content: center;
 }
+
+:host-context(body.dark-mode) .detail-item{
+  color: ghostwhite;
+}
+

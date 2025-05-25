@@ -102,3 +102,70 @@ td .btn {
   background-color: #e6e6e6;
   color: #000;
 }
+
+/* Modo oscuro*/
+
+:host-context(body.dark-mode) .table {
+  background-color: #1e293b;
+  color: #f1f5f9;
+  border-color: #334155;
+}
+
+:host-context(body.dark-mode) .table-striped tbody tr:nth-of-type(odd) {
+  background-color: #1f2937;
+}
+
+:host-context(body.dark-mode) .table-striped tbody tr:nth-of-type(even) {
+  background-color: #0f172a;
+}
+
+:host-context(body.dark-mode) .table th,
+:host-context(body.dark-mode) .table td {
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+:host-context(body.dark-mode) .custom-table-header th {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  color: white;
+}
+
+:host-context(body.dark-mode) .form-control,
+:host-context(body.dark-mode) .form-select {
+  background-color: #1f2937;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+:host-context(body.dark-mode) .form-control::placeholder {
+  color: #94a3b8;
+}
+
+:host-context(body.dark-mode) .form-control:focus,
+:host-context(body.dark-mode) .form-select:focus {
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+  border-color: #0ea5e9;
+}
+
+:host-context(body.dark-mode) .btn-outline-secondary {
+  background-color: #1f2937;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+:host-context(body.dark-mode) .btn-outline-secondary:hover {
+  background-color: #334155;
+  color: white;
+}
+
+:host-context(body.dark-mode) tbody tr td {
+  background-color: #1f2937 !important;
+}
+
+
+:host-context(body.dark-mode) .input-group-text{
+  color:black;
+  background-color: #1f2937;
+border: none;
+
+}

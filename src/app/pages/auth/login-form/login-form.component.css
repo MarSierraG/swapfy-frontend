@@ -10,8 +10,18 @@
   transition: background-color 0.2s ease;
 }
 
-
-
 .toggle-password-btn:hover {
   background-color: #e2e6ea;
+}
+
+.form-control {
+  background-color: white;
+}
+
+.container{
+  color:black;
+}
+
+.input-group-text{
+  color:black;
 }
