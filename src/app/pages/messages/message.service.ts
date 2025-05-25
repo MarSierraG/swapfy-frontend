@@ -41,4 +41,29 @@ export class MessageService {
   getMessagesReceivedBy(userId: number): Observable<Message[]> {
     return this.http.get<Message[]>(`${this.API_URL}/receiver/${userId}`);
   }
+
+  getUnreadSummary(userId: number): Observable<{ [senderId: number]: number }> {
+    const token = localStorage.getItem('token');
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    return this.http.get<{ [senderId: number]: number }>(
+      `${this.API_URL}/unread-summary/${userId}`,
+      { headers }
+    );
+  }
+
+  markAsRead(senderId: number, receiverId: number) {
+    const token = localStorage.getItem('token');
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    return this.http.put(
+      `${this.API_URL}/mark-as-read?senderId=${senderId}&receiverId=${receiverId}`,
+      {},
+      { headers }
+    );
+  }
 }

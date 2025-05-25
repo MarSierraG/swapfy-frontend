@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-
 import { AuthService } from '../../../services/auth/auth.service';
+import {MessageService} from '../../messages/message.service';
 
 @Component({
   selector: 'app-login-form',
@@ -24,6 +24,7 @@ export class LoginFormComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private messageService: MessageService,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -75,10 +76,31 @@ export class LoginFormComponent {
         }).then(() => {
           this.loginForm.reset();
 
-          setTimeout(() => {
+          const userId = this.authService.currentUserId();
+
+          if (!sessionStorage.getItem('alertedUnread') && userId) {
+            this.messageService.getUnreadSummary(userId).subscribe((summary: Record<number, number>) => {
+              const total = Object.values(summary).reduce((a, b) => a + b, 0);
+
+              sessionStorage.setItem('alertedUnread', 'true');
+
+              if (total > 0) {
+                Swal.fire({
+                  icon: 'info',
+                  title: 'Tienes mensajes',
+                  text: `Tienes ${total} mensaje${total > 1 ? 's' : ''} sin leer.`,
+                  confirmButtonColor: '#14b8a6'
+                }).then(() => this.router.navigate(['/home']));
+              } else {
+                this.router.navigate(['/home']);
+              }
+            });
+          } else {
             this.router.navigate(['/home']);
-          }, 100);
+          }
         });
+
+
       },
       error: (error) => {
         console.error('Error en el login', error);

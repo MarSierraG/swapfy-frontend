@@ -104,6 +104,7 @@ body.dark-mode .btn-outline-secondary {
   background-color: #2e2e2e;
   border-color: #6c757d;
   color: #f8f9fa;
+  margin-bottom: 1rem;
 }
 
 body.dark-mode .btn:hover,
