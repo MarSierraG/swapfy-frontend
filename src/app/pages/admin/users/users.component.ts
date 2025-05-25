@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { UserService, User } from '../../../services/user/user.service';
+import { UserService } from '../../../services/user/user.service';
+import { User } from '../../../models/user.model';
 import Swal from 'sweetalert2';
 import {LoaderComponent} from '../../../components/shared/loader/loader.component';
 import {NavbarWrapperComponent} from '../../../components/layout/navbar-wrapper/navbar-wrapper.component';

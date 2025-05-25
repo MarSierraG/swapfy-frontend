@@ -54,6 +54,7 @@
           <th>Localización</th>
           <th>Créditos</th>
           <th>Rol</th>
+          <th>Registrado</th>
           <th>Acciones</th>
         </tr>
         </thead>
@@ -67,6 +68,7 @@
           <td>
             <span class="badge text-bg-secondary text-uppercase">{{ user.roles[0] || '—' }}</span>
           </td>
+          <td>{{ user.registrationDate | date: 'dd/MM/yyyy HH:mm' }}</td>
           <td class="d-flex flex-wrap gap-1">
             <button class="btn btn-sm btn-outline-info" (click)="showBiography(user)" title="Ver biografía">
               <i class="bi bi-person-lines-fill"></i>

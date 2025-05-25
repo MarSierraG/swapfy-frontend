@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../services/auth/auth.service';
-import {User, UserService} from '../../services/user/user.service';
 import {NavbarWrapperComponent} from '../../components/layout/navbar-wrapper/navbar-wrapper.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { debounceTime, first, map, of, switchMap } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import {User} from '../../models/user.model';
+import {UserService} from '../../services/user/user.service';
+
+
 import {
   FormBuilder,
   FormGroup,
@@ -14,10 +19,6 @@ import {
   ValidationErrors,
   AsyncValidatorFn
 } from '@angular/forms';
-import { debounceTime, first, map, of, switchMap } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-
-
 
 @Component({
   selector: 'app-settings',

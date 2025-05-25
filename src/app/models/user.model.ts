@@ -6,4 +6,5 @@ export interface User {
   biography: string;
   credits: number;
   roles: string[];
+  registrationDate: string;
 }
