@@ -13,7 +13,10 @@
       <a routerLink="/store" title="Mi tienda"><i class="bi bi-cart"></i></a>
     </li>
     <li routerLinkActive="active">
-      <a routerLink="/chats" title="Chats"><i class="bi bi-chat-dots"></i></a>
+      <a routerLink="/chats" title="Chats" class="icon-wrapper">
+        <i class="bi bi-chat-dots"></i>
+        <span class="dot unread-dot" *ngIf="hasUnreadMessages && !isInChats()"></span>
+      </a>
     </li>
     <li routerLinkActive="active">
       <a routerLink="/settings" title="Ajustes"><i class="bi bi-gear"></i></a>

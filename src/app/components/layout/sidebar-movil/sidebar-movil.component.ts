@@ -1,7 +1,9 @@
-import { Component, Input} from '@angular/core';
-import {Router, RouterModule} from '@angular/router';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {AuthService} from '../../../services/auth/auth.service';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../../../services/auth/auth.service';
+import { MessageService } from '../../../pages/messages/message.service';
+import { DarkModeService } from '../../../services/darkmode/dark-mode.service';
 
 @Component({
   selector: 'app-sidebar-movil',
@@ -10,21 +12,44 @@ import {AuthService} from '../../../services/auth/auth.service';
   templateUrl: './sidebar-movil.component.html',
   styleUrls: ['./sidebar-movil.component.css']
 })
-
 export class SidebarMovilComponent {
-  menuOpen = false;
-  isDarkMode = false;
   @Input() showHeader: boolean = false;
   @Input() hideHeader: boolean = false;
+  menuOpen = false;
+  hasUnreadMessages = false;
+  isDarkMode = false;
 
-  constructor(public router: Router, public authService: AuthService) {}
+  constructor(
+    public router: Router,
+    public authService: AuthService,
+    private messageService: MessageService,
+    public darkModeService: DarkModeService
+  ) {}
+
+  ngOnInit(): void {
+    this.isDarkMode = this.darkModeService.isDarkMode();
+    this.darkModeService.darkMode$.subscribe(mode => {
+      this.isDarkMode = mode;
+    });
+
+    const userId = this.authService.currentUserId();
+    if (!userId) return;
+
+    this.messageService.getUnreadSummary(userId).subscribe(summary => {
+      const total = Object.values(summary).reduce((a, b) => a + b, 0);
+      this.hasUnreadMessages = total > 0;
+    });
+  }
 
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
   }
 
   toggleDarkMode(): void {
-    this.isDarkMode = !this.isDarkMode;
-    document.body.classList.toggle('dark-mode', this.isDarkMode);
+    this.darkModeService.toggle();
+  }
+
+  isInChats(): boolean {
+    return this.router.url.startsWith('/chats');
   }
 }

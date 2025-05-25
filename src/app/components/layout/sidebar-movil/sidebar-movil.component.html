@@ -35,7 +35,12 @@
       <a routerLink="/chats" title="Chats" class="nav-link-wrapper">
         <div class="icon-wrapper">
           <i class="bi bi-chat-dots me-2"></i>
-          <span class="dot" *ngIf="router.url === '/chats'"></span>
+
+          <!-- Punto activo (ruta actual) -->
+          <span class="dot route-dot" *ngIf="router.url === '/chats'"></span>
+
+          <!-- Bolita de notificación de mensajes no leídos -->
+          <span class="dot unread-dot" *ngIf="hasUnreadMessages && !isInChats()"></span>
         </div>
         <span>Mensajes</span>
       </a>

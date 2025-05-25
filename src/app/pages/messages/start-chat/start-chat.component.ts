@@ -7,6 +7,8 @@ import { MessageService } from '../message.service';
 import { User } from '../../../models/user.model';
 import {NavbarWrapperComponent} from '../../../components/layout/navbar-wrapper/navbar-wrapper.component';
 import {LoaderComponent} from '../../../components/shared/loader/loader.component';
+import Swal from 'sweetalert2';
+import { Renderer2, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-start-chat',
@@ -26,11 +28,17 @@ export class StartChatComponent implements OnInit {
   constructor(
     private userService: UserService,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2,
+    private elRef: ElementRef
   ) {}
 
   async ngOnInit() {
     this.isLoading = true;
+    const isDark = localStorage.getItem('darkMode') === 'true';
+    this.renderer[isDark ? 'addClass' : 'removeClass'](this.elRef.nativeElement, 'dark-mode');
+    document.body.classList.toggle('dark-mode', isDark);
+
 
     const currentUser = this.userService.getCurrentUser();
     if (!currentUser) return;
@@ -60,7 +68,7 @@ export class StartChatComponent implements OnInit {
         this.isLoading = false;
       },
       error: err => {
-        console.error('❌ Error al obtener usuarios:', err);
+        console.error(' Error al obtener usuarios:', err);
         this.isLoading = false;
       }
     });
@@ -86,7 +94,12 @@ export class StartChatComponent implements OnInit {
 
   startChat(userId: number) {
     if (userId === this.currentUserId) {
-      alert("No puedes iniciar un chat contigo misma 🙃");
+      Swal.fire({
+        icon: 'warning',
+        title: 'Ups...',
+        text: 'No puedes iniciar un chat contigo misma',
+        confirmButtonColor: '#14b8a6'
+      });
       return;
     }
 
