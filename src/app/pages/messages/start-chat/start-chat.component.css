@@ -1,7 +1,7 @@
 .start-chat-wrapper {
   padding: 6rem 1.5rem 3rem;
-  max-width: 600px;
   margin: 0 auto;
+  height: 100vh;
 }
 
 .header {
@@ -140,5 +140,40 @@ app-loader {
   background-color: #e0f2fe;
   padding: 0.25rem 0.6rem;
   border-radius: 6px;
+}
+
+
+:host-context(.dark-mode) .start-chat-wrapper {
+  background: linear-gradient(to bottom, #1e293b, #0f172a);
+}
+
+:host-context(.dark-mode) .header h2,
+:host-context(.dark-mode) .header p,
+:host-context(.dark-mode) .user-name,
+:host-context(.dark-mode) .user-email,
+:host-context(.dark-mode) .section-title,
+:host-context(.dark-mode) .no-results {
+  color: #e2e8f0 !important;
+}
+
+:host-context(.dark-mode) .search {
+  background-color: #1e293b;
+  color: #f1f5f9;
+  border-color: #334155;
+}
+
+:host-context(.dark-mode) .search::placeholder {
+  color: #94a3b8;
+}
+
+:host-context(.dark-mode) .user-list li,
+:host-context(.dark-mode) .chat-card {
+  background-color: #1f2937;
+  border-color: #334155;
+}
+
+:host-context(.dark-mode) .badge {
+  background-color: #1e40af;
+  color: #e0f2fe;
 }
 

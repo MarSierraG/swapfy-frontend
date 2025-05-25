@@ -20,9 +20,16 @@
 
   <div *ngIf="conversations.length > 0; else noChats">
     <ul>
-      <li *ngFor="let convo of conversations" (click)="openChat(convo.userId)">
-        <div class="convo-name">{{ convo.name }}</div>
-        <div class="convo-message">{{ convo.lastMessage }}</div>
+      <li *ngFor="let convo of conversations" (click)="openChat(convo.userId)" class="convo-item">
+        <div class="convo-left">
+          <div class="convo-name">{{ convo.name }}</div>
+          <div class="convo-message">{{ convo.lastMessage }}</div>
+        </div>
+        <div class="convo-right">
+    <span class="unread-badge" *ngIf="unreadSummary[convo.userId]">
+      {{ unreadSummary[convo.userId] }}
+    </span>
+        </div>
       </li>
     </ul>
   </div>

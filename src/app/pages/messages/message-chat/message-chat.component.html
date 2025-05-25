@@ -19,10 +19,13 @@
       [(ngModel)]="content"
       name="message"
       placeholder="Escribe un mensaje..."
+      [attr.maxLength]="maxLength"
+      title="Máximo 500 caracteres"
       required
     />
     <button type="submit">
       <span class="material-symbols-outlined">send</span>
     </button>
   </form>
+
 </div>
