@@ -147,7 +147,7 @@ export class UsersComponent implements OnInit {
           return;
         }
 
-        if (!location || location.length < 2 || location.length > 100) {
+        if (location && (location.length < 2 || location.length > 100)) {
           Swal.showValidationMessage('La localización debe tener entre 2 y 100 caracteres.');
           return;
         }
@@ -156,6 +156,7 @@ export class UsersComponent implements OnInit {
           Swal.showValidationMessage('La biografía no puede superar los 300 caracteres.');
           return;
         }
+
 
         if (isNaN(credits) || credits < 0) {
           Swal.showValidationMessage('Los créditos deben ser un número igual o mayor que 0.');

@@ -1,0 +1,75 @@
+<app-navbar-wrapper></app-navbar-wrapper>
+
+<div class="summary-container mt-5">
+  <!-- Título de la sección -->
+  <div class="section-header mb-4">
+    <i class="bi bi-bar-chart-fill me-2"></i>
+    <span>Resumen de actividad</span>
+  </div>
+
+  <p class="summary-subtext">Estadísticas actuales de uso y créditos:</p>
+
+  <!-- Estadísticas principales -->
+  <div class="admin-grid mt-4">
+    <div class="admin-card shadow-sm">
+      <i class="bi bi-coin icon"></i>
+      <h4 class="label">Total de créditos gastados</h4>
+      <p class="desc fs-4 fw-semibold text-dark">{{ totalSpentCredits }}</p>
+    </div>
+
+    <div class="admin-card shadow-sm">
+      <i class="bi bi-box-seam icon"></i>
+      <h4 class="label">Total de artículos publicados</h4>
+      <p class="desc fs-4 fw-semibold text-dark">{{ totalPublishedItems }}</p>
+    </div>
+
+    <div class="admin-card shadow-sm">
+      <i class="bi bi-people icon"></i>
+      <h4 class="label">Total de personas con las que has hablado</h4>
+      <p class="desc fs-4 fw-semibold text-dark">{{ conversationCount }}</p>
+    </div>
+  </div>
+
+
+  <!-- Botón PDF + volver -->
+  <div class="d-flex gap-3 mt-5">
+    <button class="btn btn-outline-primary" (click)="downloadExtract()">
+      <i class="bi bi-file-earmark-pdf me-2"></i> Descargar extracto de créditos (PDF)
+    </button>
+
+    <button class="btn btn-outline-secondary" routerLink="/settings">
+      <i class="bi bi-arrow-left me-1"></i> Volver a ajustes
+    </button>
+  </div>
+
+  <!-- Historial de créditos -->
+  <div class="credit-history">
+    <div class="section-header mb-4">
+      <i class="bi bi-clock-history me-2 icon"></i>
+      <span>Historial de créditos</span>
+    </div>
+
+    <div *ngIf="credits.length > 0; else noCredits">
+      <table class="table table-bordered table-hover text-center">
+        <thead class="table-light">
+        <tr>
+          <th>Tipo</th>
+          <th>Cantidad</th>
+          <th>Fecha</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let credit of credits">
+          <td>{{ credit.type }}</td>
+          <td>{{ credit.amount }}</td>
+          <td>{{ credit.createdAt | date: 'short' }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noCredits>
+      <p class="text-muted">No se encontraron movimientos de crédito.</p>
+    </ng-template>
+  </div>
+</div>

@@ -66,4 +66,9 @@ export class MessageService {
       { headers }
     );
   }
+
+  getUniqueConversationCount(userId: number): Observable<number> {
+    return this.http.get<number>(`${this.API_URL}/unique-users/${userId}`);
+  }
+
 }

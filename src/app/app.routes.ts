@@ -69,5 +69,10 @@ export const routes: Routes = [
       import('./pages/messages/messages.routes').then(m => m.MESSAGES_ROUTES),
   },
 
+  {
+    path: 'summary',
+    loadComponent: () => import('./pages/summary-page/summary-page.component').then(m => m.SummaryPageComponent)
+  },
+
   { path: '**', redirectTo: '' }
 ];

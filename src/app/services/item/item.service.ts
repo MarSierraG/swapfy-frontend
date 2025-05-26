@@ -44,5 +44,7 @@ export class ItemService {
     return this.http.get<any[]>(url);
   }
 
-
+  getItemsByUser(userId: number): Observable<Item[]> {
+    return this.http.get<Item[]>(`${this.apiUrl}/user/${userId}`);
+  }
 }

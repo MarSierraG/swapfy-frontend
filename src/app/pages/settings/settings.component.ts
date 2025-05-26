@@ -19,6 +19,7 @@ import {
   ValidationErrors,
   AsyncValidatorFn
 } from '@angular/forms';
+import {CreditService} from '../../services/credits/credit.service';
 
 @Component({
   selector: 'app-settings',
@@ -40,6 +41,7 @@ export class SettingsComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private fb: FormBuilder,
+    private creditService: CreditService,
 
   ) {}
 
@@ -139,25 +141,49 @@ export class SettingsComponent implements OnInit {
       return;
     }
 
-    this.userService.updateUser(this.user.userId, updatedData).subscribe({
-      next: (updatedUser) => {
-        this.user = updatedUser;
-        this.isEditing = false;
+    Swal.fire({
+      title: '¿Guardar cambios?',
+      text: 'Editar tu perfil costará 1 crédito. ¿Deseas continuar?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, continuar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#14b8a6',
+      cancelButtonColor: '#ccc'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (!this.user || this.user.credits == null || this.user.credits < 1) {
+          Swal.fire('Créditos insuficientes', 'No tienes créditos disponibles para editar tu perfil.', 'error');
+          return;
+        }
 
-        Swal.fire({
-          title: 'Perfil actualizado',
-          text: 'Tus datos se han guardado correctamente.',
-          icon: 'success',
-          confirmButtonColor: '#14b8a6'
-        });
-      },
-      error: (err) => {
-        console.error('Error al actualizar usuario:', err);
-        Swal.fire({
-          title: 'Error',
-          text: err?.error?.message || 'Ocurrió un problema al guardar los cambios.',
-          icon: 'error',
-          confirmButtonColor: '#e74c3c'
+        this.userService.updateUser(this.user.userId, updatedData).subscribe({
+          next: (updatedUser) => {
+            this.creditService.registrarGasto({
+              userId: updatedUser.userId,
+              amount: -1,
+              type: 'modificación de perfil'
+            }).subscribe();
+
+            this.user = updatedUser;
+            this.user.credits = updatedUser.credits - 1; // Esto si estás usando user.credits aún directamente
+            this.isEditing = false;
+
+            Swal.fire({
+              title: 'Perfil actualizado',
+              text: 'Tus datos se han guardado y se ha descontado 1 crédito.',
+              icon: 'success',
+              confirmButtonColor: '#14b8a6'
+            });
+          },
+          error: (err) => {
+            Swal.fire({
+              title: 'Error',
+              text: err?.error?.message || 'Ocurrió un problema al guardar los cambios.',
+              icon: 'error',
+              confirmButtonColor: '#e74c3c'
+            });
+          }
         });
       }
     });
@@ -192,6 +218,8 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-
+  verMovimientos(): void {
+    this.router.navigate(['summary']);
+  }
 
 }
