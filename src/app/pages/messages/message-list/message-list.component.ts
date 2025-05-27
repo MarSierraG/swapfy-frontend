@@ -8,6 +8,7 @@ import {CommonModule} from '@angular/common';
 import {LoaderComponent} from '../../../components/shared/loader/loader.component';
 import {Renderer2, ElementRef } from '@angular/core';
 import { DarkModeService } from '../../../services/darkmode/dark-mode.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -40,10 +41,9 @@ export class MessageListComponent implements OnInit {
   async ngOnInit() {
     this.isLoading = true;
 
-    // Suscribirse al modo oscuro y forzar recarga
+    // Oscuro
     this.darkModeService.darkMode$.subscribe((isDark) => {
       document.body.classList.toggle('dark-mode', isDark);
-
     });
 
     const user = this.userService.getCurrentUser();
@@ -51,48 +51,44 @@ export class MessageListComponent implements OnInit {
 
     this.userId = user.userId;
 
+    // Obtener resumen de mensajes no leídos
     this.messageService.getUnreadSummary(this.userId).subscribe(summary => {
       this.unreadSummary = summary;
     });
 
-    const sent = await this.messageService.getMessagesSentBy(this.userId).toPromise() ?? [];
-    const received = await this.messageService.getMessagesReceivedBy(this.userId).toPromise() ?? [];
+    // Obtener conversaciones visibles desde el backend
+    this.messageService.getVisibleConversations().subscribe({
+      next: async (users) => {
+        const convoPromises = users.map(async (user) => {
+          const msgs = await this.messageService.getConversation(this.userId, user.userId).toPromise();
 
-    const all = [...sent, ...received];
-    const grouped: { [key: number]: Message[] } = {};
+          const sortedMsgs = msgs?.length
+            ? msgs.sort((a, b) => (b.timestamp ?? '').localeCompare(a.timestamp ?? ''))
+            : [];
 
-    all.forEach(msg => {
-      const otherId = msg.senderUserId === this.userId ? msg.receiverUserId : msg.senderUserId;
-      if (!grouped[otherId]) grouped[otherId] = [];
-      grouped[otherId].push(msg);
+          const last = sortedMsgs[0];
+
+          return {
+            userId: user.userId,
+            name: user.name,
+            lastMessage: last?.content ?? '(sin mensajes)',
+            lastTimestamp: last?.timestamp ? new Date(last.timestamp).getTime() : 0,
+          };
+        });
+
+
+        const resolved = await Promise.all(convoPromises);
+
+        this.conversations = resolved.sort((a, b) => b.lastTimestamp - a.lastTimestamp);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error cargando conversaciones', err);
+        this.isLoading = false;
+      }
     });
 
-    const conversationPromises = Object.entries(grouped)
-      .filter(([otherId]) => +otherId !== this.userId)
-      .map(async ([otherId, msgs]) => {
-        try {
-          const user = await this.userService.getUserById(+otherId).toPromise();
-          const sortedMsgs = msgs.sort((a, b) => (a.timestamp! > b.timestamp! ? -1 : 1));
-          return {
-            userId: +otherId,
-            name: user?.name ?? `Usuario ${otherId}`,
-            lastMessage: sortedMsgs[0].content,
-            lastTimestamp: new Date(sortedMsgs[0].timestamp!).getTime()
-          };
-        } catch {
-          console.warn(`No se encontró el usuario con ID ${otherId}`);
-          return null;
-        }
-      });
-
-    const rawResults = await Promise.all(conversationPromises);
-
-    this.conversations = (rawResults.filter(Boolean) as typeof this.conversations)
-      .sort((a, b) => b.lastTimestamp - a.lastTimestamp);
-
-    this.isLoading = false;
   }
-
 
 
 
@@ -103,4 +99,31 @@ export class MessageListComponent implements OnInit {
   startNewChat() {
     this.router.navigate(['/chats/new']);
   }
+
+  hide(otherUserId: number) {
+    Swal.fire({
+      title: '¿Ocultar conversación?',
+      text: 'Esta conversación desaparecerá de tu lista. Volverá a mostrarse si tú o la otra persona escribís un nuevo mensaje.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, ocultar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.messageService.hideConversation(otherUserId).subscribe({
+          next: () => {
+            this.conversations = this.conversations.filter(c => c.userId !== otherUserId);
+            Swal.fire('Conversación ocultada', '', 'success');
+          },
+          error: (err) => {
+            console.error('Error al ocultar conversación', err);
+            Swal.fire('Error', 'No se pudo ocultar la conversación', 'error');
+          }
+        });
+      }
+    });
+  }
+
+
+
 }

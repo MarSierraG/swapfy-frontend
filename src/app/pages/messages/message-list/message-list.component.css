@@ -200,3 +200,15 @@ app-loader {
 :host-context(.dark-mode) .convo-message {
   color: #e2e8f0;
 }
+
+.hide-btn {
+  background-color: transparent;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.hide-btn:hover {
+  color: red;
+}

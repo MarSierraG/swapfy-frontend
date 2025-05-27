@@ -71,4 +71,20 @@ export class MessageService {
     return this.http.get<number>(`${this.API_URL}/unique-users/${userId}`);
   }
 
+  getVisibleConversations(): Observable<any[]> {
+    const token = localStorage.getItem('token');
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    return this.http.get<any[]>(`${this.API_URL}/visible-conversations`, { headers });
+  }
+
+  hideConversation(otherUserId: number) {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.post(`${this.API_URL.replace('/messages', '')}/hidden-conversations/hide/${otherUserId}`, {}, { headers });
+  }
+
+
 }
