@@ -1,0 +1,90 @@
+<app-navbar-wrapper></app-navbar-wrapper>
+
+<div class="page-wrapper main-content">
+  <div class="container mt-4 pb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="admin-title">
+        <i class="bi bi-cash-coin me-2 icon"></i> Gestión de Créditos
+      </h3>
+    </div>
+
+    <p class="text-muted">Desde aquí podrás ver, editar o eliminar movimientos de crédito.</p>
+
+    <!-- Spinner -->
+    <div *ngIf="isLoading" class="text-center my-5">
+      <app-loader></app-loader>
+    </div>
+
+    <!-- Mensaje si no hay créditos -->
+    <div *ngIf="!isLoading && credits.length === 0" class="text-center my-5">
+      <p class="text-muted">No hay movimientos de crédito registrados aún.</p>
+    </div>
+
+    <!-- Filtro de búsqueda -->
+    <div class="row g-2 mb-3">
+      <div class="col-md-3">
+        <select class="form-select" [(ngModel)]="selectedFilter">
+          <option value="id">ID Movimiento</option>
+          <option value="user">Nombre Usuario</option>
+          <option value="userId">ID Usuario</option>
+          <option value="type">Tipo</option>
+          <option value="amount">Monto</option>
+        </select>
+      </div>
+      <div class="col-md-9">
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input
+            class="form-control"
+            [type]="selectedFilter === 'id' || selectedFilter === 'amount' ? 'number' : 'text'"
+            placeholder="Buscar movimiento..."
+            [(ngModel)]="searchValue"
+          />
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Tabla de créditos -->
+    <div class="table-responsive" *ngIf="!isLoading && credits.length > 0">
+      <table class="table table-striped align-middle shadow-sm rounded">
+        <thead>
+        <tr class="custom-table-header">
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>ID Usuario</th>
+          <th>Monto</th>
+          <th>Tipo</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let credit of filteredCredits.slice(0, visibleCount)">
+          <td>{{ credit.creditId }}</td>
+          <td>{{ credit.userName || '—' }}</td>
+          <td>{{ credit.userId }}</td>
+          <td>{{ credit.amount }}</td>
+          <td>{{ credit.type }}</td>
+          <td>{{ credit.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td class="d-flex flex-wrap gap-1">
+            <button class="btn btn-sm btn-outline-primary" (click)="editCredit(credit)" title="Editar">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger" (click)="deleteCredit(credit)" title="Eliminar">
+              <i class="bi bi-trash3"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <!-- Paginación -->
+      <div class="text-center mt-3" *ngIf="visibleCount < filteredCredits.length">
+        <button class="btn btn-outline-secondary" (click)="showMoreCredits()">
+          <i class="bi bi-chevron-down me-1"></i> Mostrar más
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

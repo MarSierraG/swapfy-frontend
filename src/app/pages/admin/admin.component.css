@@ -10,18 +10,22 @@
   padding: 2rem;
 }
 
-.admin-title {
-  font-size: 2.4rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 2.5rem;
+.bi-tools{
+  color:#0A9396;
+}
+
+.section-header {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #0f172a;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  border-bottom: 2px solid #00b3b3;
-  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid #009ba5;
 }
-
 .admin-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));

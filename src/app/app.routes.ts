@@ -74,5 +74,14 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/summary-page/summary-page.component').then(m => m.SummaryPageComponent)
   },
 
+  {
+    path: 'admin/credits',
+    loadComponent: () =>
+      import('./pages/admin/credits/credit-admin-page.component').then(
+        (m) => m.CreditAdminPageComponent
+      ),
+  },
+
+
   { path: '**', redirectTo: '' }
 ];

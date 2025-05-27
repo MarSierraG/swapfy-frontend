@@ -2,9 +2,11 @@
 
 <div class="admin-dashboard-wrapper">
   <div class="admin-container">
-    <h2 class="admin-title">
-      <i class="bi bi-tools me-2"></i> Panel de Administración
-    </h2>
+    <div class="section-header mb-4">
+      <i class="bi bi-tools me-2"></i>
+      <span>Panel de Administración</span>
+    </div>
+
 
     <div class="admin-grid">
       <a routerLink="/admin/users" class="admin-card shadow-sm">
@@ -23,6 +25,12 @@
         <i class="bi bi-tags icon"></i>
         <h4 class="label">Etiquetas</h4>
         <p class="desc">Organiza tus categorías</p>
+      </a>
+
+      <a routerLink="/admin/credits" class="admin-card shadow-sm">
+        <i class="bi bi-cash-coin icon"></i>
+        <h4 class="label">Créditos</h4>
+        <p class="desc">Gestiona los movimientos de crédito</p>
       </a>
     </div>
   </div>

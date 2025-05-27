@@ -4,19 +4,23 @@
 
 <div class="chat-wrapper">
   <div class="chat-header">
-    <div class="chat-title">
+    <div class="section-header mb-4">
       <span class="material-symbols-outlined">forum</span>
       <div>
-        <h1>Tus conversaciones</h1>
-        <p>Gestiona tus mensajes privados</p>
+        <span>Tus conversaciones</span>
       </div>
     </div>
+  </div>
+
+  <div class="message-info">
+    <p>Gestiona tus mensajes privados</p>
 
     <button class="new-chat-btn" (click)="startNewChat()">
-      <span class="material-symbols-outlined">add</span>
+      <span class="material-symbols-outlined" style="color: white">add</span>
       Nuevo
     </button>
   </div>
+
 
   <div *ngIf="conversations.length > 0; else noChats">
     <ul>

@@ -24,4 +24,17 @@ export class CreditService {
     return this.http.get<Credit[]>(`${environment.apiUrl}/credits/user/${userId}`);
   }
 
+  getAllCredits(): Observable<Credit[]> {
+    return this.http.get<Credit[]>(`${this.baseUrl}`);
+  }
+
+  updateCredit(id: number, data: Partial<Credit>) {
+    return this.http.put(`${this.baseUrl}/${id}`, data);
+  }
+
+  deleteCredit(id: number) {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
+
 }
