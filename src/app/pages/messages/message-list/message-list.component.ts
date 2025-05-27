@@ -63,10 +63,10 @@ export class MessageListComponent implements OnInit {
           const msgs = await this.messageService.getConversation(this.userId, user.userId).toPromise();
 
           const sortedMsgs = msgs?.length
-            ? msgs.sort((a, b) => (b.timestamp ?? '').localeCompare(a.timestamp ?? ''))
+            ? msgs.sort((a, b) => new Date(b.timestamp!).getTime() - new Date(a.timestamp!).getTime())
             : [];
 
-          const last = sortedMsgs[0];
+          const last = sortedMsgs[0];  // último mensaje más reciente
 
           return {
             userId: user.userId,

@@ -66,7 +66,7 @@
           <td>{{ credit.userId }}</td>
           <td>{{ credit.amount }}</td>
           <td>{{ credit.type }}</td>
-          <td>{{ credit.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ credit.createdAt | madridDate }}</td>
           <td class="d-flex flex-wrap gap-1">
             <button class="btn btn-sm btn-outline-primary" (click)="editCredit(credit)" title="Editar">
               <i class="bi bi-pencil-square"></i>

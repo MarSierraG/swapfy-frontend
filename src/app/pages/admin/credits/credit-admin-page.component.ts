@@ -6,11 +6,12 @@ import { NavbarWrapperComponent } from '../../../components/layout/navbar-wrappe
 import { LoaderComponent } from '../../../components/shared/loader/loader.component';
 import Swal from 'sweetalert2';
 import {FormsModule} from '@angular/forms';
+import {MadridDatePipe} from '../../../pipes/madrid-date.pipe';
 
 @Component({
   selector: 'app-credit-admin-page',
   standalone: true,
-  imports: [CommonModule, DatePipe, NavbarWrapperComponent, LoaderComponent, FormsModule],
+  imports: [CommonModule, DatePipe, NavbarWrapperComponent, LoaderComponent, FormsModule, MadridDatePipe],
   templateUrl: './credit-admin-page.component.html',
   styleUrls: ['./credit-admin-page.component.css']
 })

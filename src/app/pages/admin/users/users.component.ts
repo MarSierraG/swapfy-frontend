@@ -6,6 +6,7 @@ import { User } from '../../../models/user.model';
 import Swal from 'sweetalert2';
 import {LoaderComponent} from '../../../components/shared/loader/loader.component';
 import {NavbarWrapperComponent} from '../../../components/layout/navbar-wrapper/navbar-wrapper.component';
+import {MadridDatePipe} from '../../../pipes/madrid-date.pipe';
 
 
 @Component({
@@ -13,7 +14,7 @@ import {NavbarWrapperComponent} from '../../../components/layout/navbar-wrapper/
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
-  imports: [CommonModule, FormsModule, LoaderComponent, NavbarWrapperComponent],
+  imports: [CommonModule, FormsModule, LoaderComponent, NavbarWrapperComponent, MadridDatePipe],
 })
 export class UsersComponent implements OnInit {
   users: User[] = [];

@@ -9,6 +9,7 @@ import { LoaderComponent } from '../../../components/shared/loader/loader.compon
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
 import {Subscription} from 'rxjs';
+import {MadridDatePipe} from '../../../pipes/madrid-date.pipe';
 
 
 @Component({
@@ -16,7 +17,7 @@ import {Subscription} from 'rxjs';
   selector: 'app-message-chat',
   templateUrl: './message-chat.component.html',
   styleUrls: ['./message-chat.component.css'],
-  imports: [CommonModule, FormsModule, MatSnackBarModule, NavbarWrapperComponent, LoaderComponent],
+  imports: [CommonModule, FormsModule, MatSnackBarModule, NavbarWrapperComponent, LoaderComponent, MadridDatePipe],
 })
 export class MessageChatComponent implements OnInit {
   messages: Message[] = [];
@@ -82,7 +83,10 @@ export class MessageChatComponent implements OnInit {
     this.messageService
       .getConversation(this.userId, this.otherUserId)
       .subscribe((messages: Message[]) => {
-        this.messages = messages.sort((a, b) => (a.timestamp! > b.timestamp! ? 1 : -1));
+        this.messages = messages.sort((a, b) =>
+          new Date(a.timestamp!).getTime() - new Date(b.timestamp!).getTime()
+        );
+
 
         if (showLoader) this.isLoading = false;
 

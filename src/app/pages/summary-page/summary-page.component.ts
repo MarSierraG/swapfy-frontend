@@ -9,6 +9,7 @@ import {MessageService} from '../messages/message.service';
 import {environment} from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import {Credit} from '../../models/credit.model';
+import {MadridDatePipe} from '../../pipes/madrid-date.pipe';
 
 
 @Component({
@@ -16,7 +17,7 @@ import {Credit} from '../../models/credit.model';
   selector: 'app-summary-page',
   templateUrl: './summary-page.component.html',
   styleUrls: ['./summary-page.component.css'],
-  imports: [CommonModule, NavbarWrapperComponent]
+  imports: [CommonModule, NavbarWrapperComponent, MadridDatePipe]
 })
 export class SummaryPageComponent implements OnInit {
   constructor(
