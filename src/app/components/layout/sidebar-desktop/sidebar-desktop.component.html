@@ -21,9 +21,6 @@
     <li routerLinkActive="active">
       <a routerLink="/settings" title="Ajustes"><i class="bi bi-gear"></i></a>
     </li>
-    <li routerLinkActive="active">
-      <a routerLink="/credits" title="Créditos"><i class="bi bi-coin"></i></a>
-    </li>
     <li *ngIf="authService.isAdmin()" routerLinkActive="active">
       <a routerLink="/admin" title="Panel Admin">
         <i class="bi bi-shield-lock-fill"></i>

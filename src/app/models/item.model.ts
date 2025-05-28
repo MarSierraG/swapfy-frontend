@@ -16,4 +16,5 @@ export interface Item {
   tagNames: string[];
   tags?: Tag[];
   imageUrl: string;
+  userEmail: string;
 }

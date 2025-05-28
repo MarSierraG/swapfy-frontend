@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {User} from '../../models/user.model';
+import {catchError} from 'rxjs/operators';
 
 
 @Injectable({ providedIn: 'root' })
@@ -36,4 +37,11 @@ export class UserService {
     const userJson = localStorage.getItem('user');
     return userJson ? JSON.parse(userJson) as User : null;
   }
+
+  getUserByEmail(email: string): Observable<User | null> {
+    return this.http.get<User>(`${this.apiUrl}/email/${email}`).pipe(
+      catchError(() => of(null))
+    );
+  }
+
 }

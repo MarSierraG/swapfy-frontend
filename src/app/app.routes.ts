@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
 import { HomeComponent }      from './pages/home/home.component';
 import { StoreComponent }     from './pages/store/store.component';
-import { DummyComponent }     from './pages/dummy/dummy.component';
 import { CreateItemComponent } from './pages/create-item/create-item.component';
 import { AuthPageComponent } from './pages/auth/auth-page.component';
 import {ForgotPasswordComponent} from './pages/auth/forgot-password/forgot-password.component';
@@ -24,8 +23,6 @@ export const routes: Routes = [
   { path: 'home',           component: HomeComponent,        canActivate: [authGuard] },
   { path: 'store',          component: StoreComponent,       canActivate: [authGuard] },
   { path: 'crear-articulo', component: CreateItemComponent,  canActivate: [authGuard] },
-  { path: 'credits',        component: DummyComponent,       canActivate: [authGuard] },
-
   {
     path: 'admin',
     loadComponent: () =>

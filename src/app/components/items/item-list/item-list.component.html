@@ -6,7 +6,7 @@
 <div *ngIf="!isLoading && items.length === 0 && showOwner">
 
   <!-- Sin búsqueda activa -->
-  <div *ngIf="!searchTerm" class="text-center my-5 text-muted">
+  <div *ngIf="!searchTerm && isViewingOwnStore && searchField !== 'email'" class="text-center my-5 text-muted">
     <i class="bi bi-box-seam-fill fs-1 d-block mb-3"></i>
     <p class="mb-2">Aún no has publicado ningún artículo.</p>
     <a class="btn btn-outline-primary" routerLink="/crear-articulo">

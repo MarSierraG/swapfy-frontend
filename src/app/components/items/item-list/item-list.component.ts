@@ -18,6 +18,9 @@ export class ItemListComponent {
   @Input() isLoading: boolean = true;
   @Input() onReload?: () => void;
   @Input() searchTerm: string = '';
+  @Input() searchField: string = 'title';
+  @Input() isViewingOwnStore: boolean = true;
+
 
 }
 

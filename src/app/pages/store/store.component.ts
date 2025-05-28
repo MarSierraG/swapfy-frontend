@@ -8,13 +8,15 @@ import { NavbarWrapperComponent } from '../../components/layout/navbar-wrapper/n
 import { ItemService } from '../../services/item/item.service';
 import { Item } from '../../models/item.model';
 import { AuthService } from '../../services/auth/auth.service';
+import {UserService} from '../../services/user/user.service';
+import {LoaderComponent} from '../../components/shared/loader/loader.component';
 
 @Component({
   selector: 'app-store',
   standalone: true,
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.css'],
-  imports: [CommonModule, RouterModule, ItemListComponent, NavbarWrapperComponent]
+  imports: [CommonModule, RouterModule, ItemListComponent, NavbarWrapperComponent,  LoaderComponent]
 })
 export class StoreComponent implements OnInit {
   items: Item[] = [];
@@ -23,9 +25,17 @@ export class StoreComponent implements OnInit {
   searchTerm: string = '';
   filteredItems: Item[] = [];
   searchField: string = 'title';
+  externalUserEmail: string | null = null;
+  externalUserName: string | null = null;
+  isViewingOwnStore = true;
+  isSearchingExternalUser = false;
 
 
-  constructor(private itemService: ItemService, private auth: AuthService) {}
+
+  constructor
+  (private itemService: ItemService,
+              private auth: AuthService,
+              private userService: UserService ) {}
 
   ngOnInit(): void {
     this.userId = this.auth.currentUserId()!;
@@ -75,8 +85,61 @@ export class StoreComponent implements OnInit {
   onSearchChanged({ term, field }: { term: string; field: string }): void {
     this.searchTerm = term;
     this.searchField = field;
-    this.applyFilter();
+
+    if (this.searchField === 'email') {
+      this.isSearchingExternalUser = true;
+
+      this.userService.getUserByEmail(term).subscribe(user => {
+        if (user) {
+          this.externalUserEmail = user.email;
+          this.externalUserName = user.name;
+          this.isViewingOwnStore = user.userId === this.userId;
+
+          this.itemService.getItemsByUserId(user.userId).subscribe({
+            next: (data) => {
+              this.items = data;
+              this.filteredItems = data;
+              this.isLoading = false;
+              this.isSearchingExternalUser = false;
+            },
+            error: (err) => {
+              console.error('Error cargando artículos del email:', err);
+              this.isLoading = false;
+              this.isSearchingExternalUser = false;
+            }
+          });
+        } else {
+          this.items = [];
+          this.filteredItems = [];
+          this.externalUserEmail = null;
+          this.externalUserName = null;
+          this.isViewingOwnStore = false;
+          this.isLoading = false;
+          this.isSearchingExternalUser = false;
+        }
+      });
+    } else {
+      this.externalUserEmail = null;
+      this.externalUserName = null;
+      this.isViewingOwnStore = true;
+      this.isSearchingExternalUser = false;
+
+      this.itemService.getItemsByUserId(this.userId).subscribe({
+        next: (data) => {
+          this.items = data;
+          this.applyFilter();
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Error al volver a cargar tus artículos:', err);
+          this.isLoading = false;
+        }
+      });
+    }
+
+
   }
+
 
 
 }

@@ -54,15 +54,6 @@
         <span>Ajustes</span>
       </a>
     </li>
-    <li routerLinkActive="active">
-      <a routerLink="/credits" title="Créditos" class="nav-link-wrapper">
-        <div class="icon-wrapper">
-          <i class="bi bi-coin me-2"></i>
-          <span class="dot" *ngIf="router.url === '/credits'"></span>
-        </div>
-        <span>Créditos</span>
-      </a>
-    </li>
     <li *ngIf="authService.isAdmin()" routerLinkActive="active">
       <a routerLink="/admin" title="Panel Admin" class="nav-link-wrapper">
         <div class="icon-wrapper">

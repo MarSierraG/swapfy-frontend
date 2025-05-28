@@ -2,25 +2,45 @@
   (searchTermEmitter)="onSearchChanged($event)"
 ></app-navbar-wrapper>
 
+
+
 <div class="page-wrapper main-content">
   <div class="section-header mb-4">
     <i class="bi bi-box-fill me-2 icon"></i>
-    <span>Mis artículos</span>
+    <span *ngIf="isViewingOwnStore">Mis artículos</span>
+
+    <!-- Si estás buscando por email pero no hay nombre aún -->
+    <span *ngIf="!isViewingOwnStore && !externalUserName && !externalUserEmail">
+      Buscando artículos del usuario...
+    </span>
+
+    <!-- Si hay al menos email o nombre -->
+    <span *ngIf="!isViewingOwnStore && (externalUserName || externalUserEmail)">
+      Artículos publicados por
+      <ng-container *ngIf="externalUserName">{{ externalUserName }}</ng-container>
+      <ng-container *ngIf="externalUserEmail">({{ externalUserEmail }})</ng-container>
+    </span>
   </div>
+
 
   <!-- Mostrar solo si hay artículos -->
   <button
-    *ngIf="items.length > 0"
+    *ngIf="isViewingOwnStore && items.length > 0"
     class="btn btn-outline-primary d-flex align-items-center gap-2 px-3 py-2 shadow-sm rounded-pill fw-semibold"
     routerLink="/crear-articulo"
   >
     <i class="bi bi-plus-circle fs-5"></i> Crear artículo
   </button>
 
+
   <app-item-list
     [items]="filteredItems"
     [isLoading]="isLoading"
     [showOwner]="true"
     [searchTerm]="searchTerm"
-  ></app-item-list>
+    [searchField]="searchField"
+    [isViewingOwnStore]="isViewingOwnStore"
+  />
+
+
 </div>

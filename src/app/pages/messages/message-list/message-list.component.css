@@ -201,6 +201,10 @@ app-loader {
   color: #e2e8f0;
 }
 
+:host-context(.dark-mode) .title{
+  color: white;
+}
+
 .hide-btn {
   background-color: transparent;
   border: none;
@@ -212,3 +216,4 @@ app-loader {
 .hide-btn:hover {
   color: red;
 }
+
