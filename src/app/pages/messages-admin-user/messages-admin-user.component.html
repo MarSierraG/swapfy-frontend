@@ -1,0 +1,42 @@
+<app-navbar-wrapper></app-navbar-wrapper>
+<app-loader *ngIf="isLoading"></app-loader>
+
+<div class="chat-wrapper">
+  <div class="chat-header">
+    <div class="section-header mb-4">
+      <i class="bi bi-chat-dots-fill swapfy-icon"></i>
+      <div>
+        <span class="title">Conversaciones del usuario #{{ userId }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="message-info">
+    <p>Historial de mensajes del usuario</p>
+  </div>
+
+  <div *ngIf="conversations.length > 0; else noChats">
+    <ul>
+      <li *ngFor="let convo of conversations" class="convo-item">
+        <div class="convo-left" (click)="openChatWithUser(convo.userId)">
+          <div class="convo-name">{{ convo.name }}</div>
+          <div class="convo-message">{{ convo.lastMessage }}</div>
+        </div>
+        <div class="convo-right">
+          <span class="unread-badge" *ngIf="unreadSummary[convo.userId]">
+            {{ unreadSummary[convo.userId] }}
+          </span>
+          <button (click)="deleteConversation(convo.userId); $event.stopPropagation()" class="hide-btn">
+            Eliminar
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #noChats>
+    <div class="empty">
+      <p>No hay conversaciones registradas para este usuario.</p>
+    </div>
+  </ng-template>
+</div>

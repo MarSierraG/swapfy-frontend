@@ -1,0 +1,15 @@
+<app-navbar-wrapper></app-navbar-wrapper>
+<app-loader *ngIf="isLoading"></app-loader>
+
+<div class="chat-container">
+  <div class="messages" #messageContainer>
+    <div
+      *ngFor="let msg of messages"
+      [class.me]="msg.senderUserId === userId"
+      [class.other]="msg.senderUserId !== userId"
+    >
+      <p>{{ msg.content }}</p>
+      <small>{{ msg.timestamp | madridDate }}</small>
+    </div>
+  </div>
+</div>

@@ -92,6 +92,28 @@ export const routes: Routes = [
       import('./pages/unauthorized/unauthorized.component').then(m => m.UnauthorizedComponent),
   },
 
+  {
+    path: 'admin/messages-admin',
+    loadComponent: () => import('./pages/admin/messages/message-chat.component').then(m => m.MessagesComponent),
+    canActivate: [authGuard, AdminGuard]
+  },
+
+  {
+    path: 'admin/messages-admin/user/:id',
+    loadComponent: () =>
+      import('./pages/messages-admin-user/messages-admin-user.component').then(m => m.MessagesAdminUserComponent),
+      canActivate: [authGuard, AdminGuard]
+  },
+
+  {
+    path: 'admin/messages-admin/conversation/:userId/:otherUserId',
+    loadComponent: () =>
+      import('./pages/messages-admin-user/messages-admin-conversation/messages-admin-conversation.component').then(
+        (m) => m.MessagesAdminConversationComponent
+      ),
+    canActivate: [authGuard, AdminGuard]
+  },
+
 
   {
     path: '**',

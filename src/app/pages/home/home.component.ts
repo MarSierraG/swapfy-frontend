@@ -29,7 +29,6 @@ export class HomeComponent implements OnInit {
   constructor(private itemService: ItemService, private auth: AuthService) {}
 
   ngOnInit(): void {
-    console.log('¿Es admin?', this.auth.isAdmin());
     this.userName = this.auth.currentUserName() ?? 'Usuario';
     const myId = this.auth.currentUserId();
 

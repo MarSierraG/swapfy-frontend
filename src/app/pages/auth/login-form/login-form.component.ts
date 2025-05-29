@@ -65,8 +65,6 @@ export class LoginFormComponent {
 
     this.authService.login(formData).subscribe({
       next: ({ user }) => {
-        console.log('Login exitoso');
-        console.log('Usuario recibido del backend:', user);
 
         Swal.fire({
           title: `¡Bienvenido, ${user.name}!`,

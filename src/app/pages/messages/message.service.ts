@@ -86,5 +86,23 @@ export class MessageService {
     return this.http.post(`${this.API_URL.replace('/messages', '')}/hidden-conversations/hide/${otherUserId}`, {}, { headers });
   }
 
+  getVisibleConversationsForAdmin(userId: number): Observable<any[]> {
+    const token = localStorage.getItem('token');
+    const headers = {
+      Authorization: `Bearer ${token}`
+    };
+
+    return this.http.get<any[]>(
+      `${this.API_URL}/admin/visible-conversations/${userId}`,
+      { headers }
+    );
+  }
+
+  deleteConversation(userId: number, otherUserId: number) {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+
+    return this.http.delete(`${this.API_URL}/conversation?user1=${userId}&user2=${otherUserId}`, { headers });
+  }
 
 }
