@@ -47,7 +47,7 @@ export class RegisterFormComponent {
       ],
       email: [
         '',
-        [Validators.required, Validators.email, Validators.maxLength(254)],
+        [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/), Validators.maxLength(100)],
         [this.emailUnicoValidator()]
       ],
 
@@ -104,6 +104,8 @@ export class RegisterFormComponent {
 
 
   onSubmit(): void {
+    this.registerForm.markAllAsTouched();
+
     if (!this.registerForm.valid) {
       this.setTimedError('Por favor completa todos los campos correctamente.');
       return;

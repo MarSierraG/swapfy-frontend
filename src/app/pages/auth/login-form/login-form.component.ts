@@ -33,8 +33,8 @@ export class LoginFormComponent {
         {
           validators: [
             Validators.required,
-            Validators.email,
-            Validators.maxLength(254)
+            Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
+            Validators.maxLength(100)
           ],
           updateOn: 'change'
         }
@@ -56,6 +56,7 @@ export class LoginFormComponent {
 
   onSubmit(): void {
     if (!this.loginForm.valid) {
+      this.loginForm.markAllAsTouched();
       this.setTimedError('Completa todos los campos.');
       return;
     }

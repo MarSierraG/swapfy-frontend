@@ -70,7 +70,7 @@
             Introduce un correo con formato válido.
           </div>
           <div *ngIf="registerForm.get('email')?.errors?.['maxlength']">
-            El correo no puede superar los 254 caracteres.
+            El correo no puede superar los 100 caracteres.
           </div>
         </div>
       </div>
@@ -105,11 +105,6 @@
           </div>
         </div>
       </ng-container>
-
-      <!-- Error bonito -->
-      <div *ngIf="errorMessage" class="swapfy-error">
-        {{ errorMessage }}
-      </div>
 
       <!-- Botón -->
       <button type="submit" class="btn swapfy-button w-100 mt-3">

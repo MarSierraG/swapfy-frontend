@@ -24,11 +24,11 @@
           <div *ngIf="loginForm.get('email')?.errors?.['required']">
             El correo es obligatorio.
           </div>
-          <div *ngIf="loginForm.get('email')?.errors?.['email']">
+          <div *ngIf="loginForm.get('email')?.errors?.['pattern']">
             Introduce un correo con formato válido.
           </div>
           <div *ngIf="loginForm.get('email')?.errors?.['maxlength']">
-            El correo no puede superar los 254 caracteres.
+            El correo no puede superar los 100 caracteres.
           </div>
         </div>
 
@@ -76,18 +76,11 @@
       </div>
     </div>
 
-    <!-- Alerta de error -->
-<!--    <div class="mb-3">-->
-<!--      <div *ngIf="errorMessage" class="invalid-feedback d-block">-->
-<!--        {{ errorMessage }}-->
-<!--      </div>-->
-<!--    </div>-->
 
     <!-- Botón -->
     <button
       type="submit"
-      class="btn swapfy-button w-100 mt-2"
-      [disabled]="loginForm.invalid">
+      class="btn swapfy-button w-100 mt-2">
       Iniciar sesión
     </button>
 
