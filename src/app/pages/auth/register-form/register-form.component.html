@@ -31,7 +31,7 @@
             El nombre debe tener al menos 2 caracteres.
           </div>
           <div *ngIf="registerForm.get('name')?.errors?.['maxlength']">
-            El nombre no puede superar los 100 caracteres.
+            El nombre no puede superar los 15 caracteres.
           </div>
           <div *ngIf="registerForm.get('name')?.errors?.['nombreInvalido']">
             El nombre solo puede contener letras, espacios y guiones.

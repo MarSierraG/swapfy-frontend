@@ -41,7 +41,7 @@ export class RegisterFormComponent {
         [
           Validators.required,
           Validators.minLength(2),
-          Validators.maxLength(100),
+          Validators.maxLength(15),
           this.nombreValidoValidator
         ]
       ],

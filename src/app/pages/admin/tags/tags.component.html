@@ -24,6 +24,11 @@
         type="text"
         placeholder="Buscar etiqueta..."
         [(ngModel)]="searchValue" />
+
+      <select class="form-select" [(ngModel)]="searchField">
+        <option value="name">Nombre</option>
+        <option value="id">ID</option>
+      </select>
     </div>
 
     <!-- Loader -->
@@ -33,7 +38,7 @@
 
     <!-- Sin resultados -->
     <div *ngIf="!isLoading && filteredTags.length === 0" class="text-center my-5">
-      <p class="text-muted">🏷️ No se encontraron etiquetas.</p>
+      <p class="text-muted"> No se encontraron etiquetas.</p>
     </div>
 
     <!-- Tabla -->

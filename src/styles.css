@@ -194,3 +194,8 @@ body.dark-mode .text-muted{
   color: #005f66;
   box-shadow: 0 4px 12px rgba(0, 179, 179, 0.15);
 }
+
+.swapfy-icon {
+  font-size: 2.4rem;
+  color: #009ba5;
+}

@@ -135,11 +135,11 @@ export class UsersComponent implements OnInit {
         const credits = +(document.getElementById('swal-credits') as HTMLInputElement).value;
         const role = (document.getElementById('swal-role') as HTMLSelectElement).value;
 
-        const nombreRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s'-]{2,100}$/;
+        const nombreRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s'-]{2,15}$/;
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!nombreRegex.test(name)) {
-          Swal.showValidationMessage('El nombre debe tener entre 2 y 100 caracteres y solo puede contener letras, espacios y guiones.');
+          Swal.showValidationMessage('El nombre debe tener entre 2 y 15 caracteres y solo puede contener letras, espacios y guiones.');
           return;
         }
 

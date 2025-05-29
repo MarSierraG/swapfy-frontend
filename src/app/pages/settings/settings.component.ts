@@ -63,16 +63,16 @@ export class SettingsComponent implements OnInit {
     this.editForm = this.fb.group({
       name: [
         this.user?.name || '',
-        [Validators.required, Validators.minLength(2), Validators.maxLength(100), this.nombreValidoValidator]
+        [Validators.required, Validators.minLength(2), Validators.maxLength(15), this.nombreValidoValidator]
       ],
       email: [
         this.user?.email || '',
         [Validators.required, Validators.email, Validators.maxLength(254)],
-        [this.emailUnicoValidator(this.user!.userId)]  // ⬅️ validación async
+        [this.emailUnicoValidator(this.user!.userId)]
       ],
       location: [
         this.user?.location || '',
-        [Validators.minLength(2), Validators.maxLength(100)]
+        [Validators.minLength(2), Validators.maxLength(15)]
       ],
       biography: [
         this.user?.biography || '',
@@ -166,7 +166,7 @@ export class SettingsComponent implements OnInit {
             }).subscribe();
 
             this.user = updatedUser;
-            this.user.credits = updatedUser.credits - 1; // Esto si estás usando user.credits aún directamente
+            this.user.credits = updatedUser.credits - 1;
             this.isEditing = false;
 
             Swal.fire({
@@ -208,7 +208,7 @@ export class SettingsComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        // Lógica para eliminar cuenta (llamada a UserService, etc.)
+
         this.userService.deleteUser(this.user!.userId).subscribe(() => {
           localStorage.clear();
           this.router.navigate(['/login']);

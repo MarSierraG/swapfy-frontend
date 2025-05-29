@@ -65,14 +65,14 @@
           <label class="form-label"><i class="bi bi-person-fill"></i> Nombre</label>
           <input formControlName="name" type="text" class="form-control editable-active"
                  [class.is-invalid]="editForm.get('name')?.touched && editForm.get('name')?.invalid"
-                 maxlength="100" />
+                 maxlength="15" />
           <div class="form-text text-end">
-            {{ editForm.get('name')?.value?.length || 0 }}/100
+            {{ editForm.get('name')?.value?.length || 0 }}/15
           </div>
           <div *ngIf="editForm.get('name')?.touched && editForm.get('name')?.invalid" class="invalid-feedback d-block mt-1">
             <div *ngIf="editForm.get('name')?.errors?.['required']">El nombre es obligatorio.</div>
             <div *ngIf="editForm.get('name')?.errors?.['minlength']">Mínimo 2 caracteres.</div>
-            <div *ngIf="editForm.get('name')?.errors?.['maxlength']">Máximo 100 caracteres.</div>
+            <div *ngIf="editForm.get('name')?.errors?.['maxlength']">Máximo 15 caracteres.</div>
             <div *ngIf="editForm.get('name')?.errors?.['nombreInvalido']">Solo letras, espacios y guiones permitidos.</div>
           </div>
         </div>

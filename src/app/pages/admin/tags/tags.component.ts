@@ -18,6 +18,7 @@ export class TagsComponent implements OnInit {
   tags: Tag[] = [];
   isLoading = true;
   searchValue: string = '';
+  searchField: 'name' | 'id' = 'name';
 
   constructor(private tagService: TagService) {}
 
@@ -40,9 +41,21 @@ export class TagsComponent implements OnInit {
   }
 
   get filteredTags(): Tag[] {
-    const term = this.searchValue.toLowerCase();
-    return this.tags.filter(tag => tag.name.toLowerCase().includes(term));
+    const term = this.searchValue.trim().toLowerCase();
+
+    if (!term) return this.tags;
+
+    if (this.searchField === 'name') {
+      return this.tags.filter(tag => tag.name.toLowerCase().includes(term));
+    }
+
+    if (this.searchField === 'id') {
+      return this.tags.filter(tag => tag.tagId.toString().includes(term));
+    }
+
+    return this.tags;
   }
+
 
   openCreateModal(): void {
     Swal.fire({
