@@ -7,6 +7,8 @@ import { AuthPageComponent } from './pages/auth/auth-page.component';
 import {ForgotPasswordComponent} from './pages/auth/forgot-password/forgot-password.component';
 import {ResetPasswordComponent} from './pages/auth/reset-password/reset-password.component';
 import {SettingsComponent} from './pages/settings/settings.component';
+import {AdminGuard} from './services/auth/admin.guard';
+
 
 export const routes: Routes = [
 /* Rutas públicas */
@@ -23,11 +25,12 @@ export const routes: Routes = [
   { path: 'home',           component: HomeComponent,        canActivate: [authGuard] },
   { path: 'store',          component: StoreComponent,       canActivate: [authGuard] },
   { path: 'crear-articulo', component: CreateItemComponent,  canActivate: [authGuard] },
+
   {
     path: 'admin',
     loadComponent: () =>
       import('./pages/admin/admin.component').then(m => m.AdminComponent),
-    canActivate: [authGuard]
+    canActivate: [authGuard, AdminGuard]
   },
 
 
@@ -35,7 +38,7 @@ export const routes: Routes = [
     path: 'admin/users',
     loadComponent: () =>
       import('./pages/admin/users/users.component').then(m => m.UsersComponent),
-    canActivate: [authGuard]
+    canActivate: [authGuard, AdminGuard]
   },
 
   {
@@ -46,18 +49,22 @@ export const routes: Routes = [
 
   {
     path: 'admin/items',
-    loadComponent: () => import('./pages/admin/items/items.component').then(m => m.AdminItemsComponent)
+    loadComponent: () =>
+      import('./pages/admin/items/items.component').then(m => m.AdminItemsComponent),
+    canActivate: [authGuard, AdminGuard]
   },
 
   {
     path: 'admin/tags',
-    loadComponent: () => import('./pages/admin/tags/tags.component').then(m => m.TagsComponent),
-    canActivate: [authGuard]
+    loadComponent: () =>
+      import('./pages/admin/tags/tags.component').then(m => m.TagsComponent),
+    canActivate: [authGuard, AdminGuard]
   },
 
   {
     path: 'settings',
-    component: SettingsComponent
+    component: SettingsComponent,
+    canActivate: [authGuard]
   },
 
   {
@@ -68,17 +75,28 @@ export const routes: Routes = [
 
   {
     path: 'summary',
-    loadComponent: () => import('./pages/summary-page/summary-page.component').then(m => m.SummaryPageComponent)
+    loadComponent: () =>
+      import('./pages/summary-page/summary-page.component').then(m => m.SummaryPageComponent)
   },
 
   {
     path: 'admin/credits',
     loadComponent: () =>
-      import('./pages/admin/credits/credit-admin-page.component').then(
-        (m) => m.CreditAdminPageComponent
-      ),
+      import('./pages/admin/credits/credit-admin-page.component').then(m => m.CreditAdminPageComponent),
+    canActivate: [authGuard, AdminGuard]
+  },
+
+  {
+    path: 'unauthorized',
+    loadComponent: () =>
+      import('./pages/unauthorized/unauthorized.component').then(m => m.UnauthorizedComponent),
   },
 
 
-  { path: '**', redirectTo: '' }
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent),
+  }
+
 ];

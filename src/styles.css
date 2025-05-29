@@ -199,3 +199,18 @@ body.dark-mode .text-muted{
   font-size: 2.4rem;
   color: #009ba5;
 }
+
+.swapfy-logo-top-right {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* Opcional si quieres que se vea redondito */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.swapfy-alert {
+  position: relative;
+}
