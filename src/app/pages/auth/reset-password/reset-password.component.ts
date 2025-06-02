@@ -47,36 +47,39 @@ export class ResetPasswordComponent {
   }
 
   onSubmit(): void {
-    if (this.resetForm.valid) {
-      const { email, code, newPassword } = this.resetForm.value;
-
-      this.isLoading = true;
-
-      this.authService.resetPassword({ email, code, newPassword }).subscribe({
-        next: (response) => {
-          this.isLoading = false;
-          Swal.fire({
-            icon: 'success',
-            title: '¡Contraseña actualizada!',
-            text: typeof response === 'string' ? response : 'Ahora puedes iniciar sesión',
-            confirmButtonColor: '#14b8a6'
-          }).then(() => {
-            this.router.navigate(['/auth'], { queryParams: { mode: 'login' } });
-          });
-        },
-        error: (error) => {
-          this.isLoading = false;
-          console.error(error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'El código es inválido o ha expirado',
-            confirmButtonColor: '#e3342f'
-          });
-        }
-      });
+    if (this.resetForm.invalid) {
+      this.resetForm.markAllAsTouched();
+      return;
     }
+
+    const { email, code, newPassword } = this.resetForm.value;
+    this.isLoading = true;
+
+    this.authService.resetPassword({ email, code, newPassword }).subscribe({
+      next: (response) => {
+        this.isLoading = false;
+        Swal.fire({
+          icon: 'success',
+          title: '¡Contraseña actualizada!',
+          text: typeof response === 'string' ? response : 'Ahora puedes iniciar sesión',
+          confirmButtonColor: '#14b8a6'
+        }).then(() => {
+          this.router.navigate(['/auth'], { queryParams: { mode: 'login' } });
+        });
+      },
+      error: (error) => {
+        this.isLoading = false;
+        console.error(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'El código es inválido o ha expirado',
+          confirmButtonColor: '#e3342f'
+        });
+      }
+    });
   }
+
 }
 
 function passwordStrengthValidator(control: AbstractControl): ValidationErrors | null {

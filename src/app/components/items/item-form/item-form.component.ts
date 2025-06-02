@@ -209,4 +209,10 @@ export class ItemFormComponent implements OnInit, OnChanges {
 
   protected readonly HTMLInputElement = HTMLInputElement;
   protected readonly String = String;
+
+  get isMaxTagsReached(): boolean {
+    return this.formItem.tags.length >= 3;
+  }
+
 }
+

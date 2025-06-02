@@ -31,36 +31,40 @@ export class ForgotPasswordComponent {
   }
 
   onSubmit(): void {
-    if (this.forgotForm.valid) {
-      const email = this.forgotForm.value.email;
-
-      this.isLoading = true;
-
-      this.authService.forgotPassword(email).subscribe({
-        next: (response) => {
-          this.isLoading = false;
-          Swal.fire({
-            icon: 'success',
-            title: '¡Código enviado!',
-            text: 'Revisa la bandeja de entrada del correo asociado a tu cuenta',
-            confirmButtonColor: '#14b8a6'
-          }).then(() => {
-            this.router.navigate(['/auth'], { queryParams: { mode: 'reset' } });
-          });
-        },
-        error: (error) => {
-          this.isLoading = false;
-          console.error(error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Correo no encontrado',
-            text: '¡No existe ninguna cuenta con ese correo!',
-            confirmButtonColor: '#e3342f'
-          });
-        }
-      });
+    if (this.forgotForm.invalid) {
+      this.forgotForm.markAllAsTouched();
+      return;
     }
+
+    const email = this.forgotForm.value.email;
+
+    this.isLoading = true;
+
+    this.authService.forgotPassword(email).subscribe({
+      next: (response) => {
+        this.isLoading = false;
+        Swal.fire({
+          icon: 'success',
+          title: '¡Código enviado!',
+          text: 'Revisa la bandeja de entrada del correo asociado a tu cuenta',
+          confirmButtonColor: '#14b8a6'
+        }).then(() => {
+          this.router.navigate(['/auth'], { queryParams: { mode: 'reset' } });
+        });
+      },
+      error: (error) => {
+        this.isLoading = false;
+        console.error(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Correo no encontrado',
+          text: '¡No existe ninguna cuenta con ese correo!',
+          confirmButtonColor: '#e3342f'
+        });
+      }
+    });
   }
+
 
   emitBack(): void {
     this.backToLogin.emit();

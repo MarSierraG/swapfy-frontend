@@ -150,6 +150,7 @@
                 class="form-check-input"
                 [id]="'tag-' + tag.tagId"
                 [checked]="formItem.tags.includes(tag.tagId)"
+                [disabled]="!formItem.tags.includes(tag.tagId) && isMaxTagsReached"
                 (change)="onTagCheckboxChange($event, tag.tagId)" />
               <label class="form-check-label" [for]="'tag-' + tag.tagId">{{ tag.name }}</label>
             </div>

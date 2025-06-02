@@ -175,16 +175,24 @@ export class AdminItemsComponent implements OnInit {
           return;
         }
 
+        if (selectedTags.length === 0 || selectedTags.length > 3) {
+          Swal.showValidationMessage('Debes seleccionar entre 1 y 3 etiquetas.');
+          return;
+        }
+
         return { title, description, creditValue, type, status, tags: selectedTags };
       },
       didOpen: () => {
-        const tagSelectElement = document.getElementById('swal-tags');
+        const tagSelectElement = document.getElementById('swal-tags') as HTMLSelectElement;
         if (tagSelectElement) {
-          new Choices(tagSelectElement, {
+          const choicesInstance = new Choices(tagSelectElement, {
             removeItemButton: true,
             placeholder: true,
-            placeholderValue: 'Selecciona etiquetas'
+            placeholderValue: 'Selecciona etiquetas',
+            maxItemCount: 3
           });
+
+          (window as any).swalChoicesInstance = choicesInstance;
         }
       }
     }).then(result => {

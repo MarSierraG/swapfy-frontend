@@ -89,7 +89,7 @@ export class UsersComponent implements OnInit {
       if (result.isConfirmed) {
         this.userService.deleteUser(user.userId).subscribe({
           next: () => {
-            this.users = this.users.filter(u => u.userId !== user.userId); // 👈 quitar de la tabla
+            this.users = this.users.filter(u => u.userId !== user.userId);
             Swal.fire('¡Eliminado!', 'El usuario ha sido eliminado.', 'success');
           },
           error: () => {

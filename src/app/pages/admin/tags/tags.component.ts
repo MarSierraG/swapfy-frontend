@@ -102,7 +102,6 @@ export class TagsComponent implements OnInit {
       if (result.isConfirmed && result.value) {
         const nuevoNombre = result.value.trim();
 
-        // ✅ Evitar actualizar si no hay cambios
         if (nuevoNombre === tag.name) {
           Swal.fire({
             icon: 'info',
