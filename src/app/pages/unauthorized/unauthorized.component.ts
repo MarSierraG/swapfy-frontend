@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import Swal from 'sweetalert2';
+import {FooterComponent} from "../../components/layout/footer/footer.component";
 
 @Component({
   selector: 'app-unauthorized',
   templateUrl: './unauthorized.component.html',
-  imports: [
-    RouterLink
-  ],
+    imports: [
+        RouterLink,
+        FooterComponent
+    ],
   styleUrls: ['./unauthorized.component.css']
 })
 export class UnauthorizedComponent implements OnInit {

@@ -20,16 +20,18 @@ import {
   AsyncValidatorFn
 } from '@angular/forms';
 import {CreditService} from '../../services/credits/credit.service';
+import {FooterComponent} from "../../components/layout/footer/footer.component";
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  imports: [
-    NavbarWrapperComponent,
-    FormsModule,
-    CommonModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        NavbarWrapperComponent,
+        FormsModule,
+        CommonModule,
+        ReactiveFormsModule,
+        FooterComponent
+    ],
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {

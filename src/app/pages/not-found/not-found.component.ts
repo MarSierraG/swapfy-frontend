@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import {FooterComponent} from "../../components/layout/footer/footer.component";
 
 @Component({
-  selector: 'app-not-found',
-  templateUrl: './not-found.component.html',
-  styleUrls: ['./not-found.component.css']
+    selector: 'app-not-found',
+    templateUrl: './not-found.component.html',
+    imports: [
+        FooterComponent
+    ],
+    styleUrls: ['./not-found.component.css']
 })
 export class NotFoundComponent implements OnInit {
 

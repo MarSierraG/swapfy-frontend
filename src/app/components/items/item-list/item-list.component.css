@@ -8,6 +8,8 @@
   padding: 0 16px;
   position: relative;
   padding-bottom: 2rem;
+  margin-bottom: 5rem;
+
 }
 
 app-item-card {
@@ -16,6 +18,10 @@ app-item-card {
   min-width: 260px;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   display: block;
+
+  /* Animación al entrar */
+  animation: fadeInScale 0.4s ease forwards;
+  opacity: 0;
 }
 
 @media (max-width: 1100px) {
@@ -23,3 +29,15 @@ app-item-card {
     flex: 1 1 300px;
   }
 }
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+

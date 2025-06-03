@@ -8,13 +8,14 @@ import { ItemListComponent } from '../../components/items/item-list/item-list.co
 import { NavbarWrapperComponent } from '../../components/layout/navbar-wrapper/navbar-wrapper.component';
 
 import { AuthService } from '../../services/auth/auth.service';
+import {FooterComponent} from '../../components/layout/footer/footer.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  imports: [CommonModule, RouterModule, ItemListComponent, NavbarWrapperComponent]
+  imports: [CommonModule, RouterModule, ItemListComponent, NavbarWrapperComponent, FooterComponent]
 })
 export class HomeComponent implements OnInit {
   userName = '';

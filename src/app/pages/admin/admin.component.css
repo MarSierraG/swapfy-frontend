@@ -99,3 +99,7 @@
 :host-context(body.dark-mode) .text-muted{
   color: white !important;
 }
+
+:host-context(body.dark-mode) .section-header {
+  color:white;
+}

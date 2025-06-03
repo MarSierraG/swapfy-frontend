@@ -10,13 +10,14 @@ import { Item } from '../../models/item.model';
 import { AuthService } from '../../services/auth/auth.service';
 import {UserService} from '../../services/user/user.service';
 import {LoaderComponent} from '../../components/shared/loader/loader.component';
+import {FooterComponent} from "../../components/layout/footer/footer.component";
 
 @Component({
   selector: 'app-store',
   standalone: true,
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.css'],
-  imports: [CommonModule, RouterModule, ItemListComponent, NavbarWrapperComponent,  LoaderComponent]
+    imports: [CommonModule, RouterModule, ItemListComponent, NavbarWrapperComponent, LoaderComponent, FooterComponent]
 })
 export class StoreComponent implements OnInit {
   items: Item[] = [];

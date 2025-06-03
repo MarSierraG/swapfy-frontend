@@ -10,6 +10,7 @@ import {environment} from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import {Credit} from '../../models/credit.model';
 import {MadridDatePipe} from '../../pipes/madrid-date.pipe';
+import {FooterComponent} from "../../components/layout/footer/footer.component";
 
 
 @Component({
@@ -17,7 +18,7 @@ import {MadridDatePipe} from '../../pipes/madrid-date.pipe';
   selector: 'app-summary-page',
   templateUrl: './summary-page.component.html',
   styleUrls: ['./summary-page.component.css'],
-  imports: [CommonModule, NavbarWrapperComponent, MadridDatePipe]
+    imports: [CommonModule, NavbarWrapperComponent, MadridDatePipe, FooterComponent]
 })
 export class SummaryPageComponent implements OnInit {
   constructor(

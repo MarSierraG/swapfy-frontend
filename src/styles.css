@@ -10,7 +10,15 @@ html, body {
   padding-right: 20px;
   margin: 0 auto;
   padding-top: 90px;
+  min-height: calc(100vh - 192px);
 }
+
+.sticky-footer {
+  position: absolute;
+  width: 100%;
+  margin-top: 12rem;
+}
+
 
 :root {
   --swapfy-primary: #14b8a6;
@@ -214,3 +222,5 @@ body.dark-mode .text-muted{
 .swapfy-alert {
   position: relative;
 }
+
+

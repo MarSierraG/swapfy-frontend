@@ -23,4 +23,10 @@
     [searchTerm]="searchTerm"
     [onReload]="loadItems"
   ></app-item-list>
+
+
 </div>
+
+
+<app-footer [ngClass]="{ 'sticky-footer': !isLoading }"></app-footer>
+

@@ -1,0 +1,63 @@
+
+/* Footer animado */
+.footer {
+  width: 100%;
+  background-color: #009ba5;
+  color: #ffffff;
+  font-size: 0.9rem;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+
+  animation: fadeInUp 0.6s ease-out;
+  transition: all 0.3s ease;
+  z-index: 999;
+  margin-top: 9rem;
+
+  position: absolute;
+  bottom: 0;
+}
+
+
+.footer-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.footer a.footer-link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.footer a.footer-link:hover {
+  text-decoration: underline;
+}
+
+.social-icons i {
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.social-icons i:hover {
+  opacity: 0.8;
+}
+
+.footer hr {
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.footer .container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-top: 2px;
+}
+
+.footer-logo{
+  width: 70px;
+  height: auto;
+  margin-bottom: 1rem;
+  filter: brightness(2) contrast(150%) drop-shadow(0 0 6px rgba(0, 255, 255, 0.5));
+}
+
+
