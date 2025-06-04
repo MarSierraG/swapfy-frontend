@@ -36,10 +36,19 @@
         <i class="bi bi-check2-circle me-2 text-success"></i>
         <span class="label">Estado:</span> {{ translate(item.status) }}
       </div>
+
       <div class="detail-item">
         <i class="bi bi-person-fill me-2 text-secondary"></i>
-        <span class="label">Publicado por:</span> {{ item.userName }} - {{ item.userEmail }}
+        <span class="label">Publicado por:</span>
+        <a
+          [routerLink]="['/store']"
+          [queryParams]="{ email: item.userEmail }"
+          class="text-decoration-underline text-primary ms-1"
+        >
+          {{ item.userName }} ({{ item.userEmail }})
+        </a>
       </div>
+
     </div>
 
     <!-- Etiquetas -->
@@ -60,6 +69,25 @@
       <button class="btn btn-outline-danger w-100 rounded-pill py-2 mb-4" (click)="eliminar()">
         <i class="bi bi-trash me-1"></i> Eliminar
       </button>
+
+      <!-- Botón mensaje -->
+      <button
+        *ngIf="item?.userId !== authService.currentUserId() && !mensajeEnviado"
+        class="btn btn-logout rounded-pill py-2 mb-4"
+        (click)="askForItem()"
+      >
+        <i class="bi bi-chat-dots me-2"></i> Preguntar por este artículo
+      </button>
+
+      <!-- Botón tras enviar -->
+      <button
+        *ngIf="mensajeEnviado"
+        class="btn btn-logout"
+        (click)="goToConversation()"
+      >
+        <i class="bi bi-chat-left-text me-2"></i> Ver conversación
+      </button>
+
     </div>
   </div>
 </div>

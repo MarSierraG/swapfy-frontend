@@ -7,10 +7,6 @@
   box-sizing: border-box;
 }
 
-/*.dark-mode .chat-wrapper {*/
-/*  background: linear-gradient(to bottom, #1e293b, #0f172a) !important;*/
-/*}*/
-
 .chat-header {
   display: flex;
   justify-content: space-between;
@@ -45,12 +41,6 @@
 .material-symbols-outlined{
   color: #009ba5;
 }
-
-
-/*body.dark-mode .chat-title h1,*/
-/*body.dark-mode .chat-title p {*/
-/*  color: #e2e8f0;*/
-/*}*/
 
 
 .new-chat-btn {
@@ -104,16 +94,20 @@ li {
   background-color: #f5f5f5;
 }
 
-/*body.dark-mode .convo-item {*/
-/*  background-color: #1f2937;*/
-/*  border: 1px solid #334155;*/
-/*}*/
 
 .convo-name {
   font-weight: 600;
   font-size: 1rem;
-  color: #0f172a;
+  color: #0d6efd;
   margin-bottom: 0.3rem;
+  display: inline-block;
+  text-decoration: none;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.convo-name:hover {
+  color: #084298;
+  text-decoration: underline;
 }
 
 .convo-message {
@@ -125,10 +119,6 @@ li {
   max-width: 100%;
 }
 
-/*body.dark-mode .convo-name,*/
-/*body.dark-mode .convo-message {*/
-/*  color: #e2e8f0;*/
-/*}*/
 
 .empty {
   text-align: center;
@@ -137,9 +127,6 @@ li {
   margin-top: 3rem;
 }
 
-/*body.dark-mode .empty {*/
-/*  color: #94a3b8;*/
-/*}*/
 
 .unread-badge {
   background-color: #1e646a;
@@ -182,10 +169,6 @@ app-loader {
   background-color: rgba(255, 255, 255, 0.85);
 }
 
-/*body.dark-mode app-loader {*/
-/*  background-color: rgba(15, 23, 42, 0.85); !* azul oscuro translúcido *!*/
-/*}*/
-
 
 :host-context(.dark-mode) .chat-wrapper {
   background: linear-gradient(to bottom, #1e293b, #0f172a);
@@ -217,3 +200,10 @@ app-loader {
   color: red;
 }
 
+:host-context(.dark-mode) .convo-name {
+  color: #93c5fd; /* azul claro */
+}
+
+:host-context(.dark-mode) .convo-name:hover {
+  color: #bfdbfe; /* azul más claro aún */
+}

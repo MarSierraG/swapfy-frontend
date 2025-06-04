@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { ItemService } from '../../services/item/item.service';
 import { Item } from '../../models/item.model';
 import { AuthService } from '../../services/auth/auth.service';
@@ -10,13 +10,14 @@ import { HttpClient } from '@angular/common/http';
 import { ItemRequestDTO } from '../../models/item-request.dto';
 import Swal from 'sweetalert2';
 import {LoaderComponent} from '../../components/shared/loader/loader.component';
+import {MessageService} from '../messages/message.service';
 
 @Component({
   standalone: true,
   selector: 'app-item-detail',
   templateUrl: './item-detail.component.html',
   styleUrls: ['./item-detail.component.css'],
-  imports: [CommonModule, NavbarWrapperComponent, ItemFormComponent, LoaderComponent]
+  imports: [CommonModule, NavbarWrapperComponent, ItemFormComponent, LoaderComponent, RouterLink]
 })
 export class ItemDetailComponent implements OnInit {
   item: Item | null = null;
@@ -25,13 +26,16 @@ export class ItemDetailComponent implements OnInit {
   tagsDisponibles: { tagId: number; name: string }[] = [];
   selectedFile: File | null = null;
   isLoading = false;
+  mensajeEnviado = false;
+
 
   constructor(
     private route: ActivatedRoute,
     private itemService: ItemService,
-    private authService: AuthService,
+    protected authService: AuthService,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -177,6 +181,54 @@ export class ItemDetailComponent implements OnInit {
     };
 
     return map[key?.toLowerCase()] || key;
+  }
+
+  askForItem() {
+    const senderId = this.authService.currentUserId();
+    const receiverId = this.item?.userId;
+
+    if (!senderId || !receiverId || !this.item) return;
+
+    Swal.fire({
+      icon: 'question',
+      title: '¿Quieres contactar al propietario?',
+      text: 'Se enviará un mensaje automático y se te redirigirá al chat.',
+      showCancelButton: true,
+      confirmButtonColor: 'darkcyan',
+      cancelButtonColor: '#aaa',
+      confirmButtonText: 'Sí, enviar mensaje',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.messageService.sendMessage({
+          senderUserId: senderId,
+          receiverUserId: receiverId,
+          content: JSON.stringify({
+            type: 'item',
+            message: 'Estoy interesado en este artículo:',
+            itemId: this.item!.itemId
+          })
+        }).subscribe({
+          next: () => {
+            this.mensajeEnviado = true;
+            this.router.navigate(['/chats', receiverId]);
+          },
+          error: () => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'No se pudo enviar el mensaje.'
+            });
+          }
+        });
+      }
+    });
+  }
+
+  goToConversation() {
+    const receiverId = this.item?.userId;
+    if (!receiverId) return;
+      this.router.navigate(['/chats', receiverId]);
   }
 
 }

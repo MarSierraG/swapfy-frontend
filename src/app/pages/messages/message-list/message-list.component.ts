@@ -1,6 +1,6 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {NavbarWrapperComponent} from '../../../components/layout/navbar-wrapper/navbar-wrapper.component';
 import {UserService} from '../../../services/user/user.service';
 import {Message, MessageService} from '../message.service';
@@ -17,13 +17,13 @@ import Swal from 'sweetalert2';
   templateUrl: './message-list.component.html',
   styleUrls: ['./message-list.component.css'],
   imports: [
-    NavbarWrapperComponent, CommonModule, LoaderComponent
+    NavbarWrapperComponent, CommonModule, LoaderComponent, RouterLink
   ]
 })
 export class MessageListComponent implements OnInit {
   userId!: number;
   messages: Message[] = [];
-  conversations: { userId: number; name: string; lastMessage: string; lastTimestamp: number }[] = [];
+  conversations: { userId: number; name: string; email: string; lastMessage: string; lastTimestamp: number }[] = [];
   isLoading = true;
   unreadSummary: Record<number, number> = {};
   isDarkMode = false;
@@ -71,7 +71,8 @@ export class MessageListComponent implements OnInit {
           return {
             userId: user.userId,
             name: user.name,
-            lastMessage: last?.content ?? '(sin mensajes)',
+            email: user.email,
+            lastMessage: this.formatLastMessage(last?.content),
             lastTimestamp: last?.timestamp ? new Date(last.timestamp).getTime() : 0,
           };
         });
@@ -125,5 +126,18 @@ export class MessageListComponent implements OnInit {
   }
 
 
+  formatLastMessage(content?: string): string {
+    if (!content) return '(sin mensajes)';
+
+    try {
+      const parsed = JSON.parse(content);
+      if (parsed.type === 'item') {
+        return parsed.message || '[Interés en artículo]';
+      }
+    } catch {
+    }
+
+    return content;
+  }
 
 }

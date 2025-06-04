@@ -172,3 +172,37 @@ app-loader {
 :host-context(.dark-mode) .input-area input::placeholder {
   color: #94a3b8;
 }
+
+.item-message {
+  border-left: 4px solid #0d6efd;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 12px;
+}
+
+
+.item-message-text {
+  margin-bottom: 8px;
+  display: block;
+}
+
+.messages {
+  scroll-behavior: smooth;
+}
+
+@keyframes fadeInMessage {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.messages .me,
+.messages .other {
+  animation: fadeInMessage 0.35s ease forwards;
+}

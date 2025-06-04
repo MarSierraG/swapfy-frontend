@@ -25,7 +25,15 @@
     <ul>
       <li *ngFor="let convo of conversations" class="convo-item">
         <div class="convo-left" (click)="openChat(convo.userId)">
-          <div class="convo-name">{{ convo.name }}</div>
+          <a
+            [routerLink]="['/store']"
+            [queryParams]="{ email: convo.email }"
+            class="convo-name text-decoration-none text-primary"
+            (click)="$event.stopPropagation()"
+          >
+            {{ convo.name }}
+          </a>
+
           <div class="convo-message">{{ convo.lastMessage }}</div>
         </div>
         <div class="convo-right">

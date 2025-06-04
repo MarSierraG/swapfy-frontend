@@ -1,5 +1,12 @@
-import {Component, OnInit, ViewChild, ElementRef, Renderer2} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Renderer2,
+  AfterViewChecked
+} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Message, MessageService } from '../message.service';
 import { UserService } from '../../../services/user/user.service';
 import { CommonModule } from '@angular/common';
@@ -8,8 +15,12 @@ import { NavbarWrapperComponent } from '../../../components/layout/navbar-wrappe
 import { LoaderComponent } from '../../../components/shared/loader/loader.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
-import {Subscription} from 'rxjs';
-import {MadridDatePipe} from '../../../pipes/madrid-date.pipe';
+import { Subscription } from 'rxjs';
+import { MadridDatePipe } from '../../../pipes/madrid-date.pipe';
+import { ItemCardComponent } from '../../../components/items/item-card/item-card.component';
+import { Item } from '../../../models/item.model';
+import { ItemService } from '../../../services/item/item.service';
+import { NgZone,  AfterViewInit,  ChangeDetectorRef, } from '@angular/core';
 
 
 @Component({
@@ -17,21 +28,29 @@ import {MadridDatePipe} from '../../../pipes/madrid-date.pipe';
   selector: 'app-message-chat',
   templateUrl: './message-chat.component.html',
   styleUrls: ['./message-chat.component.css'],
-  imports: [CommonModule, FormsModule, MatSnackBarModule, NavbarWrapperComponent, LoaderComponent, MadridDatePipe],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatSnackBarModule,
+    NavbarWrapperComponent,
+    LoaderComponent,
+    MadridDatePipe,
+    ItemCardComponent
+  ]
 })
-export class MessageChatComponent implements OnInit {
+export class MessageChatComponent implements OnInit, AfterViewInit {
   messages: Message[] = [];
   content = '';
   userId!: number;
   otherUserId!: number;
   isLoading = true;
   maxLength = 500;
-  private routeSub!: Subscription;
+  itemsInChat: Item[] = [];
+
 
 
   @ViewChild('messageContainer') messageContainer!: ElementRef;
   @ViewChild('messageInput') messageInput!: ElementRef;
-
 
   constructor(
     private route: ActivatedRoute,
@@ -40,8 +59,10 @@ export class MessageChatComponent implements OnInit {
     private userService: UserService,
     private snackBar: MatSnackBar,
     private renderer: Renderer2,
-    private elRef: ElementRef
-
+    private elRef: ElementRef,
+    private itemService: ItemService,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -54,9 +75,21 @@ export class MessageChatComponent implements OnInit {
     this.userId = user.userId;
 
     const param = this.route.snapshot.paramMap.get('id');
-    if (!param) return;
+
+    if (!param || isNaN(+param)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'ID inválido',
+        text: 'La conversación no se puede cargar.',
+        confirmButtonColor: '#14b8a6'
+      }).then(() => {
+        this.router.navigate(['/chats']);
+      });
+      return;
+    }
 
     this.otherUserId = +param;
+
 
     if (this.otherUserId === this.userId) {
       Swal.fire({
@@ -70,11 +103,36 @@ export class MessageChatComponent implements OnInit {
       return;
     }
 
+    this.userService.getUserById(this.otherUserId).subscribe({
+      next: (usuarioEncontrado) => {
+        if (!usuarioEncontrado) {
+          throw new Error('No existe');
+        }
 
-    this.messageService.markAsRead(this.otherUserId, this.userId).subscribe(() => {
-      this.loadConversation();
+        this.messageService.markAsRead(this.otherUserId, this.userId).subscribe(() => {
+          this.loadConversation();
+        });
+      },
+      error: () => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Usuario no encontrado',
+          text: 'El usuario con el que intentas chatear no existe.',
+          confirmButtonColor: '#14b8a6'
+        }).then(() => {
+          this.router.navigate(['/chats']);
+        });
+      }
     });
   }
+
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 0);
+  }
+
 
 
   loadConversation(showLoader: boolean = true): void {
@@ -83,17 +141,42 @@ export class MessageChatComponent implements OnInit {
     this.messageService
       .getConversation(this.userId, this.otherUserId)
       .subscribe((messages: Message[]) => {
-        this.messages = messages.sort((a, b) =>
-          new Date(a.timestamp!).getTime() - new Date(b.timestamp!).getTime()
+        this.messages = messages.sort(
+          (a, b) => new Date(a.timestamp!).getTime() - new Date(b.timestamp!).getTime()
         );
 
+        // Prepara todas las promesas de carga de ítems
+        const loadingItems: Promise<void>[] = [];
 
-        if (showLoader) this.isLoading = false;
+        this.messages.forEach(msg => {
+          const itemId = this.extractItemId(msg.content);
+          const yaCargado = this.itemsInChat.some(i => i.itemId === itemId);
 
-        setTimeout(() => this.scrollToBottom(), 100);
+          if (itemId && !yaCargado) {
+            const promesa = new Promise<void>(resolve => {
+              this.itemService.getItemById(itemId).subscribe(item => {
+                this.itemsInChat.push(item);
+                resolve();
+              });
+            });
+
+            loadingItems.push(promesa);
+          }
+        });
+
+
+        Promise.all(loadingItems).then(() => {
+          if (showLoader) this.isLoading = false;
+
+          // Esperar a que Angular renderice los item-cards
+          setTimeout(() => {
+            this.scrollToBottom();
+          }, 150);
+        });
       });
-
   }
+
+
 
 
   sendMessage(): void {
@@ -122,7 +205,7 @@ export class MessageChatComponent implements OnInit {
     const message: Message = {
       senderUserId: this.userId,
       receiverUserId: this.otherUserId,
-      content: trimmed,
+      content: trimmed
     };
 
     this.messageService.sendMessage(message).subscribe(() => {
@@ -132,13 +215,48 @@ export class MessageChatComponent implements OnInit {
     });
   }
 
-
   scrollToBottom(): void {
     try {
       this.messageContainer.nativeElement.scrollTop =
         this.messageContainer.nativeElement.scrollHeight;
     } catch (err) {
       console.warn('No se pudo hacer scroll', err);
+    }
+  }
+
+  isItemMessage(content: string): boolean {
+    try {
+      const obj = JSON.parse(content);
+      return obj.type === 'item';
+    } catch {
+      return false;
+    }
+  }
+
+  getItemText(content: string): string {
+    try {
+      const obj = JSON.parse(content);
+      return obj.message || '';
+    } catch {
+      return '';
+    }
+  }
+
+  getItemFromMessage(content: string): Item | null {
+    try {
+      const obj = JSON.parse(content);
+      return this.itemsInChat.find(i => i.itemId === obj.itemId) || null;
+    } catch {
+      return null;
+    }
+  }
+
+  extractItemId(content: string): number | null {
+    try {
+      const obj = JSON.parse(content);
+      return obj.type === 'item' ? obj.itemId : null;
+    } catch {
+      return null;
     }
   }
 }

@@ -8,8 +8,26 @@
       [class.me]="msg.senderUserId === userId"
       [class.other]="msg.senderUserId !== userId"
     >
-      <p>{{ msg.content }}</p>
-      <small>{{ msg.timestamp | madridDate }}</small>
+      <ng-container *ngIf="isItemMessage(msg.content); else normalMessage">
+        <div class="item-message">
+          <span class="item-message-text fw-semibold text-secondary">
+            {{ getItemText(msg.content) }}
+          </span>
+          <br>
+          <app-item-card
+            *ngIf="getItemFromMessage(msg.content) as referencedItem"
+            [item]="referencedItem"
+            [showOwner]="true"
+          ></app-item-card>
+        </div>
+        <small>{{ msg.timestamp | madridDate }}</small>
+      </ng-container>
+
+      <ng-template #normalMessage>
+        <p>{{ msg.content }}</p>
+        <small>{{ msg.timestamp | madridDate }}</small>
+      </ng-template>
+
     </div>
   </div>
 

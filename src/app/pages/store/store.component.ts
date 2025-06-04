@@ -11,6 +11,8 @@ import { AuthService } from '../../services/auth/auth.service';
 import {UserService} from '../../services/user/user.service';
 import {LoaderComponent} from '../../components/shared/loader/loader.component';
 import {FooterComponent} from "../../components/layout/footer/footer.component";
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-store',
@@ -19,6 +21,7 @@ import {FooterComponent} from "../../components/layout/footer/footer.component";
   styleUrls: ['./store.component.css'],
     imports: [CommonModule, RouterModule, ItemListComponent, NavbarWrapperComponent, LoaderComponent, FooterComponent]
 })
+
 export class StoreComponent implements OnInit {
   items: Item[] = [];
   userId = 0;
@@ -32,27 +35,37 @@ export class StoreComponent implements OnInit {
   isSearchingExternalUser = false;
 
 
-
-  constructor
-  (private itemService: ItemService,
-              private auth: AuthService,
-              private userService: UserService ) {}
+  constructor(
+    private itemService: ItemService,
+    private auth: AuthService,
+    private userService: UserService,
+    private route: ActivatedRoute ) {}
 
   ngOnInit(): void {
     this.userId = this.auth.currentUserId()!;
 
-    this.itemService.getItemsByUserId(this.userId).subscribe({
-      next: (data) => {
-        this.items = data;
-        this.applyFilter();
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Error al cargar artículos del usuario:', err);
-        this.isLoading = false;
+    this.route.queryParamMap.subscribe(params => {
+      const email = params.get('email');
+      if (email) {
+        // Redirigido desde item-detail
+        this.onSearchChanged({ term: email, field: 'email' });
+      } else {
+
+        this.itemService.getItemsByUserId(this.userId).subscribe({
+          next: (data) => {
+            this.items = data;
+            this.applyFilter();
+            this.isLoading = false;
+          },
+          error: (err) => {
+            console.error('Error al cargar artículos del usuario:', err);
+            this.isLoading = false;
+          }
+        });
       }
     });
   }
+
 
   logout(): void {
     this.auth.logout();
