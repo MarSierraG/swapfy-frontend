@@ -28,6 +28,9 @@ app-item-card {
   app-item-card {
     flex: 1 1 300px;
   }
+  .items-wrapper {
+    padding-bottom: 13rem;
+  }
 }
 
 @keyframes fadeInScale {

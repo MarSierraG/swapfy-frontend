@@ -11,7 +11,7 @@
 
   display: flex;
   align-items: center;
-  justify-content: space-between; /* espacio entre logo, buscador y botón */
+  justify-content: space-between;
   padding: 15px 20px;
   height: 65px;
 
@@ -90,8 +90,8 @@
   background: white;
   border-radius: 20px;
   padding: 4px 10px;
-  width: 28%;
-  min-width: 275px;
+  width: 30%;
+  min-width: 230px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   z-index: 100;
   gap: 8px;
@@ -136,6 +136,7 @@
   gap: 4px;
   font-size: 0.85rem;
   color: #333;
+  width: 45%;
 }
 
 /* Icono del embudo */

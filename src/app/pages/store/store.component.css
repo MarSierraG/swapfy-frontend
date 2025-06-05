@@ -10,7 +10,15 @@
   padding-bottom: 0.25rem;
   border-bottom: 2px solid #009ba5;
   letter-spacing: 0.3px;
+  flex-wrap:wrap;
+  word-break: break-word;
 }
+
+.section-header span {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 
 :host-context(body.dark-mode) .section-header {
   color: white;
