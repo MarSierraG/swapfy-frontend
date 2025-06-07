@@ -64,24 +64,17 @@ export class SummaryPageComponent implements OnInit {
   }
 
   downloadExtract(): void {
-    const url = `${environment.apiUrl}/credits/extract`;
     const token = localStorage.getItem('token');
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    };
 
-    console.log('Token:', token);
+    const url = `${environment.apiUrl}/credits/extract`;
 
-    if (!token) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Sesión expirada',
-        text: 'Por favor, vuelve a iniciar sesión.',
-        confirmButtonColor: '#3085d6'
-      });
-      return;
-    }
-
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    this.http.get(url, { responseType: 'blob', headers }).subscribe({
+    this.http.get(url, {
+      responseType: 'blob',
+      headers: new HttpHeaders(headers)
+    }).subscribe({
       next: (blob: Blob) => {
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
@@ -99,6 +92,7 @@ export class SummaryPageComponent implements OnInit {
       }
     });
   }
+
 
 
 
