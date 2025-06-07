@@ -12,6 +12,8 @@ import {Credit} from '../../models/credit.model';
 import {MadridDatePipe} from '../../pipes/madrid-date.pipe';
 import {FooterComponent} from "../../components/layout/footer/footer.component";
 import Swal from 'sweetalert2';
+import autoTable from 'jspdf-autotable';
+import jsPDF from 'jspdf';
 
 
 @Component({
@@ -64,34 +66,30 @@ export class SummaryPageComponent implements OnInit {
   }
 
   downloadExtract(): void {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
+    const doc = new jsPDF();
+console.log("Hola desde frontend");
+    doc.setFontSize(18);
+    doc.text('Extracto de Créditos - Swapfy', 105, 20, { align: 'center' });
 
-    const url = `${environment.apiUrl}/credits/extract`;
 
-    this.http.get(url, {
-      responseType: 'blob',
-      headers,
-      withCredentials: true
-    }).subscribe({
-      next: (blob: Blob) => {
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'extracto_creditos_swapfy.pdf';
-        a.click();
-      },
-      error: (err: any) => {
-        console.error('Error al descargar el PDF:', err);
-        Swal.fire({
-          icon: 'error',
-          title: 'No se pudo descargar el PDF',
-          text: 'Ocurrió un error inesperado. Inténtalo más tarde.',
-          confirmButtonColor: '#3085d6'
-        });
-      }
-    });
+    if (this.credits.length === 0) {
+      doc.setFontSize(12);
+      doc.text('No se encontraron movimientos de crédito.', 20, 40);
+    } else {
+      const tableData = this.credits.map(c => [
+        c.type,
+        c.amount,
+        new Date(c.createdAt).toLocaleString('es-ES')
+      ]);
+
+      autoTable(doc, {
+        startY: 30,
+        head: [['Tipo', 'Cantidad', 'Fecha']],
+        body: tableData,
+      });
+    }
+
+    doc.save('extracto_creditos_swapfy.pdf');
   }
 
 
