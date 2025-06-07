@@ -7,10 +7,11 @@ import {CreditService} from '../../services/credits/credit.service';
 import {ItemService} from '../../services/item/item.service';
 import {MessageService} from '../messages/message.service';
 import {environment} from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Credit} from '../../models/credit.model';
 import {MadridDatePipe} from '../../pipes/madrid-date.pipe';
 import {FooterComponent} from "../../components/layout/footer/footer.component";
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -63,10 +64,24 @@ export class SummaryPageComponent implements OnInit {
   }
 
   downloadExtract(): void {
-    const userId = this.authService.currentUserId();
-    const url = `${environment.apiUrl}/credits/extract/${userId}`;
+    const url = `${environment.apiUrl}/credits/extract`;
+    const token = localStorage.getItem('token');
 
-    this.http.get(url, { responseType: 'blob' }).subscribe({
+    console.log('Token:', token);
+
+    if (!token) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Sesión expirada',
+        text: 'Por favor, vuelve a iniciar sesión.',
+        confirmButtonColor: '#3085d6'
+      });
+      return;
+    }
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    this.http.get(url, { responseType: 'blob', headers }).subscribe({
       next: (blob: Blob) => {
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
@@ -75,10 +90,17 @@ export class SummaryPageComponent implements OnInit {
       },
       error: (err: any) => {
         console.error('Error al descargar el PDF:', err);
-        // Puedes mostrar un Swal aquí si quieres
+        Swal.fire({
+          icon: 'error',
+          title: 'No se pudo descargar el PDF',
+          text: 'Ocurrió un error inesperado. Inténtalo más tarde.',
+          confirmButtonColor: '#3085d6'
+        });
       }
     });
   }
+
+
 
 
 
