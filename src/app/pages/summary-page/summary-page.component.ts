@@ -66,33 +66,90 @@ export class SummaryPageComponent implements OnInit {
   }
 
   downloadExtract(): void {
-    const doc = new jsPDF();
-console.log("Hola desde frontend");
-    doc.setFontSize(18);
-    doc.text('Extracto de Créditos - Swapfy', 105, 20, { align: 'center' });
+    try {
+      const doc = new jsPDF();
+
+      const img = new Image();
+      img.src = 'assets/logo/logo.png';
 
 
-    if (this.credits.length === 0) {
-      doc.setFontSize(12);
-      doc.text('No se encontraron movimientos de crédito.', 20, 40);
-    } else {
-      const tableData = this.credits.map(c => [
-        c.type,
-        c.amount,
-        new Date(c.createdAt).toLocaleString('es-ES')
-      ]);
+      const logoTimeout = setTimeout(() => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al cargar el logo',
+          text: 'No se pudo cargar el logo para el PDF. Verifica que el archivo exista en /assets.',
+        });
+      }, 3000);
 
-      autoTable(doc, {
-        startY: 30,
-        head: [['Tipo', 'Cantidad', 'Fecha']],
-        body: tableData,
+      img.onload = () => {
+        try {
+          clearTimeout(logoTimeout);
+
+          const logoWidth = 18;
+          const logoHeight = 18;
+          const pageWidth = doc.internal.pageSize.getWidth();
+          const centerX = (pageWidth - logoWidth) / 2;
+
+          doc.addImage(img, 'PNG', centerX, 15, logoWidth, logoHeight);
+          doc.setFontSize(16);
+          doc.text('Extracto de Créditos - Swapfy', pageWidth / 2, 40, { align: 'center' });
+
+          const startY = 50;
+
+          if (this.credits.length === 0) {
+            doc.setFontSize(12);
+            doc.text('No se encontraron movimientos de crédito.', 20, startY);
+          } else {
+            const tableData = this.credits.map(c => [
+              c.type,
+              c.amount,
+              new Date(c.createdAt).toLocaleString('es-ES')
+            ]);
+
+            autoTable(doc, {
+              startY,
+              head: [['Tipo', 'Cantidad', 'Fecha']],
+              body: tableData,
+              theme: 'striped',
+              styles: {
+                halign: 'center',
+                fontSize: 11
+              },
+              headStyles: {
+                fillColor: [40, 104, 154],
+                textColor: 255
+              }
+            });
+          }
+
+          doc.save('extracto_creditos_swapfy.pdf');
+        } catch (error) {
+          clearTimeout(logoTimeout);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al generar el PDF',
+            text: 'Ha ocurrido un error inesperado durante la creación del documento.',
+          });
+        }
+      };
+
+      img.onerror = () => {
+        clearTimeout(logoTimeout);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al cargar el logo',
+          text: 'No se pudo cargar la imagen del logo para el PDF.',
+        });
+      };
+
+    } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al descargar el PDF',
+        text: 'Ha ocurrido un error inesperado. Inténtalo más tarde.',
       });
     }
-
-    doc.save('extracto_creditos_swapfy.pdf');
   }
-
-
 
 
 
