@@ -65,15 +65,16 @@ export class SummaryPageComponent implements OnInit {
 
   downloadExtract(): void {
     const token = localStorage.getItem('token');
-    const headers = {
+    const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
-    };
+    });
 
     const url = `${environment.apiUrl}/credits/extract`;
 
     this.http.get(url, {
       responseType: 'blob',
-      headers: new HttpHeaders(headers)
+      headers,
+      withCredentials: true
     }).subscribe({
       next: (blob: Blob) => {
         const a = document.createElement('a');
@@ -92,8 +93,6 @@ export class SummaryPageComponent implements OnInit {
       }
     });
   }
-
-
 
 
 
