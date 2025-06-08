@@ -69,9 +69,6 @@
           <div *ngIf="loginForm.get('password')?.errors?.['maxlength']">
             Máximo 50 caracteres.
           </div>
-          <div *ngIf="loginForm.get('password')?.errors?.['pattern']">
-            Solo caracteres alfanuméricos y símbolos seguros (&#64;#$%^&+=!.-).
-          </div>
         </div>
       </div>
     </div>

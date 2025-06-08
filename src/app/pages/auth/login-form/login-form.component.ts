@@ -45,7 +45,6 @@ export class LoginFormComponent {
         [
           Validators.required,
           Validators.maxLength(50),
-          Validators.pattern(/^[\w@#$%^&+=!."-]*$/)
         ]
       ]
 
