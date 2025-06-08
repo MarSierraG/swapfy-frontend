@@ -14,11 +14,19 @@
             {{ getItemText(msg.content) }}
           </span>
           <br>
-          <app-item-card
-            *ngIf="getItemFromMessage(msg.content) as referencedItem"
-            [item]="referencedItem"
-            [showOwner]="true"
-          ></app-item-card>
+          <ng-container *ngIf="getItemFromMessage(msg.content) as referencedItem; else itemNoDisponible">
+            <app-item-card
+              [item]="referencedItem"
+              [showOwner]="true"
+            ></app-item-card>
+          </ng-container>
+
+          <ng-template #itemNoDisponible>
+            <div class="text-secondary">
+              <em>Artículo no disponible</em>
+            </div>
+          </ng-template>
+
         </div>
         <small>{{ msg.timestamp | madridDate }}</small>
       </ng-container>

@@ -154,9 +154,15 @@ export class MessageChatComponent implements OnInit, AfterViewInit {
 
           if (itemId && !yaCargado) {
             const promesa = new Promise<void>(resolve => {
-              this.itemService.getItemById(itemId).subscribe(item => {
-                this.itemsInChat.push(item);
-                resolve();
+              this.itemService.getItemById(itemId).subscribe({
+                next: (item) => {
+                  this.itemsInChat.push(item);
+                  resolve();
+                },
+                error: () => {
+                  console.warn(`Item con ID ${itemId} no encontrado (posiblemente eliminado)`);
+                  resolve();
+                }
               });
             });
 
