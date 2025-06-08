@@ -41,6 +41,6 @@ export class NotFoundComponent implements OnInit {
       }).then(() => {
         this.router.navigate([isLoggedIn ? '/home' : '/auth']);
       });
-    }, 200); // pequeño delay por estética
+    }, 200);
   }
 }

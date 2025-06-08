@@ -65,7 +65,7 @@ html, body {
   margin-bottom: 1rem;
   transition: transform 0.3s ease;
 
-  background-color: rgba(255, 255, 255, 0.14);  /* más blanco y visible */
+  background-color: rgba(255, 255, 255, 0.14);
 
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -165,8 +165,6 @@ html, body {
 }
 
 
-
-/* Estilo de formularios */
 .form-label {
   font-weight: 600;
   color: #005a66;
@@ -246,7 +244,7 @@ textarea.form-control {
 }
 
 .btn-delete-account:hover {
-  background-color: rgba(220, 53, 69, 0.05); /* rojo clarito */
+  background-color: rgba(220, 53, 69, 0.05);
   border-color: #dc3545;
   color: #dc3545;
 }

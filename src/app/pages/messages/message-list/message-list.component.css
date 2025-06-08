@@ -201,9 +201,9 @@ app-loader {
 }
 
 :host-context(.dark-mode) .convo-name {
-  color: #93c5fd; /* azul claro */
+  color: #93c5fd;
 }
 
 :host-context(.dark-mode) .convo-name:hover {
-  color: #bfdbfe; /* azul más claro aún */
+  color: #bfdbfe;
 }

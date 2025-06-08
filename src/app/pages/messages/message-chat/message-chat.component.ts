@@ -185,7 +185,6 @@ export class MessageChatComponent implements OnInit, AfterViewInit {
           (a, b) => new Date(a.timestamp!).getTime() - new Date(b.timestamp!).getTime()
         );
 
-        // ✅ Actualizamos el último mensaje recibido para el polling
         if (this.messages.length > 0) {
           this.lastMessageId = this.messages[this.messages.length - 1].messageId!;
         }

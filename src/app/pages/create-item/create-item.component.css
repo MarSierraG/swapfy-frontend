@@ -230,7 +230,7 @@
   box-shadow: 0 0 0 0.2rem rgba(0, 155, 165, 0.2);
 }
 
-/* Etiquetas modernas */
+
 .form-label {
   font-size: 1.05rem;
   font-weight: 600;
@@ -242,13 +242,13 @@
   gap: 0.5rem;
 }
 
-/* Íconos junto al label */
+
 .form-label i {
   font-size: 1.2rem;
   color: #007b8a;
 }
 
-/* === Inputs y Selects modernos === */
+
 .form-control,
 .form-select {
   border-radius: 0.75rem;
@@ -275,7 +275,7 @@ input[type="number"].form-control {
   text-align: center;
 }
 
-/* Aumentar espacio entre grupo de campos */
+
 .mb-3,
 .mb-4 {
   margin-bottom: 1.5rem !important;

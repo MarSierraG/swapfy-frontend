@@ -1,4 +1,4 @@
-/* ======= TÍTULO ======= */
+
 .admin-title {
   font-size: 2rem;
   font-weight: 700;
@@ -14,7 +14,7 @@
 }
 
 
-/* ======= TABLA ======= */
+
 .table {
   border-collapse: separate;
   border-spacing: 0;
@@ -38,7 +38,7 @@
 }
 
 
-/* ======= CABECERA TABLA ======= */
+
 .custom-table-header th {
   background: linear-gradient(135deg, #009ba5, #003f66);
   color: white;
@@ -49,7 +49,7 @@
 }
 
 
-/* ======= FILTROS ======= */
+
 .form-select, .form-control {
   border-radius: 0.75rem;
   border: 1px solid #cde6ea;
@@ -63,7 +63,7 @@
 }
 
 
-/* ======= BOTONES ACCIONES ======= */
+
 td .btn {
   border-radius: 0.5rem !important;
   padding: 0.35rem 0.55rem !important;
@@ -89,7 +89,7 @@ td .btn {
 }
 
 
-/* ======= BOTÓN MOSTRAR MÁS ======= */
+
 .btn-outline-secondary {
   border-radius: 999px;
   padding: 0.6rem 1.5rem;

@@ -11,23 +11,23 @@ export class MadridDatePipe implements PipeTransform {
   transform(value: string | Date | null | undefined, format: string = 'dd/MM/yyyy HH:mm'): string | null {
     if (!value) return null;
 
-    // Convertimos fecha al formato y zona Madrid
+    // Convertir fecha al formato y zona Madrid
     try {
-      // Convertimos a Date
+      // Convertir a Date
       const date = new Date(value);
       if (isNaN(date.getTime())) return null;
 
-      // Usamos Intl.DateTimeFormat para zona horaria Madrid
+      // Usar Intl.DateTimeFormat para zona horaria Madrid
       const options: Intl.DateTimeFormatOptions = {
         year: 'numeric', month: '2-digit', day: '2-digit',
         hour: '2-digit', minute: '2-digit',
         hour12: false,
         timeZone: 'Europe/Madrid',
       };
-      // Formateamos manualmente para control (dd/MM/yyyy HH:mm)
+      // Formatear manualmente para control (dd/MM/yyyy HH:mm)
       const formatter = new Intl.DateTimeFormat('es-ES', options);
       const parts = formatter.formatToParts(date);
-      // Extraemos las partes
+
       const map: any = {};
       parts.forEach(({ type, value }) => { map[type] = value; });
       return `${map.day}/${map.month}/${map.year} ${map.hour}:${map.minute}`;

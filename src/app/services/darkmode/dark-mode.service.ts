@@ -19,7 +19,7 @@ export class DarkModeService {
     localStorage.setItem('darkMode', current.toString());
     document.body.classList.toggle('dark-mode', current);
 
-    // Forzar recarga solo si estamos en /chats o similares
+
     const url = this.router.url;
     if (url.startsWith('/chats')) {
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {

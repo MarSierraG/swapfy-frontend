@@ -56,7 +56,6 @@ export class AuthService {
   isAdmin(): boolean {
     const raw = localStorage.getItem(this.ROLES_KEY);
 
-    // Si no hay roles definidos, devolvemos false
     if (!raw || raw === 'undefined') return false;
 
     try {
@@ -102,7 +101,7 @@ export class AuthService {
 
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.roles[0]; // O devuelve un array si prefieres
+      return payload.roles[0];
     } catch (e) {
       return '';
     }

@@ -56,7 +56,7 @@ export class ItemFormComponent implements OnInit, OnChanges {
 
 
   ngOnInit() {
-    // No usamos ngOnInit para cargar el item, lo haremos en ngOnChanges
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {

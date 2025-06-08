@@ -97,13 +97,12 @@
   gap: 8px;
 }
 
-/* Icono de la lupa */
+/* Lupa */
 .search-wrapper i {
   font-size: 1rem;
   color: #666;
 }
 
-/* Input de texto */
 .search-bar {
   border: none;
   outline: none;

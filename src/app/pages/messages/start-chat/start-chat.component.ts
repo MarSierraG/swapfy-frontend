@@ -60,7 +60,7 @@ export class StartChatComponent implements OnInit {
     const recentResults = await Promise.all(recentUserPromises);
     this.recentUsers = recentResults.filter(Boolean) as User[];
 
-    // Get all users excluding current
+
     this.userService.getAllUsers().subscribe({
       next: allUsers => {
         this.users = allUsers.filter(u => u.userId !== this.currentUserId);
