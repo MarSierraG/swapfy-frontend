@@ -46,6 +46,11 @@ export class MessageChatComponent implements OnInit, AfterViewInit {
   isLoading = true;
   maxLength = 500;
   itemsInChat: Item[] = [];
+  private lastMessageId: number | null = null;
+  private pollingInterval: any;
+  private messageSound = new Audio('assets/sounds/message.mp3');
+
+
 
 
 
@@ -66,6 +71,10 @@ export class MessageChatComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
+    this.pollingInterval = setInterval(() => {
+      this.checkForUpdates();
+    }, 5000);
+
     const isDark = localStorage.getItem('darkMode') === 'true';
     document.body.classList.toggle('dark-mode', isDark);
 
@@ -133,6 +142,37 @@ export class MessageChatComponent implements OnInit, AfterViewInit {
     }, 0);
   }
 
+  ngOnDestroy(): void {
+    if (this.pollingInterval) clearInterval(this.pollingInterval);
+  }
+
+
+  checkForUpdates(): void {
+    this.messageService
+      .getConversation(this.userId, this.otherUserId)
+      .subscribe((messages: Message[]) => {
+        const sorted = messages.sort(
+          (a, b) => new Date(a.timestamp!).getTime() - new Date(b.timestamp!).getTime()
+        );
+
+        const last = sorted.at(-1);
+
+        if (!this.lastMessageId || last?.messageId !== this.lastMessageId) {
+          if (last?.senderUserId !== this.userId) {
+            this.showNewMessageNotification();
+          }
+
+          this.loadConversation(false);
+        }
+      });
+  }
+
+  showNewMessageNotification(): void {
+    //Reproducir sonido
+    this.messageSound.play().catch(() => {
+      console.warn('No se pudo reproducir el sonido');
+    });
+  }
 
 
   loadConversation(showLoader: boolean = true): void {
@@ -144,6 +184,11 @@ export class MessageChatComponent implements OnInit, AfterViewInit {
         this.messages = messages.sort(
           (a, b) => new Date(a.timestamp!).getTime() - new Date(b.timestamp!).getTime()
         );
+
+        // ✅ Actualizamos el último mensaje recibido para el polling
+        if (this.messages.length > 0) {
+          this.lastMessageId = this.messages[this.messages.length - 1].messageId!;
+        }
 
         // Prepara todas las promesas de carga de ítems
         const loadingItems: Promise<void>[] = [];
@@ -170,18 +215,15 @@ export class MessageChatComponent implements OnInit, AfterViewInit {
           }
         });
 
-
         Promise.all(loadingItems).then(() => {
           if (showLoader) this.isLoading = false;
 
-          // Esperar a que Angular renderice los item-cards
           setTimeout(() => {
             this.scrollToBottom();
           }, 150);
         });
       });
   }
-
 
 
 
