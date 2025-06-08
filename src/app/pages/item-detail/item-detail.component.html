@@ -70,24 +70,27 @@
         <i class="bi bi-trash me-1"></i> Eliminar
       </button>
 
-      <!-- Botón mensaje -->
+    </div>
+
+
+    <!-- Botón para preguntar (visible solo si NO es el propietario) -->
+    <div *ngIf="!isOwner && !mensajeEnviado" class="action-buttons">
       <button
-        *ngIf="item?.userId !== authService.currentUserId() && !mensajeEnviado"
         class="btn btn-logout rounded-pill py-2 mb-4"
         (click)="askForItem()"
       >
         <i class="bi bi-chat-dots me-2"></i> Preguntar por este artículo
       </button>
+    </div>
 
-      <!-- Botón tras enviar -->
+    <!-- Botón tras enviar -->
+    <div *ngIf="mensajeEnviado" class="action-buttons mt-4">
       <button
-        *ngIf="mensajeEnviado"
         class="btn btn-logout"
         (click)="goToConversation()"
       >
         <i class="bi bi-chat-left-text me-2"></i> Ver conversación
       </button>
-
     </div>
   </div>
 </div>

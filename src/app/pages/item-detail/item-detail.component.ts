@@ -27,6 +27,7 @@ export class ItemDetailComponent implements OnInit {
   selectedFile: File | null = null;
   isLoading = false;
   mensajeEnviado = false;
+  isOwner = false;
 
 
   constructor(
@@ -50,6 +51,7 @@ export class ItemDetailComponent implements OnInit {
         const isAdmin = roles.map(r => r.toUpperCase()).includes('ADMIN');
 
         this.isOwnerOrAdmin = data.userId === currentUserId || isAdmin;
+        this.isOwner = data.userId === currentUserId;
       },
       error: () => this.router.navigate(['/store'])
     });
