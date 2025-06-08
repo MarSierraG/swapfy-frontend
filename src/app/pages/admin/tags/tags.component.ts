@@ -65,10 +65,18 @@ export class TagsComponent implements OnInit {
       inputPlaceholder: 'Introduce el nombre de la etiqueta',
       confirmButtonText: 'Crear',
       showCancelButton: true,
-      inputValidator: value => !value.trim() ? 'El nombre no puede estar vacío' : null
+      inputValidator: (value) => {
+        const trimmed = value.trim();
+        if (!trimmed) return 'El nombre no puede estar vacío';
+        if (trimmed.length < 2) return 'Debe tener al menos 2 caracteres';
+        if (trimmed.length > 30) return 'Máximo 30 caracteres permitidos';
+        if (!/^[\w\sáéíóúÁÉÍÓÚñÑ-]+$/.test(trimmed)) return 'Solo letras, espacios y guiones';
+        return null;
+      }
     }).then(result => {
       if (result.isConfirmed && result.value.trim()) {
-        this.tagService.createTag({ name: result.value.trim() }).subscribe({
+        const name = result.value.trim();
+        this.tagService.createTag({ name }).subscribe({
           next: (newTag) => {
             this.tags.push(newTag);
             Swal.fire('Etiqueta creada', '', 'success');
@@ -78,6 +86,7 @@ export class TagsComponent implements OnInit {
       }
     });
   }
+
 
 
   openEditModal(tag: Tag): void {
@@ -90,7 +99,11 @@ export class TagsComponent implements OnInit {
       confirmButtonText: 'Guardar',
       cancelButtonText: 'Cancelar',
       inputValidator: (value) => {
-        if (!value.trim()) return 'El nombre no puede estar vacío';
+        const trimmed = value.trim();
+        if (!trimmed) return 'El nombre no puede estar vacío';
+        if (trimmed.length < 2) return 'Debe tener al menos 2 caracteres';
+        if (trimmed.length > 30) return 'Máximo 30 caracteres permitidos';
+        if (!/^[\w\sáéíóúÁÉÍÓÚñÑ-]+$/.test(trimmed)) return 'Solo letras, espacios y guiones';
         return null;
       },
       customClass: {
