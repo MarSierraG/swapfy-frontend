@@ -1,4 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://swapfy-backend-production.up.railway.app/api'
+  apiUrl: 'https://swapfy-backend-production.up.railway.app/api',
+  maintenance: true,
+  maintenanceMessage: 'Swapfy está en proceso de mejoras y no estará disponible temporalmente ¡Gracias por tu paciencia!'
 };

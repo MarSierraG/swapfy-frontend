@@ -5,7 +5,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-auth-page',
@@ -21,6 +21,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
   ],
 })
 export class AuthPageComponent {
+  maintenanceMode = environment.maintenance;
+  maintenanceMessage = environment.maintenanceMessage;
 
   formMode: 'login' | 'register' | 'forgot' | 'reset' = 'login';
 

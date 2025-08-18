@@ -10,6 +10,47 @@
   overflow: visible;
 }
 
+/*Mensaje de mantenimiento*/
+.maintenance-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.maintenance-card {
+  background: #e6f8fb;
+  color: #004B66;
+
+  border: 1px solid rgba(0, 200, 255, 0.5);
+
+  /* Glow */
+  box-shadow:
+    0 0 6px  rgba(0, 200, 255, 0.6),
+    0 0 14px rgba(0, 200, 255, 0.35),
+    0 0 28px rgba(0, 200, 255, 0.2),
+    0 0 48px rgba(0, 200, 255, 0.1);
+}
+
+
+.alert {
+  background: #e6f8fb;
+  color: #004B66;
+}
+
+.alert h4 {
+  font-size: 1.3rem;
+}
+
+.alert p {
+  font-size: 1rem;
+}
+
+
+
 
 .auth-container {
   background-color: #fff;
