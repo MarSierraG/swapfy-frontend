@@ -1,0 +1,24 @@
+<div class="overlay" *ngIf="visible">
+  <div class="overlay-card">
+    <!-- Spinner personalizado -->
+    <div class="spinner-container">
+      <img src="assets/logo/logo.png" alt="Cargando..." class="logo-spinner" />
+      <p class="loading-text">Cargando...</p>
+    </div>
+
+    <!-- Texto con temporizador animado -->
+    <div class="server-message">
+      <svg class="timer-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+           viewBox="0 0 24 24" fill="none" stroke="#007BBD" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="12 6 12 12 16 14"/>
+      </svg>
+      <span class="main-text">Conectando con el servidor...</span>
+      <p class="sub-text">
+        Esto puede tardar un poco si el servidor está en reposo.<br>
+        No cierres esta ventana, en unos segundos estará listo.
+      </p>
+    </div>
+  </div>
+</div>

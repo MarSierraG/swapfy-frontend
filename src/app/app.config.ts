@@ -1,3 +1,4 @@
+// src/app/app.config.ts
 import { ApplicationConfig, provideZoneChangeDetection, inject } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { importProvidersFrom } from '@angular/core';
@@ -9,6 +10,9 @@ import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
+// 👇 importa el interceptor del loader
+import { backendLoaderInterceptor } from './interceptors/backend-loader.interceptor';
+
 let tokenAlreadyHandled = false;
 
 export const appConfig: ApplicationConfig = {
@@ -17,8 +21,13 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     importProvidersFrom(SweetAlert2Module.forRoot()),
     importProvidersFrom(ReactiveFormsModule),
+
     provideHttpClient(
       withInterceptors([
+        // 1) Loader: muestra/oculta overlay en llamadas a environment.apiUrl
+        backendLoaderInterceptor,
+
+        // 2) Tu interceptor de Auth + manejo de 401
         (req, next) => {
           const token = localStorage.getItem('token');
           const router = inject(Router);
@@ -44,9 +53,7 @@ export const appConfig: ApplicationConfig = {
                     title: 'Sesión expirada',
                     text: 'Tu sesión ha caducado. Por favor, inicia sesión de nuevo.',
                     confirmButtonText: 'Aceptar',
-                    customClass: {
-                      confirmButton: 'btn btn-primary'
-                    },
+                    customClass: { confirmButton: 'btn btn-primary' },
                     buttonsStyling: false
                   }).then(() => {
                     tokenAlreadyHandled = false;

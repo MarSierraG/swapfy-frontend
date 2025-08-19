@@ -1,0 +1,90 @@
+/* Fondo con blur */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.overlay-card {
+  background: #fff;
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  max-width: 420px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Spinner personalizado */
+.logo-spinner {
+  width: 70px;
+  height: 70px;
+  animation: rotate 1.6s linear infinite;
+  opacity: 0.95;
+  border-radius: 50%;
+  padding: 5px;
+  border: 2px solid var(--bs-primary);
+  box-shadow: 0 0 10px var(--bs-primary);
+  background-color: whitesmoke;
+  margin-bottom: 10px;
+}
+
+.loading-text {
+  font-size: 1.2rem;
+  color: #007BBD;
+  font-weight: 500;
+  animation: blink 1.6s infinite;
+  margin-bottom: 1rem;
+}
+
+/* Texto */
+.main-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #007BBD;
+  margin: 0.5rem 0;
+}
+
+.sub-text {
+  font-size: 0.95rem;
+  color: #6c757d;
+  margin-top: 0.5rem;
+  line-height: 1.4;
+}
+
+/* Icono de temporizador animado */
+.timer-icon {
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: middle;
+  animation: spin 1.5s linear infinite;
+}
+
+/* Animaciones */
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
